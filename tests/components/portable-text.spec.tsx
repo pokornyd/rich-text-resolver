@@ -1,11 +1,10 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import { PortableText, toPlainText } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
+import { render } from "@testing-library/react";
 import React from "react";
-import TestRenderer from "react-test-renderer";
 
-import { nodesToPortableText, parseHtml } from "../../src";
-import { resolveImage, resolveTable } from "../../src/utils/resolution/html";
-import { PortableTextReactResolvers } from "../../src/utils/resolution/react";
+import { transformToPortableText } from "../../src";
+import { ImageComponent, PortableTextReactResolvers, TableComponent } from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
   value: "<p>some text in a paragraph</p>",
@@ -45,14 +44,8 @@ const portableTextComponents: PortableTextReactResolvers = {
       const item = dummyRichText.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    table: ({ value }) => {
-      const tableString = resolveTable(value, toPlainText);
-      return <>{tableString}</>;
-    },
-    image: ({ value }) => {
-      const imageString = resolveImage(value);
-      return <>{imageString}</>;
-    },
+    table: ({ value }) => <TableComponent {...value} />,
+    image: ({ value }) => <ImageComponent {...value} />,
   },
   marks: {
     link: ({ value, children }) => {
@@ -83,9 +76,9 @@ const portableTextComponents: PortableTextReactResolvers = {
 describe("portable text React resolver", () => {
   const renderPortableText = (richTextValue: string, components = portableTextComponents) => {
     dummyRichText.value = richTextValue;
-    const jsonTree = parseHtml(dummyRichText.value);
-    const portableText = nodesToPortableText(jsonTree);
-    return TestRenderer.create(<PortableText value={portableText} components={components} />).toJSON();
+    const portableText = transformToPortableText(dummyRichText.value);
+
+    return render(<PortableText value={portableText} components={components} />).container.innerHTML;
   };
 
   it("renders simple HTML", () => {

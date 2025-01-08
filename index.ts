@@ -1,4 +1,3 @@
-export { PortableTextReactResolvers } from './src/utils/resolution/react.js';
 export { transformNodes, transformNodesAsync, nodesToHtml, nodesToHtmlAsync, NodeTransformer, NodeTransformers, AsyncNodeTransformer, AsyncNodeTransformers, NodeToString, NodeToStringAsync, NodeToStringMap, AsyncNodeToStringMap } from './src/index.js';
 export { traversePortableText } from './src/utils/transformer-utils.js';
 export { nodesToPortableText, transformToPortableText } from "./src/transformers/portable-text-transformer/portable-text-transformer.js";

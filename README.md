@@ -178,10 +178,9 @@ const resolvers: PortableTextReactResolvers = {
       const item = richTextElement.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    table: ({ value }) => {
-      const tableString = resolveTable(value, toPlainText);
-      return <>{tableString}</>;
-    }
+    // default components for table and image for convenience
+    table: ({ value }) => <TableComponent {...value} />,
+    image: ({ value }) => <ImageComponent {...value} />,
   },
   marks: {
     link: ({ value, children }) => {
