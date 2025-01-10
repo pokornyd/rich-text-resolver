@@ -1,25 +1,19 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import {
-  escapeHTML,
-  PortableTextMarkComponentOptions,
-  PortableTextOptions,
-  PortableTextTypeComponentOptions,
-  toHTML,
-} from "@portabletext/to-html";
+import { escapeHTML, PortableTextTypeComponentOptions, toHTML } from "@portabletext/to-html";
 
 import {
-  browserParse,
-  nodeParse,
+  nodesToPortableText,
   PortableTextBlock,
-  PortableTextComponent,
+  PortableTextComponentOrItem,
   PortableTextExternalLink,
   PortableTextImage,
-  PortableTextInternalLink,
+  PortableTextItemLink,
   PortableTextTable,
   ResolverFunction,
-  transformToPortableText,
 } from "../../../src";
-import { resolveImage, resolveTable, toHTMLImageDefault } from "../../../src/utils/resolution/html";
+import { browserParse } from "../../../src/parser/browser";
+import { nodeParse } from "../../../src/parser/node";
+import { PortableTextHtmlResolvers, resolveImage, resolveTable } from "../../../src/utils/resolution/html";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -33,8 +27,8 @@ type CustomResolvers = {
   image?: ResolverFunction<PortableTextImage>;
   block?: ResolverFunction<PortableTextBlock>;
   table?: ResolverFunction<PortableTextTable>;
-  component?: ResolverFunction<PortableTextComponent>;
-  internalLink?: ResolverFunction<PortableTextInternalLink>;
+  component?: ResolverFunction<PortableTextComponentOrItem>;
+  contentItemLink?: ResolverFunction<PortableTextItemLink>;
   link?: ResolverFunction<PortableTextExternalLink>;
 };
 
@@ -82,19 +76,19 @@ describe("HTML transformer", () => {
   const getPortableTextComponents = (
     element: Elements.RichTextElement,
     customResolvers: CustomResolvers = {},
-  ): PortableTextOptions => ({
+  ): PortableTextHtmlResolvers => ({
     components: {
       types: {
         image: ({
           value,
-        }: PortableTextTypeComponentOptions<PortableTextImage>) => {
+        }) => {
           return customResolvers.image
             ? customResolvers.image(value)
-            : resolveImage(value, toHTMLImageDefault);
+            : resolveImage(value);
         },
-        component: ({
+        componentOrItem: ({
           value,
-        }: PortableTextTypeComponentOptions<PortableTextComponent>) => {
+        }: PortableTextTypeComponentOptions<PortableTextComponentOrItem>) => {
           const linkedItem = element.linkedItems.find(
             (item) => item.system.codename === value.component._ref,
           );
@@ -114,16 +108,16 @@ describe("HTML transformer", () => {
         },
       },
       marks: {
-        internalLink: ({
+        contentItemLink: ({
           children,
           value,
-        }: PortableTextMarkComponentOptions<PortableTextInternalLink>) => {
+        }) => {
           return `<a href="https://website.com/${value?.reference._ref}">${children}</a>`;
         },
         link: ({
           children,
           value,
-        }: PortableTextMarkComponentOptions<PortableTextExternalLink>) => {
+        }) => {
           return `<a href=${escapeHTML(value?.href!)}">${children}</a>`;
         },
       },
@@ -138,8 +132,8 @@ describe("HTML transformer", () => {
 
     const browserTree = browserParse(richTextInput.value);
     const nodeTree = nodeParse(richTextInput.value);
-    const nodePortableText = transformToPortableText(nodeTree);
-    const browserPortableText = transformToPortableText(browserTree);
+    const nodePortableText = nodesToPortableText(nodeTree);
+    const browserPortableText = nodesToPortableText(browserTree);
     const nodeResult = toHTML(
       nodePortableText,
       getPortableTextComponents(richTextInput, customResolvers),

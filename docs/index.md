@@ -1,255 +1,197 @@
-# JSON Transformer
+# JSON Transformers
 
-This module also allows you to manipulate the intermediate JSON structure prior to converting it into Portable text or if you prefer to work with a tree structure, rather than portable text.
+This module provides an environment-aware `parseHtml` function to convert an HTML string into an array of nodes. The JSON structure can subsequently be transformed using one of the provided transformation methods, either to a modified HTML string or a completely different structure, both in synchronous and asynchronous manner.
+
+This toolset can be particularly useful for transforming rich text or HTML content from external sources into a valid Kontent.ai rich text format in migration scenarios. 
 
 ## Usage
 
-Output of `nodeParse` and `browserParse` methods is a simple tree structure, defined by the following interface.
+Pass stringified HTML to `parseHtml` function to get an array of `DomNode` objects:
 
 ```ts
-interface ParseResult {
+import { parseHtml } from '@kontent-ai/rich-text-resolver';
+
+const rawHtml = `<p>Hello <strong>World!</strong></p>`;
+
+const parsedNodes = parseHtml(rawHtml);
+```
+
+`DomNode` is a union of `DomHtmlNode` and `DomTextNode`, defined as follows:
+
+```ts
+export type DomNode = DomHtmlNode | DomTextNode;
+
+export interface DomTextNode {
+  type: "text";
+  content: string;
+}
+
+export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
+  type: "tag";
+  tagName: string;
+  attributes: TAttributes & Record<string, string | undefined>;
   children: DomNode[];
 }
 ```
 
-`DomNode` is a union of `DomHtmlNode` and `DomTextNode`, which together define the full HTML tree structure:
+The resulting array can be transformed using one of the functions included in the module.
 
-![Resolved DOMTree](../media/domtree.jpg)
+### HTML Transformation
 
-The structure can be modified using `transformToJson` method which accepts `ParseResult` as the first argument and an optional `customResolvers` object, which can contain two methods `resolveDomTextNode` and `resolveDomHtmlNode`. Each method is responsible for manipulating its respective node type, allowing you to transform the output as per your requirements.
+To transform the `DomNode` array back to HTML, you can use `nodesToHtml` function or its async variant `nodesToHtmlAsync`. The function accepts the parsed array and a `transformers` object, which defines custom transformation for each HTML node. Text nodes are transformed automatically. A wildcard `*` can be used to define fallback transformation for all tags not explicitly defined. If no explicit or wildcard transformation is provided, default resolution is used.
 
-Example use of the `transformToJson` method:
+#### Basic
+Basic example of HTML transformation, removing HTML attribute `style` and transforming `b` tag to `strong`:
+```ts
+import { nodesToHtml } from 'your-json-transformer';
+
+const rawHtml = `<p style="color:red">Hello <b>World!</b></p>`;
+const parsedNodes = parseHtml(rawHtml);
+
+const transformers: NodeToStringMap = {
+  // children contains already transformed child nodes
+  b: (node, children) => `<strong>${children}</strong>`;
+  "*": (node, children) => `<${node.tagName}>${children}</${node.tagName}>`;
+};
+
+// restores original HTML with attributes
+let htmlOutput = nodesToHtml(parsedNodes, {});
+console.log(htmlOutput); // <p style="color:red">Hello <b>World!</b></p>
+
+// b is converted to strong, wildcard transformation omits attributes from remaining nodes
+htmlOutput = nodesToHtml(parsedNodes, transformers);
+console.log(htmlOutput); // <p>Hello <strong>World!</strong></p>
+```
+
+#### Advanced
+For more complex scenarios, optional context and its handler can be passed to the transformation function as third and fourth parameters respectively. Context can be accessed when defining node transformations. If a handler is provided, it clones the context before it's modified and passed to child node processing, thus maintaining correct context state for each node.
+
+Example showcasing asynchronous transformation of `<img>` tag to `<figure>`, simultaneously uploading the image to Kontent.ai asset library, using SDK `ManagementClient` provided as context:
 
 ```ts
-const transformJsonWithCustomResolvers = (result: ParseResult) => transformToJson(result, {
-  resolveDomTextNode: customResolveDomTextNode,
-  resolveDomHtmlNode: customResolveDomHtmlNode
-})
+import axios from "axios";
+import { ManagementClient } from "@kontent-ai/management-sdk";
+import {
+  parseHtml,
+  AsyncNodeToStringMap,
+  nodesToHtmlAsync,
+} from "@kontent-ai/rich-text-resolver";
 
-
-const customResolveDomTextNode: ResolveDomTextNodeType = node => {
-  return {
-    text: node.content
-  };
-}
-
-const customResolveDomHtmlNode: ResolveDomHtmlNodeType = (node, traverse) => {
-  let result = {
-    tag: node.tagName
-  };
-
-  switch (node.tagName) {
-    case 'figure': {
-      const figureObject = {
-        'imageId': node.attributes['data-image-id']
-      };
-      result = { ...result, ...figureObject }
-      break;
-    }
-    case "img": {
-      const imgObject = {
-        'src': node.attributes['src'],
-        'alt': node.attributes['alt']
+const input = `<p><img src="https://website.com/image.jpg" alt="some image"></p>`;
+const nodes = parseHtml(input);
+const transformers: AsyncNodeToStringMap<ManagementClient> = {
+  img: async (node, _, client) => {
+    return await new Promise<string>((resolve, reject) => {
+      if (!client) {
+        reject("Client is not provided");
+        return;
       }
-      result = { ...result, ...imgObject }
-      break;      
-    }
-    case 'ol': {
-      const tdObject = {
-        'tag': 'ol'
-      };
-      result = { ...result, ...tdObject }
-      break;
-    }
-    case 'ul': {
-      const tdObject = {
-        'tag': 'ul'
-      };
-      result = { ...result, ...tdObject }
-      break;
-    }
-    case 'li': {
-      let tdObject = {
-        'tag': 'li',
-        'text': node.children[0].type === 'text' ? node.children[0].content : ""
-      };
-      if (node.children.length > 1) {
-        tdObject = { ...tdObject, ...{ children: node.children.slice(1).map(node => traverse(node)) } }
-      }
-      return { ...result, ...tdObject }
-    }
-    case "object": {
-      if (node.attributes['type'] === 'application/kenticocloud') {
-        const linkedItemObject = {
-          codeName: node.attributes['data-codename']
+
+      const src: string = node.attributes.src;
+
+      axios.get(src, { responseType: "arraybuffer" }).then(async (response) => {
+        const base64 = Buffer.from(response.data, "binary").toString("base64");
+        const filename = src.split("/").pop()!;
+        const uploadResponse = await client
+          .uploadBinaryFile()
+          .withData({
+            binaryData: base64,
+            contentLength: base64.length,
+            contentType:
+              response.headers["content-type"] || "application/octet-stream",
+            filename,
+          })
+          .toPromise()
+          .then((res) => res.data);
+
+        const fileReference = {
+          id: uploadResponse.id,
+          type: "internal" as const,
         };
-        result = { ...result, ...linkedItemObject }
-      }
-      break;
-    }
-    default: {
 
-    }
-  }
-  return result;
-}
+        const image = await client
+          .addAsset()
+          .withData(() => ({
+            file_reference: fileReference,
+            title: filename,
+            descriptions: [
+              {
+                language: { codename: "default" },
+                description: node.attributes.alt ?? "Auto-generated asset",
+              },
+            ],
+          }))
+          .toPromise()
+          .then((res) => res.data);
 
-const originalTree = browserParse(richTextValue);
-const transformedTree = transformJsonWithCustomResolvers(originalTree);
+        resolve(`<figure data-asset-id="${image.id}"></figure>`);
+      });
+    });
+  },
+};
+
+const richText = nodesToHtmlAsync(
+  nodes,
+  transformers,
+  new ManagementClient({
+    environmentId: "YOUR_ENVIRONMENT_ID",
+    apiKey: "YOUR_MANAGEMENT_API_KEY",
+  })
+);
+
+console.log(richText); 
+// <p><figure data-asset-id="cc8f13a2-e0fb-468b-ba18-344c6e2ecb66"></figure></p>
 ```
 
-## Resolution
-If you prefer working with a tree structure, rather than Portable text, you can implement resolution around the `ParseResult` tree. See examples below.
+### Generic transformation
 
-#### HTML string (TypeScript)
+Should you need to transform the nodes to a different structure, rather than HTML (string), you can use `transformNodes` (`transformNodesAsync`) function. Its usage is similar but revolves around generics and provides further control over the output, such as specifying custom transformation for text nodes.
+
+Snippet showcasing use of `transformNodes` to convert the `DomNode` array into Portable Text, as used internally in this module. Full source code in [the corresponding TS file](../src/transformers/portable-text-transformer/portable-text-transformer.ts).
 
 ```ts
-const parsedTree = browserParse(richTextValue);
-
-const resolve = (domNode: DomNode): string => {
-  switch (node.type) {
-    case "tag": {
-      if (isLinkedItem(node)) {
-        return resolveLinkedItem(node);
-      } else if (isImage(node)) {
-        return resolveImage(node);
-      } else if (isItemLink(node)) {
-        return resolveItemLink(node);
-      } else {
-        // Recursively calls `resolve` for node's children
-        return resolveHtmlElement(node);
-      }
-    }
-
-    case "text":
-      return node.content;
-
-    default:
-      throw new Error("Invalid input.");
-  }
+type ListContext = {
+  depth: number;
+  type: "number" | "bullet" | "unknown";
 };
 
-const resolvedHtml = parsedTree.children.map(resolve).join("");
-```
-
-##### Helper resolution methods
-
-Resolution method implementation varies based on the use cases. This is just a showcase to present how to get information for node specific data.
-
-```ts
-const resolveHtmlElement = (node: DomHtmlNode): string => {
-  const attributes = Object.entries(node.attributes)
-    .map(([key, value]) => `${key}="${value}"`)
-    .join(" ");
-  const openingTag = `<${node.tagName} ${attributes}>`;
-  const closingTag = `</${node.tagName}>`;
-
-  // Recursively calls `resolve` for node's children
-  return `${openingTag}${node.children.map(link).join("")}${closingTag}`;
+const transformers: NodeTransformers<PortableTextItem, ListContext> = {
+  text: processText,
+  tag: {
+    ...(Object.fromEntries(
+      blockElements.map((tagName) => [tagName, processBlock]),
+    ) as Record<BlockElement, NodeToPortableText<DomHtmlNode>>),
+    ...(Object.fromEntries(
+      textStyleElements.map((tagName) => [tagName, processMark]),
+    ) as Record<TextStyleElement, NodeToPortableText<DomHtmlNode>>),
+    ...(Object.fromEntries(
+      ignoredElements.map((tagName) => [tagName, ignoreProcessing]),
+    ) as Record<IgnoredElement, NodeToPortableText<DomHtmlNode>>),
+    a: processMark,
+    li: processListItem,
+    table: processTable,
+    tr: processTableRow,
+    td: processTableCell,
+    br: processLineBreak,
+    img: processImage,
+    object: processLinkedItemOrComponent,
+  },
 };
+
+const updateListContext = (node: DomNode, context: ListContext): ListContext =>
+  (isElement(node) && isListBlock(node))
+    ? { depth: context.depth + 1, type: node.tagName === "ol" ? "number" : "bullet" }
+    : context;
+
+export const nodesToPortableText = (
+  parsedNodes: DomNode[],
+): PortableTextObject[] =>
+  transformNodes(
+    parsedNodes,
+    transformers,
+    { depth: 0, type: "unknown" }, // initialization of list transformation context
+    updateListContext,
+  ) as PortableTextObject[];
 ```
 
-[Image attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Images-in-rich-text) contain just the information parsed from HTML. Image context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getImage` method.
 
-```ts
-resolveImage = (node: DomHtmlNode): string => {
-  const imageId = node.attributes["data-asset-id"];
-
-  const image = getImage(imageId);
-  return `<img src=${image.url}/>`;
-};
-```
-
-[Link attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Links-in-rich-text) contain just the information parsed from HTML. Link context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getLink` method.
-
-```ts
-const resolveItemLink = (node: DomHtmlNode): string => {
-  const linkId = node.attributes["data-item-id"];
-
-  const link = getLink(linkId);
-
-  return `<a href="${resolveLink(link)}">${node.children.map(link).join()}</a>`;
-};
-```
-
-[Linked item attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Content-items-and-components-in-rich-text) contain just the information parsed from HTML. Linked item context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getLinkedContentItem` method.
-
-```ts
-const resolveLinkedItem = (node: DomHtmlNode): string => {
-  const itemCodeName = node.attributes["data-codename"];
-
-  const item = getLinkedContentItem(itemCodeName);
-  switch (item.system.type) {
-    case "quote":
-      return `<quote>${item.elements.quote_text.value}</quote>`;
-    //  ...
-    default:
-      return `<strong>UNSUPPORTED CONTENT ITEM</strong>`;
-  }
-};
-```
-
-### React with JS SDK
-
-```tsx
-// assumes element prop comes from JS SDK
-
-type Props = Readonly<{
-    element: Elements.RichTextElement;
-    className: string;
-}>;
-
-const RichText: React.FC<Props> = ({element, className}) => {
-  const [richTextContent, setRichTextContent] = useState<JSX.Element[] | null>(null);
-
-  useEffect(() => {
-    const parsedTree = browserParse(element.value);
-    const resolve = (domNode: DomNode, index: number): JSX.Element => {
-      switch (domNode.type) {
-        case 'tag': {
-          // traverse tree recursively
-          const resolvedChildElements = domNode.children.map(node => resolve(node, index));
-          // omit children parameter for non-pair elements like <br>
-          if (isUnpairedElement(domNode)) {
-            return React.createElement(domNode.tagName, {...domNode.attributes});
-          }
-
-          if (isLinkedItem(domNode)) {
-            const linkedItem = element.linkedItems.find(item => item.system.codename === domNode.attributes['data-codename']);
-
-            switch (linkedItem?.system.type) {
-              case 'youtube_video': {
-                  return <YoutubeVideo key={index} id={linkedItem.elements.videoId.value} />;
-              }
-              // resolution for other types
-              default: {
-                  return <div key={index}>Failed resolving item {linkedItem.system.codename}. Resolver for type {linkedItem.system.type} not implemented.</div>;
-              }
-            }
-            // if (isImage(domNode)) {...}
-            // if (isLink(domNode)) {...}
-          }
-
-          const attributes = { ...domNode.attributes, key: index };
-          return React.createElement(domNode.tagName, attributes, resolvedChildElements);
-        }
-
-        case: 'text': {
-          return <React.Fragment key={index}>{domNode.content}</React.Fragment>
-        }
-
-        default: throw new Error("Invalid input.")
-      }
-    }
-
-    const result = parsedTree.children.map((node, index) => resolve(node, index));
-    setRichTextContent(result);
-  }, [element]);
-
-  return (
-    <div className={className}>
-      {richTextContent}
-    </div>
-  );
-};
-```

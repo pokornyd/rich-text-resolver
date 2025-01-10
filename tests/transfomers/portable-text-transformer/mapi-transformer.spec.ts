@@ -1,11 +1,6 @@
-import {
-  ArbitraryTypedObject,
-  browserParse,
-  nodeParse,
-  PortableTextSpan,
-  transformToPortableText,
-  traversePortableText,
-} from "../../../src";
+import { ArbitraryTypedObject, nodesToPortableText, PortableTextSpan, traversePortableText } from "../../../src";
+import { browserParse } from "../../../src/parser/browser";
+import { nodeParse } from "../../../src/parser/node";
 import { toManagementApiFormat } from "../../../src/utils/resolution/mapi";
 
 jest.mock("short-unique-id", () => {
@@ -27,8 +22,8 @@ describe("portabletext to MAPI resolver", () => {
     const nodeTree = nodeParse(richTextContent);
 
     // Convert the tree to Portable Text
-    const nodePortableText = transformToPortableText(nodeTree);
-    const browserPortableText = transformToPortableText(browserTree);
+    const nodePortableText = nodesToPortableText(nodeTree);
+    const browserPortableText = nodesToPortableText(browserTree);
 
     // Convert Portable Text to MAPI format
     const nodeManagementApiFormat = toManagementApiFormat(nodePortableText);
@@ -36,16 +31,16 @@ describe("portabletext to MAPI resolver", () => {
 
     // Parse the MAPI format back into a tree and convert it to Portable Text
     const secondParseTree = nodeParse(nodeManagementApiFormat);
-    const secondParsePortableText = transformToPortableText(secondParseTree);
+    const secondParsePortableText = nodesToPortableText(secondParseTree);
 
     // Compare the MAPI formats to ensure consistency across platforms
     expect(nodeManagementApiFormat).toEqual(browserManagementApiFormat);
 
     // Compare the original Portable Text to the re-parsed Portable Text after MAPI conversion
     expect(
-      secondParsePortableText.map((p) => traversePortableText(p, sortMarks)),
+      traversePortableText(secondParsePortableText, sortMarks),
     ).toStrictEqual(
-      nodePortableText.map((p) => traversePortableText(p, sortMarks)),
+      traversePortableText(nodePortableText, sortMarks),
     );
   };
 
@@ -97,12 +92,56 @@ describe("portabletext to MAPI resolver", () => {
     const richTextContent =
       `<p><strong>strong text </strong><a href="https://example.com"><strong>example strong link text</strong>not strong link text</a></p>`;
     const tree = nodeParse(richTextContent);
-    const portableText = transformToPortableText(tree);
+    const portableText = nodesToPortableText(tree);
     const mapiFormat = toManagementApiFormat(portableText);
 
     const secondParseTree = nodeParse(mapiFormat);
-    const secondParsePortableText = transformToPortableText(secondParseTree);
+    const secondParsePortableText = nodesToPortableText(secondParseTree);
     const secondParseMapiFormat = toManagementApiFormat(secondParsePortableText);
+
+    expect(portableText).toMatchInlineSnapshot(`
+[
+  {
+    "_key": "guid",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "strong",
+        ],
+        "text": "strong text ",
+      },
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "strong",
+          "guid",
+        ],
+        "text": "example strong link text",
+      },
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "guid",
+        ],
+        "text": "not strong link text",
+      },
+    ],
+    "markDefs": [
+      {
+        "_key": "guid",
+        "_type": "link",
+        "href": "https://example.com",
+      },
+    ],
+    "style": "normal",
+  },
+]
+`);
 
     expect(mapiFormat).toMatchInlineSnapshot(
       `"<p><strong>strong text <a href="https://example.com">example strong link text</a></strong><a href="https://example.com">not strong link text</a></p>"`,
@@ -112,6 +151,6 @@ describe("portabletext to MAPI resolver", () => {
     expect(portableText).not.toEqual(secondParsePortableText);
 
     // duplicate markdefinition
-    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]);
+    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]); // TODO: fix types
   });
 });

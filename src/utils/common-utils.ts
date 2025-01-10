@@ -1,11 +1,17 @@
 import {
+  BlockElement,
+  blockElements,
   DomHtmlNode,
   DomNode,
   DomTextNode,
   FigureElementAttributes,
   ImgElementAttributes,
   ItemLinkElementAttributes,
+  MarkElement,
+  markElements,
   ObjectElementAttributes,
+  ValidElement,
+  validElements,
 } from "../index.js";
 
 export const isOrderedListBlock = (node: DomHtmlNode): boolean => node.tagName === "ol";
@@ -20,6 +26,19 @@ export const isExternalLink = (node: DomHtmlNode): boolean => isAnchor(node) && 
 
 export const isAnchor = (node: DomHtmlNode): boolean => node.tagName === "a";
 
+export const isTableCell = (node: DomHtmlNode): boolean => isElement(node) && node.tagName === "td";
+
+export const isLineBreak = (node: DomHtmlNode): boolean => isElement(node) && node.tagName === "br";
+
+export const isBlockElement = (node: DomHtmlNode): boolean =>
+  isElement(node) && blockElements.includes(node.tagName as BlockElement);
+
+export const isValidElement = (node: DomHtmlNode): boolean =>
+  isElement(node) && validElements.includes(node.tagName as ValidElement);
+
+export const isMarkElement = (node: DomHtmlNode): boolean =>
+  isElement(node) && markElements.includes(node.tagName as MarkElement);
+
 /**
  * Returns `true` for text nodes and type guards the node as `DomTextNode`.
  */
@@ -33,7 +52,7 @@ export const isElement = (node: DomNode): node is DomHtmlNode => node.type === "
 /**
  * Returns `true` if the node is a linked item node (`<object></object>`) and narrows type guard.
  */
-export const isLinkedItem = (node: DomNode): node is DomHtmlNode<ObjectElementAttributes> =>
+export const isLinkedItemOrComponent = (node: DomNode): node is DomHtmlNode<ObjectElementAttributes> =>
   isElement(node)
   && node.tagName === "object"
   && node.attributes["type"] === "application/kenticocloud";
@@ -60,17 +79,6 @@ export const isNestedImg = (node?: DomNode): node is DomHtmlNode<ImgElementAttri
   && isElement(node)
   && node.tagName === "img"
   && node.attributes["data-asset-id"] !== undefined;
-
-/**
- * Recursively counts the number of text nodes and line breaks within a given DOM node and all of its descendants.
- *
- * @param node - Node to start counting from
- * @returns The total number of text nodes found within the provided node and its children
- */
-export const countChildTextNodesAndLineBreaks = (node: DomNode): number =>
-  node.type === "text" || node.tagName === "br"
-    ? 1
-    : node.children.reduce((count, child) => count + countChildTextNodesAndLineBreaks(child), 0);
 
 export const throwError = (msg: string) => {
   throw new Error(msg);

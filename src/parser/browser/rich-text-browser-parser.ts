@@ -6,15 +6,15 @@ import {
   isTextNode,
   throwError,
 } from "../../utils/index.js";
-import { DomNode, ParseResult } from "../parser-models.js";
+import { DomNode } from "../parser-models.js";
 
-export const parse = (input: string): ParseResult => {
+export const parse = (input: string): DomNode[] => {
   const parser = new DOMParser();
   const sanitizedInput = input.replaceAll(getAllNewLineAndWhiteSpace, "");
   const document = parser.parseFromString(sanitizedInput, "text/html");
 
   return isRootNode(document) && document.body.firstChild
-    ? { children: Array.from(document.body.children).flatMap(parseInternal) }
+    ? Array.from(document.body.children).flatMap(parseInternal)
     : throwError("Cannot parse a node that is not a root node");
 };
 

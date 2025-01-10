@@ -1,11 +1,6 @@
-import {
-  browserParse,
-  nodeParse,
-  PortableTextItem,
-  PortableTextObject,
-  transformToPortableText,
-  traversePortableText,
-} from "../../../src";
+import { nodesToPortableText, PortableTextItem, traversePortableText } from "../../../src";
+import { browserParse } from "../../../src/parser/browser";
+import { nodeParse } from "../../../src/parser/node";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -19,14 +14,14 @@ describe("Portable Text Transformer", () => {
   const transformInput = (
     input: string,
   ): {
-    nodeResult: PortableTextObject[];
-    browserResult: PortableTextObject[];
+    nodeResult: PortableTextItem[];
+    browserResult: PortableTextItem[];
   } => {
     const browserTree = browserParse(input);
     const nodeTree = nodeParse(input);
     return {
-      nodeResult: transformToPortableText(nodeTree),
-      browserResult: transformToPortableText(browserTree),
+      nodeResult: nodesToPortableText(nodeTree),
+      browserResult: nodesToPortableText(browserTree),
     };
   };
 
@@ -256,7 +251,7 @@ describe("Portable Text Transformer", () => {
     (parse) => {
       const input = "<p>text in a paragraph</p><div>text in a div, which doesnt exist in kontent RTE</div>";
       const tree = parse(input);
-      expect(() => transformToPortableText(tree)).toThrow();
+      expect(() => nodesToPortableText(tree)).toThrow();
     },
   );
 
@@ -305,8 +300,8 @@ describe("Portable Text Transformer", () => {
     const input =
       `<object type="application/kenticocloud" data-type="item" data-rel="link" data-codename="test_item"></object>`;
 
-    const processBlock = (block: PortableTextObject) => {
-      if (block._type === "component") {
+    const processBlock = (block: PortableTextItem) => {
+      if (block._type === "componentOrItem") {
         return {
           ...block,
           additionalData: "data",
@@ -315,7 +310,7 @@ describe("Portable Text Transformer", () => {
     };
 
     const { nodeResult } = transformInput(input);
-    const modifiedResult = nodeResult.map((block) => traversePortableText(block, processBlock));
+    const modifiedResult = traversePortableText(nodeResult, processBlock);
 
     expect(modifiedResult).toMatchSnapshot();
     expect(modifiedResult).toMatchObject(nodeResult);
@@ -334,7 +329,7 @@ describe("Portable Text Transformer", () => {
     };
 
     const { nodeResult } = transformInput(input);
-    const transformedResult = nodeResult.map((block) => traversePortableText(block, processBlock));
+    const transformedResult = traversePortableText(nodeResult, processBlock);
 
     expect(transformedResult).toMatchSnapshot();
     expect(transformedResult).toMatchObject(nodeResult);
@@ -373,6 +368,12 @@ describe("Portable Text Transformer", () => {
   it("with multiple links in a paragraph, doesn't extend linkmark beyond the first", () => {
     transformAndCompare(
       `<p>Text <a href="https://example.com">inner text 1</a> text between <a href="https://example.org">inner text 2</a>.</p>`,
+    );
+  });
+
+  it("transforms table cell with text and image", () => {
+    transformAndCompare(
+      "<table><tbody><tr><td><figure data-asset-id=\"521428d2-87fd-4d72-8cff-e4d090a5d109\" data-image-id=\"521428d2-87fd-4d72-8cff-e4d090a5d109\"><img src=\"https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/fd9202fe-84f9-43ee-b990-152269df9d75/Screenshot%202022-06-01%20134556.jpg\" data-asset-id=\"521428d2-87fd-4d72-8cff-e4d090a5d109\" data-image-id=\"521428d2-87fd-4d72-8cff-e4d090a5d109\" alt=\"\"></figure>\n<p>c</p></td></tr></tbody></table>",
     );
   });
 });

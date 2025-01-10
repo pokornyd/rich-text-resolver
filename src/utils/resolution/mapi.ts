@@ -6,10 +6,10 @@ import {
 } from "@portabletext/to-html";
 
 import {
-  PortableTextComponent,
+  PortableTextComponentOrItem,
   PortableTextExternalLink,
   PortableTextImage,
-  PortableTextInternalLink,
+  PortableTextItemLink,
   PortableTextMark,
   PortableTextObject,
   PortableTextTable,
@@ -19,7 +19,7 @@ import { resolveTable } from "./html.js";
 
 const toManagementApiImage = (image: PortableTextImage) => createFigureTag(image.asset._ref);
 
-const toManagementApiRichTextItem = (richTextItem: PortableTextComponent) =>
+const toManagementApiRichTextItem = (richTextItem: PortableTextComponentOrItem) =>
   `<object type="application/kenticocloud" data-type="${richTextItem.dataType}" data-id="${richTextItem.component._ref}"></object>`;
 
 const toManagementApiTable = (table: PortableTextTable) =>
@@ -30,7 +30,7 @@ const toManagementApiExternalLink = (children: string, link?: PortableTextExtern
     ? `<a ${createExternalLinkAttributes(link)}>${children}</a>`
     : throwError("Mark definition for external link not found.");
 
-const toManagementApiInternalLink = (children: string, link?: PortableTextInternalLink) =>
+const toManagementApiItemLink = (children: string, link?: PortableTextItemLink) =>
   link
     ? `<a data-item-id="${link.reference._ref}">${children}</a>`
     : throwError("Mark definition for item link not found.");
@@ -49,13 +49,13 @@ const portableTextComponents: PortableTextOptions = {
   components: {
     types: {
       image: ({ value }: PortableTextTypeComponentOptions<PortableTextImage>) => toManagementApiImage(value),
-      component: ({ value }: PortableTextTypeComponentOptions<PortableTextComponent>) =>
+      component: ({ value }: PortableTextTypeComponentOptions<PortableTextComponentOrItem>) =>
         toManagementApiRichTextItem(value),
       table: ({ value }: PortableTextTypeComponentOptions<PortableTextTable>) => toManagementApiTable(value),
     },
     marks: {
-      internalLink: ({ children, value }: PortableTextMarkComponentOptions<PortableTextInternalLink>) =>
-        toManagementApiInternalLink(children, value),
+      contentItemLink: ({ children, value }: PortableTextMarkComponentOptions<PortableTextItemLink>) =>
+        toManagementApiItemLink(children, value),
       link: ({ children, value }: PortableTextMarkComponentOptions<PortableTextExternalLink>) =>
         toManagementApiExternalLink(children, value),
       sub: ({ children }: PortableTextMarkComponentOptions<PortableTextMark>) => `<sub>${children}</sub>`,

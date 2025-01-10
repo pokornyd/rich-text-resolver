@@ -1,7 +1,7 @@
-import { PortableTextComponent, PortableTextImage, PortableTextInternalLink, PortableTextTable } from "../src/index.js"
+import { PortableTextComponentOrItem, PortableTextImage, PortableTextItemLink, PortableTextTable } from "../src/index.js"
   
-  const portableTextComponent: PortableTextComponent = {
-    _type: "component",
+  const portableTextComponent: PortableTextComponentOrItem = {
+    _type: "componentOrItem",
     _key: "guid",
     component: {
       _ref: "linkedItemOrComponentCodename",
@@ -21,8 +21,8 @@ import { PortableTextComponent, PortableTextImage, PortableTextInternalLink, Por
     }
   };
   
-  const portableTextItemLink: PortableTextInternalLink = {
-    _type: "internalLink",
+  const portableTextItemLink: PortableTextItemLink = {
+    _type: "contentItemLink",
     _key: "guid",
     reference: {
       _ref: "0184a8ac-9781-4292-9e30-1fb56f648a6c",
@@ -33,16 +33,14 @@ import { PortableTextComponent, PortableTextImage, PortableTextInternalLink, Por
   const portableTextTable: PortableTextTable = {
     _type: "table",
     _key: "guid",
-    numColumns: 1,
     rows: [
       {
         _type: "row",
-        _key: "",
+        _key: "guid",
         cells: [
           {
             _type: "cell",
             _key: "guid",
-            childBlocksCount: 1,
             content: [
               {
                 _type: "block",

@@ -51,8 +51,8 @@ exports[`Portable Text Transformer doesn't extend link mark to adjacent spans 1`
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
           "strong",
+          "guid",
         ],
         "text": "today",
       },
@@ -66,7 +66,7 @@ exports[`Portable Text Transformer doesn't extend link mark to adjacent spans 1`
     "markDefs": [
       {
         "_key": "guid",
-        "_type": "internalLink",
+        "_type": "contentItemLink",
         "reference": {
           "_ref": "3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5",
           "_type": "reference",
@@ -82,11 +82,12 @@ exports[`Portable Text Transformer extends component block with additional data 
 [
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "additionalData": "data",
     "component": {
       "_ref": "test_item",
       "_type": "reference",
+      "referenceType": "codename",
     },
     "dataType": "link",
   },
@@ -98,7 +99,6 @@ exports[`Portable Text Transformer extends link nested in a table with additiona
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 1,
     "rows": [
       {
         "_key": "guid",
@@ -107,7 +107,6 @@ exports[`Portable Text Transformer extends link nested in a table with additiona
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -146,7 +145,6 @@ exports[`Portable Text Transformer resolves adjacent styled fonts in table cell 
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 1,
     "rows": [
       {
         "_key": "guid",
@@ -155,7 +153,6 @@ exports[`Portable Text Transformer resolves adjacent styled fonts in table cell 
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -360,10 +357,11 @@ exports[`Portable Text Transformer transforms a linked item and a component from
   },
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "component": {
       "_ref": "n27ec1626_93ac_0129_64e5_1beeda45416c",
       "_type": "reference",
+      "referenceType": "codename",
     },
     "dataType": "component",
   },
@@ -383,10 +381,11 @@ exports[`Portable Text Transformer transforms a linked item and a component from
   },
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "component": {
       "_ref": "commercet",
       "_type": "reference",
+      "referenceType": "codename",
     },
     "dataType": "link",
   },
@@ -411,10 +410,11 @@ exports[`Portable Text Transformer transforms a linked item and a component from
   },
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "component": {
       "_ref": "d6a10cb4-3639-429f-b6b0-b7fea6dec252",
       "_type": "reference",
+      "referenceType": "id",
     },
     "dataType": "component",
   },
@@ -434,10 +434,11 @@ exports[`Portable Text Transformer transforms a linked item and a component from
   },
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "component": {
       "_ref": "99e17fe7-a215-400d-813a-dc3608ee0294",
       "_type": "reference",
+      "referenceType": "id",
     },
     "dataType": "item",
   },
@@ -453,6 +454,7 @@ exports[`Portable Text Transformer transforms asset from MAPI 1`] = `
       "_ref": "62ba1f17-13e9-43c0-9530-6b44e38097fc",
       "_type": "reference",
       "alt": undefined,
+      "referenceType": "id",
       "url": "#",
     },
   },
@@ -464,7 +466,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 1,
     "rows": [
       {
         "_key": "guid",
@@ -473,7 +474,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 2,
             "content": [
               {
                 "_key": "guid",
@@ -516,7 +516,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 3,
     "rows": [
       {
         "_key": "guid",
@@ -525,7 +524,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 2,
             "content": [
               {
                 "_key": "guid",
@@ -560,7 +558,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -583,7 +580,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -601,8 +597,8 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
                     "_key": "guid",
                     "_type": "span",
                     "marks": [
-                      "guid",
                       "strong",
+                      "guid",
                     ],
                     "text": "strong",
                   },
@@ -639,7 +635,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -662,7 +657,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -683,7 +677,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -710,7 +703,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -733,7 +725,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -754,7 +745,6 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -798,8 +788,8 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
           "strong",
+          "guid",
         ],
         "text": "bold",
       },
@@ -841,10 +831,11 @@ exports[`Portable Text Transformer transforms complex rich text into portable te
   },
   {
     "_key": "guid",
-    "_type": "component",
+    "_type": "componentOrItem",
     "component": {
       "_ref": "test_item",
       "_type": "reference",
+      "referenceType": "codename",
     },
     "dataType": "link",
   },
@@ -903,8 +894,8 @@ exports[`Portable Text Transformer transforms external links 1`] = `
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
           "strong",
+          "guid",
         ],
         "text": "GitHub repository.",
       },
@@ -934,6 +925,7 @@ exports[`Portable Text Transformer transforms images 1`] = `
       "_ref": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
       "_type": "reference",
       "alt": "",
+      "referenceType": "id",
       "url": "https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg",
     },
   },
@@ -974,8 +966,8 @@ exports[`Portable Text Transformer transforms item links 1`] = `
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
           "strong",
+          "guid",
         ],
         "text": "link to an item",
       },
@@ -983,7 +975,7 @@ exports[`Portable Text Transformer transforms item links 1`] = `
     "markDefs": [
       {
         "_key": "guid",
-        "_type": "internalLink",
+        "_type": "contentItemLink",
         "reference": {
           "_ref": "23f71096-fa89-4f59-a3f9-970e970944ec",
           "_type": "reference",
@@ -1132,8 +1124,8 @@ exports[`Portable Text Transformer transforms nested styles 1`] = `
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "em",
           "strong",
+          "em",
         ],
         "text": "also italic and this is also ",
       },
@@ -1141,15 +1133,63 @@ exports[`Portable Text Transformer transforms nested styles 1`] = `
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "em",
-          "strong",
           "sup",
+          "strong",
+          "em",
         ],
         "text": "superscript",
       },
     ],
     "markDefs": [],
     "style": "normal",
+  },
+]
+`;
+
+exports[`Portable Text Transformer transforms table cell with text and image 1`] = `
+[
+  {
+    "_key": "guid",
+    "_type": "table",
+    "rows": [
+      {
+        "_key": "guid",
+        "_type": "row",
+        "cells": [
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "image",
+                "asset": {
+                  "_ref": "521428d2-87fd-4d72-8cff-e4d090a5d109",
+                  "_type": "reference",
+                  "alt": "",
+                  "referenceType": "id",
+                  "url": "https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/fd9202fe-84f9-43ee-b990-152269df9d75/Screenshot%202022-06-01%20134556.jpg",
+                },
+              },
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "c",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ]
 `;
@@ -1256,8 +1296,8 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "em",
           "strong",
+          "em",
         ],
         "text": "with itallic",
       },
@@ -1289,8 +1329,8 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "em",
           "strong",
+          "em",
         ],
         "text": "over",
       },
@@ -1344,8 +1384,8 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "strong",
           "sub",
+          "strong",
         ],
         "text": "li",
       },
@@ -1353,10 +1393,10 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
-          "em",
-          "strong",
           "sub",
+          "strong",
+          "em",
+          "guid",
         ],
         "text": "s",
       },
@@ -1364,8 +1404,8 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
         "_key": "guid",
         "_type": "span",
         "marks": [
-          "guid",
           "em",
+          "guid",
         ],
         "text": "t with s",
       },
@@ -1482,6 +1522,7 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
       "_ref": "8c35b61a-8fcb-4089-a576-5a5e7a158bf2",
       "_type": "reference",
       "alt": "",
+      "referenceType": "id",
       "url": "https://example.com/image.png",
     },
   },
@@ -1516,7 +1557,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 3,
     "rows": [
       {
         "_key": "guid",
@@ -1525,7 +1565,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1546,7 +1585,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1581,7 +1619,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1628,7 +1665,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1652,8 +1688,8 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
                     "_key": "guid",
                     "_type": "span",
                     "marks": [
-                      "guid",
                       "em",
+                      "guid",
                     ],
                     "text": "ith lin",
                   },
@@ -1675,7 +1711,7 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
                 "markDefs": [
                   {
                     "_key": "guid",
-                    "_type": "internalLink",
+                    "_type": "contentItemLink",
                     "reference": {
                       "_ref": "6538fde0-e6e5-425c-8642-278e637b2dc1",
                       "_type": "reference",
@@ -1689,7 +1725,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 3,
             "content": [
               {
                 "_key": "guid",
@@ -1720,6 +1755,7 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
                   "_ref": "8c35b61a-8fcb-4089-a576-5a5e7a158bf2",
                   "_type": "reference",
                   "alt": "",
+                  "referenceType": "id",
                   "url": "https://example.com/image.png",
                 },
               },
@@ -1750,7 +1786,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 9,
             "content": [
               {
                 "_key": "guid",
@@ -1906,7 +1941,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1927,7 +1961,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -1948,7 +1981,6 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2021,7 +2053,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 6,
     "rows": [
       {
         "_key": "guid",
@@ -2030,7 +2061,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2051,7 +2081,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2072,7 +2101,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2093,7 +2121,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2114,7 +2141,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2135,139 +2161,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "_key": "guid",
-        "_type": "row",
-        "cells": [
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2294,7 +2187,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2315,7 +2207,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2336,7 +2227,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2357,7 +2247,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2378,7 +2267,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2399,139 +2287,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "_key": "guid",
-        "_type": "row",
-        "cells": [
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
-            "content": [
-              {
-                "_key": "guid",
-                "_type": "block",
-                "children": [
-                  {
-                    "_key": "guid",
-                    "_type": "span",
-                    "marks": [],
-                    "text": "column",
-                  },
-                ],
-                "markDefs": [],
-                "style": "normal",
-              },
-            ],
-          },
-          {
-            "_key": "guid",
-            "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2558,7 +2313,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2579,7 +2333,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2600,7 +2353,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2621,7 +2373,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2642,7 +2393,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2663,7 +2413,258 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "_key": "guid",
+        "_type": "row",
+        "cells": [
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "_key": "guid",
+        "_type": "row",
+        "cells": [
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
+            "content": [
+              {
+                "_key": "guid",
+                "_type": "block",
+                "children": [
+                  {
+                    "_key": "guid",
+                    "_type": "span",
+                    "marks": [],
+                    "text": "column",
+                  },
+                ],
+                "markDefs": [],
+                "style": "normal",
+              },
+            ],
+          },
+          {
+            "_key": "guid",
+            "_type": "cell",
             "content": [
               {
                 "_key": "guid",
@@ -2736,7 +2737,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 3,
     "rows": [
       {
         "_key": "guid",
@@ -2745,7 +2745,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2767,7 +2766,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 2,
             "content": [
               {
                 "_key": "guid",
@@ -2777,8 +2775,8 @@ exports[`Portable Text Transformer transforms tables with input <table>
                     "_key": "guid",
                     "_type": "span",
                     "marks": [
-                      "guid",
                       "strong",
+                      "guid",
                     ],
                     "text": "NanoBlade X",
                   },
@@ -2786,7 +2784,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                 "markDefs": [
                   {
                     "_key": "guid",
-                    "_type": "internalLink",
+                    "_type": "contentItemLink",
                     "reference": {
                       "_ref": "e2d97322-470a-42e7-a31e-40be26c2ef24",
                       "_type": "reference",
@@ -2802,6 +2800,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                   "_ref": "bb79f32d-4fed-4d46-bec3-71b1c285ca30",
                   "_type": "reference",
                   "alt": "",
+                  "referenceType": "id",
                   "url": "https://qa-preview-assets-eu-01.devkontentmasters.com:443/0a12060e-20af-0124-a95d-871d26379561/2af0a87f-d750-4f6c-b6ff-8f895fa7d235/scalpel_blade_12.jpg",
                 },
               },
@@ -2810,7 +2809,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 2,
             "content": [
               {
                 "_key": "guid",
@@ -2820,8 +2818,8 @@ exports[`Portable Text Transformer transforms tables with input <table>
                     "_key": "guid",
                     "_type": "span",
                     "marks": [
-                      "guid",
                       "strong",
+                      "guid",
                     ],
                     "text": "NanoBlade V",
                   },
@@ -2829,7 +2827,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                 "markDefs": [
                   {
                     "_key": "guid",
-                    "_type": "internalLink",
+                    "_type": "contentItemLink",
                     "reference": {
                       "_ref": "abaf708d-5d91-4b50-9905-30f1d0f482f9",
                       "_type": "reference",
@@ -2845,6 +2843,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                   "_ref": "f6827ddf-7b07-49c3-819d-5270f1ac0164",
                   "_type": "reference",
                   "alt": "",
+                  "referenceType": "id",
                   "url": "https://qa-preview-assets-eu-01.devkontentmasters.com:443/0a12060e-20af-0124-a95d-871d26379561/653b1fc7-466a-4d91-945a-964ae4f9570a/scalpel_blade_11.jpg",
                 },
               },
@@ -2859,7 +2858,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2880,7 +2878,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2901,7 +2898,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2928,7 +2924,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2949,7 +2944,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -2985,7 +2979,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3012,7 +3005,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3033,7 +3025,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3062,7 +3053,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3089,7 +3079,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3119,7 +3108,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 4,
             "content": [
               {
                 "_key": "guid",
@@ -3190,7 +3178,6 @@ exports[`Portable Text Transformer transforms tables with input <table>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3241,7 +3228,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 20,
     "rows": [
       {
         "_key": "guid",
@@ -3250,7 +3236,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3272,7 +3257,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3294,7 +3278,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3316,7 +3299,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3338,7 +3320,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3360,7 +3341,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3382,7 +3362,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3404,7 +3383,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3426,7 +3404,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3448,7 +3425,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3470,7 +3446,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3492,7 +3467,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3514,7 +3488,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3536,7 +3509,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3558,7 +3530,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3580,7 +3551,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3602,7 +3572,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3624,7 +3593,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3646,7 +3614,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3668,7 +3635,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3696,7 +3662,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3718,7 +3683,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3740,7 +3704,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3762,7 +3725,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3784,7 +3746,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3806,7 +3767,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3828,7 +3788,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3850,7 +3809,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3872,7 +3830,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3894,7 +3851,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3916,7 +3872,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3938,7 +3893,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3960,7 +3914,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -3982,7 +3935,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4004,7 +3956,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4026,7 +3977,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4048,7 +3998,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4070,7 +4019,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4092,7 +4040,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4114,7 +4061,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4142,7 +4088,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4164,7 +4109,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4186,7 +4130,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4208,7 +4151,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4230,7 +4172,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4252,7 +4193,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4274,7 +4214,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4296,7 +4235,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4318,7 +4256,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4340,7 +4277,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4362,7 +4298,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4384,7 +4319,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4406,7 +4340,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4428,7 +4361,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4450,7 +4382,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4472,7 +4403,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4494,7 +4424,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4516,7 +4445,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4538,7 +4466,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4560,7 +4487,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4588,7 +4514,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4610,7 +4535,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4632,7 +4556,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4654,7 +4577,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4676,7 +4598,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4698,7 +4619,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4720,7 +4640,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4742,7 +4661,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4764,7 +4682,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4786,7 +4703,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4808,7 +4724,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4830,7 +4745,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4852,7 +4766,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4874,7 +4787,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4896,7 +4808,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4918,7 +4829,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4940,7 +4850,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4962,7 +4871,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -4984,7 +4892,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5006,7 +4913,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5034,7 +4940,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5056,7 +4961,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5078,7 +4982,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5100,7 +5003,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5122,7 +5024,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5144,7 +5045,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5166,7 +5066,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5188,7 +5087,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5210,7 +5108,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5232,7 +5129,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5254,7 +5150,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5276,7 +5171,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5298,7 +5192,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5320,7 +5213,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5342,7 +5234,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5364,7 +5255,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5386,7 +5276,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5408,7 +5297,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5430,7 +5318,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5452,7 +5339,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5480,7 +5366,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5502,7 +5387,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5524,7 +5408,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5546,7 +5429,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5568,7 +5450,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5590,7 +5471,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5612,7 +5492,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5634,7 +5513,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5656,7 +5534,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5678,7 +5555,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5700,7 +5576,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5722,7 +5597,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5744,7 +5618,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5766,7 +5639,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5788,7 +5660,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5810,7 +5681,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5832,7 +5702,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5854,7 +5723,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5876,7 +5744,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5898,7 +5765,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5926,7 +5792,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5948,7 +5813,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5970,7 +5834,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -5992,7 +5855,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6014,7 +5876,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6036,7 +5897,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6058,7 +5918,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6080,7 +5939,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6102,7 +5960,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6124,7 +5981,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6146,7 +6002,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6168,7 +6023,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6190,7 +6044,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6212,7 +6065,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6234,7 +6086,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6256,7 +6107,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6278,7 +6128,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6300,7 +6149,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6322,7 +6170,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6344,7 +6191,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6372,7 +6218,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6394,7 +6239,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6416,7 +6260,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6438,7 +6281,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6460,7 +6302,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6482,7 +6323,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6504,7 +6344,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6526,7 +6365,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6548,7 +6386,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6570,7 +6407,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6592,7 +6428,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6614,7 +6449,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6636,7 +6470,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6658,7 +6491,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6680,7 +6512,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6702,7 +6533,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6724,7 +6554,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6746,7 +6575,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6768,7 +6596,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6790,7 +6617,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6818,7 +6644,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6840,7 +6665,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6862,7 +6686,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6884,7 +6707,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6906,7 +6728,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6928,7 +6749,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6950,7 +6770,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6972,7 +6791,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -6994,7 +6812,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7016,7 +6833,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7038,7 +6854,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7060,7 +6875,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7082,7 +6896,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7104,7 +6917,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7126,7 +6938,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7148,7 +6959,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7170,7 +6980,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7192,7 +7001,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7214,7 +7022,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7236,7 +7043,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7264,7 +7070,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7286,7 +7091,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7308,7 +7112,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7330,7 +7133,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7352,7 +7154,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7374,7 +7175,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7396,7 +7196,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7418,7 +7217,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7440,7 +7238,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7462,7 +7259,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7484,7 +7280,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7506,7 +7301,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7528,7 +7322,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7550,7 +7343,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7572,7 +7364,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7594,7 +7385,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7616,7 +7406,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7638,7 +7427,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7660,7 +7448,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7682,7 +7469,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7710,7 +7496,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7732,7 +7517,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7754,7 +7538,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7776,7 +7559,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7798,7 +7580,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7820,7 +7601,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7842,7 +7622,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7864,7 +7643,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7886,7 +7664,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7908,7 +7685,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7930,7 +7706,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7952,7 +7727,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7974,7 +7748,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -7996,7 +7769,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8018,7 +7790,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8040,7 +7811,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8062,7 +7832,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8084,7 +7853,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8106,7 +7874,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8128,7 +7895,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8156,7 +7922,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8178,7 +7943,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8200,7 +7964,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8222,7 +7985,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8244,7 +8006,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8266,7 +8027,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8288,7 +8048,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8310,7 +8069,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8332,7 +8090,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8354,7 +8111,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8376,7 +8132,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8398,7 +8153,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8420,7 +8174,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8442,7 +8195,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8464,7 +8216,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8486,7 +8237,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8508,7 +8258,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8530,7 +8279,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8552,7 +8300,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8574,7 +8321,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8602,7 +8348,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8624,7 +8369,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8646,7 +8390,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8668,7 +8411,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8690,7 +8432,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8712,7 +8453,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8734,7 +8474,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8756,7 +8495,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8778,7 +8516,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8800,7 +8537,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8822,7 +8558,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8844,7 +8579,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8866,7 +8600,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8888,7 +8621,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8910,7 +8642,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8932,7 +8663,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8954,7 +8684,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8976,7 +8705,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -8998,7 +8726,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9020,7 +8747,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9048,7 +8774,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9070,7 +8795,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9092,7 +8816,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9114,7 +8837,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9136,7 +8858,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9158,7 +8879,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9180,7 +8900,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9202,7 +8921,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9224,7 +8942,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9246,7 +8963,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9268,7 +8984,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9290,7 +9005,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9312,7 +9026,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9334,7 +9047,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9356,7 +9068,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9378,7 +9089,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9400,7 +9110,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9422,7 +9131,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9444,7 +9152,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9466,7 +9173,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9494,7 +9200,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9516,7 +9221,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9538,7 +9242,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9560,7 +9263,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9582,7 +9284,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9604,7 +9305,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9626,7 +9326,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9648,7 +9347,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9670,7 +9368,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9692,7 +9389,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9714,7 +9410,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9736,7 +9431,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9758,7 +9452,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9780,7 +9473,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9802,7 +9494,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9824,7 +9515,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9846,7 +9536,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9868,7 +9557,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9890,7 +9578,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9912,7 +9599,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9940,7 +9626,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9962,7 +9647,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -9984,7 +9668,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10006,7 +9689,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10028,7 +9710,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10050,7 +9731,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10072,7 +9752,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10094,7 +9773,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10116,7 +9794,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10138,7 +9815,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10160,7 +9836,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10182,7 +9857,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10204,7 +9878,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10226,7 +9899,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10248,7 +9920,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10270,7 +9941,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10292,7 +9962,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10314,7 +9983,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10336,7 +10004,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10358,7 +10025,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10386,7 +10052,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10408,7 +10073,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10430,7 +10094,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10452,7 +10115,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10474,7 +10136,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10496,7 +10157,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10518,7 +10178,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10540,7 +10199,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10562,7 +10220,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10584,7 +10241,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10606,7 +10262,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10628,7 +10283,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10650,7 +10304,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10672,7 +10325,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10694,7 +10346,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10716,7 +10367,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10738,7 +10388,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10760,7 +10409,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10782,7 +10430,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10804,7 +10451,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10832,7 +10478,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10854,7 +10499,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10876,7 +10520,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10898,7 +10541,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10920,7 +10562,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10942,7 +10583,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10964,7 +10604,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -10986,7 +10625,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11008,7 +10646,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11030,7 +10667,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11052,7 +10688,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11074,7 +10709,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11096,7 +10730,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11118,7 +10751,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11140,7 +10772,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11162,7 +10793,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11184,7 +10814,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11206,7 +10835,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11228,7 +10856,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11250,7 +10877,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11278,7 +10904,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11300,7 +10925,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11322,7 +10946,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11344,7 +10967,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11366,7 +10988,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11388,7 +11009,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11410,7 +11030,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11432,7 +11051,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11454,7 +11072,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11476,7 +11093,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11498,7 +11114,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11520,7 +11135,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11542,7 +11156,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11564,7 +11177,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11586,7 +11198,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11608,7 +11219,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11630,7 +11240,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11652,7 +11261,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11674,7 +11282,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11696,7 +11303,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11724,7 +11330,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11746,7 +11351,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11768,7 +11372,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11790,7 +11393,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11812,7 +11414,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11834,7 +11435,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11856,7 +11456,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11878,7 +11477,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11900,7 +11498,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11922,7 +11519,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11944,7 +11540,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11966,7 +11561,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -11988,7 +11582,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12010,7 +11603,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12032,7 +11624,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12054,7 +11645,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12076,7 +11666,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12098,7 +11687,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12120,7 +11708,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12142,7 +11729,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody>
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12173,7 +11759,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody><t
   {
     "_key": "guid",
     "_type": "table",
-    "numColumns": 2,
     "rows": [
       {
         "_key": "guid",
@@ -12182,7 +11767,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody><t
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",
@@ -12203,7 +11787,6 @@ exports[`Portable Text Transformer transforms tables with input <table><tbody><t
           {
             "_key": "guid",
             "_type": "cell",
-            "childBlocksCount": 1,
             "content": [
               {
                 "_key": "guid",

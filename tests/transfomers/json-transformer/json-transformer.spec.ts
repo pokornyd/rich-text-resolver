@@ -1,393 +1,258 @@
-import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
+import {
+  AsyncNodeToStringMap,
+  AsyncNodeTransformers,
+  DomNode,
+  nodesToHtml,
+  nodesToHtmlAsync,
+  NodeToStringMap,
+  NodeTransformers,
+  parseHtml,
+  transformNodes,
+  transformNodesAsync,
+} from "../../../src";
 
-import { ResolveDomHtmlNodeType, ResolveDomTextNodeType, transformToJson } from "../../../src";
-import { browserParse, ParseResult } from "../../../src/parser";
+describe("transformNodes and transformNodesAsync", () => {
+  const input = "<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>";
+  const nodes = parseHtml(input);
 
-const dummy: Elements.RichTextElement = {
-  images: [
-    {
-      description: null,
-      imageId: "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-      url:
-        "https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg",
-      height: 5812,
-      width: 3875,
-    },
-  ],
-  linkedItemCodenames: [
-    "e53bff4f_0f6e_0168_a2fe_5ec0eaa032de",
-  ],
-  linkedItems: [
-    {
-      elements: {
-        text_test: {
-          name: "Text Test",
-          type: ElementType.Text,
-          value: "JUST DO IT",
-        },
-      },
-      system: {
-        codename: "e53bff4f_0f6e_0168_a2fe_5ec0eaa032de",
-        collection: "default",
-        id: "e53bff4f-0f6e-0168-a2fe-5ec0eaa032de",
-        language: "default",
-        lastModified: "2023-03-20T09:52:14.8675247Z",
-        name: "e53bff4f-0f6e-0168-a2fe-5ec0eaa032de",
-        sitemapLocations: [],
-        type: "contenttype_with_simple_text",
-        workflowStep: null,
-        workflow: "default",
-      },
-    },
-  ],
-  links: [],
-  name: "RichText",
-  type: ElementType.RichText,
-  value:
-    "<p>Test from rich text</p>\n<figure data-asset-id=\"7d866175-d3db-4a02-b0eb-891fb06b6ab0\" data-image-id=\"7d866175-d3db-4a02-b0eb-891fb06b6ab0\"><img src=\"https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg\" data-asset-id=\"7d866175-d3db-4a02-b0eb-891fb06b6ab0\" data-image-id=\"7d866175-d3db-4a02-b0eb-891fb06b6ab0\" alt=\"\"></figure>\n<object type=\"application/kenticocloud\" data-type=\"item\" data-rel=\"component\" data-codename=\"e53bff4f_0f6e_0168_a2fe_5ec0eaa032de\"></object>",
-};
+  test("should throw if no tag transformer is specified", () => {
+    const transformers: NodeTransformers<string> = {
+      text: (node) => [`[TEXT:${node.content}]`],
+      tag: {},
+    };
 
-const transformJsonWithCustomResolvers = (result: ParseResult) =>
-  transformToJson(result, {
-    resolveDomTextNode: customResolveDomTextNode,
-    resolveDomHtmlNode: customResolveDomHtmlNode,
+    expect(() => transformNodes(nodes, transformers)).toThrow();
   });
 
-const customResolveDomTextNode: ResolveDomTextNodeType = node => {
-  return {
-    text: node.content,
-  };
-};
-
-const customResolveDomHtmlNode: ResolveDomHtmlNodeType = (node, traverse) => {
-  let result = {
-    tag: node.tagName,
-  };
-
-  switch (node.tagName) {
-    case "figure": {
-      const figureObject = {
-        imageId: node.attributes["data-image-id"],
-      };
-      result = { ...result, ...figureObject };
-      break;
-    }
-    case "img": {
-      const imgObject = {
-        src: node.attributes["src"],
-        alt: node.attributes["alt"],
-      };
-      result = { ...result, ...imgObject };
-      break;
-    }
-    case "table": {
-      const tableObject = {
-        tag: "tableName",
-      };
-      result = { ...result, ...tableObject };
-      break;
-    }
-    case "tbody": {
-      const tbodyObject = {
-        tag: "tbody",
-      };
-      result = { ...result, ...tbodyObject };
-      break;
-    }
-    case "tr": {
-      const trObject = {
-        tag: "tr",
-      };
-      result = { ...result, ...trObject };
-      break;
-    }
-    case "ol": {
-      const tdObject = {
-        tag: "ol",
-      };
-      result = { ...result, ...tdObject };
-      break;
-    }
-    case "ul": {
-      const tdObject = {
-        tag: "ul",
-      };
-      result = { ...result, ...tdObject };
-      break;
-    }
-    case "li": {
-      let tdObject = {
-        tag: "li",
-        text: node.children[0].type === "text" ? node.children[0].content : "",
-      };
-      if (node.children.length > 1) {
-        tdObject = { ...tdObject, ...{ children: node.children.slice(1).map(node => traverse(node)) } };
-      }
-      return { ...result, ...tdObject };
-    }
-    case "td": {
-      const tdObject = {
-        tag: "td",
-        content: node.children.map(node => traverse(node)),
-      };
-      result = { ...result, ...tdObject };
-      break;
-    }
-    case "object": {
-      if (node.attributes["type"] === "application/kenticocloud") {
-        const linkedItemObject = {
-          codeName: node.attributes["data-codename"],
-        };
-        result = { ...result, ...linkedItemObject };
-      }
-      break;
-    }
-    default: {
-      break;
-    }
-  }
-  if (node.tagName != "td") {
-    result = {
-      ...result,
-      ...{
-        children: node.children.map(node => traverse(node)),
+  test("should transform text and tag nodes with default/wildcard transformer (sync)", () => {
+    const transformers: NodeTransformers<string> = {
+      text: (node) => [`[TEXT:${node.content}]`],
+      tag: {
+        span: (
+          node,
+          children,
+        ) => [`[SPAN_OPEN style=${node.attributes?.style}]`, ...children, "[SPAN_CLOSE]"],
+        "*": (
+          node,
+          children,
+        ) => [`[TAG:${node.tagName} OPEN]`, ...children, `[TAG:${node.tagName} CLOSE]`],
       },
     };
-  }
 
-  return result;
-};
+    const result = transformNodes(nodes, transformers);
 
-describe("Json Transfomer Tests", () => {
-  it("No custom resolvers provided", () => {
-    const parsed = browserParse(dummy.value);
-    const result = transformToJson(parsed);
-
-    expect(result).toEqual(parsed.children);
-  });
-
-  it("Test empty", () => {
-    const testValue: ParseResult = {
-      children: [],
-    };
-
-    const output = transformJsonWithCustomResolvers(testValue);
-
-    expect(output).toEqual([]);
-  });
-
-  it("Test only DomTextNode", () => {
-    const testValue: ParseResult = {
-      children: [
-        {
-          type: "text",
-          content: "test value",
-        },
+    expect(result).toEqual(
+      [
+        "[TAG:p OPEN]",
+        "[TEXT:Hello ]",
+        "[TAG:b OPEN]",
+        "[TEXT:World]",
+        "[TAG:b CLOSE]",
+        "[TEXT:!]",
+        "[TAG:p CLOSE]",
+        "[TAG:p OPEN]",
+        "[TEXT:Another ]",
+        "[TAG:i OPEN]",
+        "[TEXT:paragraph]",
+        "[TAG:i CLOSE]",
+        "[TEXT: with a nested ]",
+        "[SPAN_OPEN style=undefined]",
+        "[TEXT:span]",
+        "[SPAN_CLOSE]",
+        "[TAG:p CLOSE]",
       ],
-    };
-
-    const output = transformJsonWithCustomResolvers(testValue)[0];
-
-    const expectedOutput = {
-      text: "test value",
-    };
-
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("Test only DomHtmlNode", () => {
-    const testValue: ParseResult = {
-      children: [
-        {
-          type: "tag",
-          tagName: "p",
-          attributes: {},
-          children: [],
-        },
-      ],
-    };
-
-    const output = transformJsonWithCustomResolvers(testValue)[0];
-
-    const expectedOutput = {
-      tag: "p",
-      children: [],
-    };
-
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("Test text transformer returning null", () => {
-    const testValue: ParseResult = {
-      children: [
-        {
-          type: "text",
-          content: "test value",
-        },
-      ],
-    };
-
-    const result = transformToJson(testValue, {
-      resolveDomTextNode: () => null,
-      resolveDomHtmlNode: null,
-    });
-
-    const expected = [null];
-
-    expect(result).toEqual(expected);
-  });
-
-  it("Test RichText", () => {
-    const parsed = browserParse(dummy.value);
-    const transformed = transformJsonWithCustomResolvers(parsed);
-
-    const expectedOutput = JSON.parse(`
-        [
-            {
-               "tag":"p",
-               "children":[
-                  {
-                     "text":"Test from rich text"
-                  }
-               ]
-            },
-            {
-               "tag":"figure",
-               "imageId":"7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-               "children":[
-                  {
-                     "tag":"img",
-                     "src":"https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg",
-                     "alt":"",
-                     "children":[
-                        
-                     ]
-                  }
-               ]
-            },
-            {
-               "tag":"object",
-               "codeName":"e53bff4f_0f6e_0168_a2fe_5ec0eaa032de",
-               "children":[]
-            }
-         ]`);
-
-    expect(transformed).toEqual(expectedOutput);
-  });
-
-  it("test resolving table", () => {
-    const inputValue =
-      "<table><tbody>\n  <tr><td>Ivan</td><td>Jiri</td></tr>\n  <tr><td>Ondra</td><td>Dan</td></tr>\n</tbody></table>";
-    const parsed = browserParse(inputValue);
-
-    const result = transformJsonWithCustomResolvers(parsed);
-    const expectedOutput = JSON.parse(`[
-      {
-         "tag":"tableName",
-         "children":[
-            {
-               "tag":"tbody",
-               "children":[
-                  {
-                     "tag":"tr",
-                     "children":[
-                        {
-                           "tag":"td",
-                           "content":[
-                              {
-                                 "text":"Ivan"
-                              }
-                           ]
-                        },
-                        {
-                           "tag":"td",
-                           "content":[
-                              {
-                                 "text":"Jiri"
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {
-                     "tag":"tr",
-                     "children":[
-                        {
-                           "tag":"td",
-                           "content":[
-                              {
-                                 "text":"Ondra"
-                              }
-                           ]
-                        },
-                        {
-                           "tag":"td",
-                           "content":[
-                              {
-                                 "text":"Dan"
-                              }
-                           ]
-                        }
-                     ]
-                  }
-               ]
-            }
-         ]
-      }
-   ]`);
-
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("test transofrming list", () => {
-    const parsed = browserParse(
-      "<ul>\n  <li>Ivan</li>\n  <li>Jiri</li>\n  <li>Dan</li>\n  <li>Ondra\n    <ul>\n      <ul>\n        <li>Rosta</li>\n      </ul>\n      <li>Ondra</li>\n    </ul>\n  </li>\n</ul>",
     );
+  });
 
-    const result = transformJsonWithCustomResolvers(parsed);
-    const expectedOutput = JSON.parse(`[
-      {
-         "tag":"ul",
-         "children":[
-            {
-               "tag":"li",
-               "text":"Ivan"
-            },
-            {
-               "tag":"li",
-               "text":"Jiri"
-            },
-            {
-               "tag":"li",
-               "text":"Dan"
-            },
-            {
-               "tag":"li",
-               "text":"Ondra",
-               "children":[
-                  {
-                     "tag":"ul",
-                     "children":[
-                        {
-                           "tag":"ul",
-                           "children":[
-                              {
-                                 "tag":"li",
-                                 "text":"Rosta"
-                              }
-                           ]
-                        },
-                        {
-                           "tag":"li",
-                           "text":"Ondra"
-                        }
-                     ]
-                  }
-               ]
-            }
-         ]
-      }
-   ]`);
-    expect(result).toEqual(expectedOutput);
+  test("should transform text and tag nodes with default/wildcard transformer (async)", async () => {
+    const transformers: AsyncNodeTransformers<string> = {
+      text: async (node) => {
+        return Promise.resolve([`[ASYNC_TEXT:${node.content}]`]);
+      },
+      tag: {
+        i: async (_, children) => {
+          const prefix = "[ASYNC_I_OPEN]";
+          const suffix = "[ASYNC_I_CLOSE]";
+          // imitate some async operation
+          await new Promise(resolve => setTimeout(resolve, 10));
+          return [prefix, ...children, suffix];
+        },
+        "*": async (node, children) => {
+          return Promise.resolve([
+            `[ASYNC_TAG:${node.tagName} OPEN]`,
+            ...children,
+            `[ASYNC_TAG:${node.tagName} CLOSE]`,
+          ]);
+        },
+      },
+    };
+
+    const result = await transformNodesAsync(nodes, transformers);
+
+    expect(result).toEqual(
+      [
+        "[ASYNC_TAG:p OPEN]",
+        "[ASYNC_TEXT:Hello ]",
+        "[ASYNC_TAG:b OPEN]",
+        "[ASYNC_TEXT:World]",
+        "[ASYNC_TAG:b CLOSE]",
+        "[ASYNC_TEXT:!]",
+        "[ASYNC_TAG:p CLOSE]",
+        "[ASYNC_TAG:p OPEN]",
+        "[ASYNC_TEXT:Another ]",
+        "[ASYNC_I_OPEN]",
+        "[ASYNC_TEXT:paragraph]",
+        "[ASYNC_I_CLOSE]",
+        "[ASYNC_TEXT: with a nested ]",
+        "[ASYNC_TAG:span OPEN]",
+        "[ASYNC_TEXT:span]",
+        "[ASYNC_TAG:span CLOSE]",
+        "[ASYNC_TAG:p CLOSE]",
+      ],
+    );
+  });
+
+  test("should handle context updates (sync)", () => {
+    // Transformers that prepend the current "level" from context
+    const transformers: NodeTransformers<string, { level: number }> = {
+      text: (node) => [
+        `[TEXT:${node.content}]`,
+      ],
+      tag: {
+        div: (_, children, ctx) => {
+          return [`[L${ctx?.level ?? 0} DIV_OPEN]`, ...children, "[DIV_CLOSE]"];
+        },
+        "*": (_, children, ctx) => {
+          return [`[L${ctx?.level ?? 0} ANY_OPEN]`, ...children, "[ANY_CLOSE]"];
+        },
+      },
+    };
+
+    const contextHandler = (_: DomNode, context: { level: number }) => {
+      return { level: context.level + 1 };
+    };
+
+    const initialContext = { level: 0 };
+
+    const result = transformNodes(nodes, transformers, initialContext, contextHandler);
+
+    expect(result).toEqual(
+      [
+        "[L1 ANY_OPEN]",
+        "[TEXT:Hello ]",
+        "[L2 ANY_OPEN]",
+        "[TEXT:World]",
+        "[ANY_CLOSE]",
+        "[TEXT:!]",
+        "[ANY_CLOSE]",
+        "[L1 ANY_OPEN]",
+        "[TEXT:Another ]",
+        "[L2 ANY_OPEN]",
+        "[TEXT:paragraph]",
+        "[ANY_CLOSE]",
+        "[TEXT: with a nested ]",
+        "[L2 ANY_OPEN]",
+        "[TEXT:span]",
+        "[ANY_CLOSE]",
+        "[ANY_CLOSE]",
+      ],
+    );
+  });
+});
+
+describe("nodesToHtml and nodesToHtmlAsync", () => {
+  const input = "<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>";
+  const nodes = parseHtml(input);
+
+  test("should convert nodes to HTML with default resolution (without any transformers, sync)", () => {
+    const transformers: NodeToStringMap = {};
+    const html = nodesToHtml(nodes, transformers);
+
+    expect(html).toEqual(input);
+  });
+
+  test("should convert nodes to HTML with default resolution (without any transformes, async)", async () => {
+    const transformers: AsyncNodeToStringMap = {};
+    const html = await nodesToHtmlAsync(nodes, transformers);
+
+    expect(html).toEqual(input);
+  });
+
+  test("should convert nodes to HTML with custom and wildcard stringifiers (sync)", () => {
+    const transformers: NodeToStringMap = {
+      i: (_, children) => {
+        return `<em data-custom="yes">${children}</em>`;
+      },
+      "*": (node, children) => {
+        const attrs = Object.entries(node.attributes || {})
+          .map(([k, v]) => ` ${k}="${v}"`)
+          .join("");
+        return `<${node.tagName}${attrs}>${children}</${node.tagName}>`;
+      },
+    };
+
+    const html = nodesToHtml(nodes, transformers);
+
+    expect(html).toBe(
+      `<p>Hello <b>World</b>!</p><p>Another <em data-custom="yes">paragraph</em> with a nested <span>span</span></p>`,
+    );
+  });
+
+  test("should remove span tags and keep text content only", () => {
+    const transformers: NodeToStringMap = {
+      span: (_, children) => children,
+    };
+
+    const html = nodesToHtml(nodes, transformers);
+
+    expect(html).toBe("<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested span</p>");
+  });
+
+  test("should convert nodes to HTML with custom transformations in an async manner", async () => {
+    const asyncTransformers: AsyncNodeToStringMap = {
+      b: async (_, children) => {
+        // simulate some async operation
+        await new Promise(resolve => setTimeout(resolve, 10));
+        return `<strong data-async="1">${children}</strong>`;
+      },
+      "*": async (node, children) => {
+        await new Promise(resolve => setTimeout(resolve, 5));
+        return `<${node.tagName}>${children}</${node.tagName}>`;
+      },
+    };
+
+    const resultHtml = await nodesToHtmlAsync(nodes, asyncTransformers);
+
+    expect(resultHtml).toBe(
+      `<p>Hello <strong data-async="1">World</strong>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>`,
+    );
+  });
+
+  test("should handle context updates in nodesToHtml", () => {
+    const transformers: NodeToStringMap<{ color: string }> = {
+      p: (_, children, ctx) => {
+        return `<p style="color:${ctx?.color}">${children}</p>`;
+      },
+      span: (_, children, ctx) => {
+        return `<span style="color:${ctx?.color}">${children}</span>`;
+      },
+      "*": (node, children) => {
+        return `<${node.tagName}>${children}</${node.tagName}>`;
+      },
+    };
+
+    const contextHandler = (node: DomNode, context: { color: string }) => {
+      // Suppose we always update color based on node type
+      return { color: node.type === "tag" && node.tagName === "span" ? "blue" : context.color };
+    };
+
+    const initialContext = { color: "red" };
+
+    const html = nodesToHtml(nodes, transformers, initialContext, contextHandler);
+
+    // when span is encountered, context color is changed to blue
+    expect(html).toBe(
+      `<p style="color:red">Hello <b>World</b>!</p><p style="color:red">Another <i>paragraph</i> with a nested <span style="color:blue">span</span></p>`,
+    );
   });
 });

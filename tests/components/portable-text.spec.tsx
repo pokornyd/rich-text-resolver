@@ -1,24 +1,10 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import {
-  PortableText,
-  PortableTextMarkComponentProps,
-  PortableTextReactComponents,
-  PortableTextTypeComponentProps,
-  toPlainText,
-} from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
+import { render } from "@testing-library/react";
 import React from "react";
-import TestRenderer from "react-test-renderer";
 
-import {
-  nodeParse,
-  PortableTextComponent,
-  PortableTextExternalLink,
-  PortableTextImage,
-  PortableTextInternalLink,
-  PortableTextTable,
-  transformToPortableText,
-} from "../../src";
-import { resolveImage, resolveTable, toHTMLImageDefault } from "../../src/utils/resolution/html";
+import { transformToPortableText } from "../../src";
+import { ImageComponent, PortableTextReactResolvers, TableComponent } from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
   value: "<p>some text in a paragraph</p>",
@@ -52,23 +38,17 @@ const dummyRichText: Elements.RichTextElement = {
   name: "dummy",
 };
 
-const portableTextComponents: Partial<PortableTextReactComponents> = {
+const portableTextComponents: PortableTextReactResolvers = {
   types: {
-    component: ({ value }: PortableTextTypeComponentProps<PortableTextComponent>) => {
+    componentOrItem: ({ value }) => {
       const item = dummyRichText.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    table: ({ value }: PortableTextTypeComponentProps<PortableTextTable>) => {
-      const tableString = resolveTable(value, toPlainText);
-      return <>{tableString}</>;
-    },
-    image: ({ value }: PortableTextTypeComponentProps<PortableTextImage>) => {
-      const imageString = resolveImage(value, toHTMLImageDefault);
-      return <>{imageString}</>;
-    },
+    table: ({ value }) => <TableComponent {...value} />,
+    image: ({ value }) => <ImageComponent {...value} />,
   },
   marks: {
-    link: ({ value, children }: PortableTextMarkComponentProps<PortableTextExternalLink>) => {
+    link: ({ value, children }) => {
       const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
       return (
         <a
@@ -82,7 +62,7 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
         </a>
       );
     },
-    internalLink: ({ value, children }: PortableTextMarkComponentProps<PortableTextInternalLink>) => {
+    contentItemLink: ({ value, children }) => {
       const item = dummyRichText.linkedItems.find(item => item.system.id === value?.reference._ref);
       return (
         <a href={"https://somerandomwebsite.xyz/" + item?.system.codename}>
@@ -96,9 +76,9 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
 describe("portable text React resolver", () => {
   const renderPortableText = (richTextValue: string, components = portableTextComponents) => {
     dummyRichText.value = richTextValue;
-    const jsonTree = nodeParse(dummyRichText.value);
-    const portableText = transformToPortableText(jsonTree);
-    return TestRenderer.create(<PortableText value={portableText} components={components} />).toJSON();
+    const portableText = transformToPortableText(dummyRichText.value);
+
+    return render(<PortableText value={portableText} components={components} />).container.innerHTML;
   };
 
   it("renders simple HTML", () => {

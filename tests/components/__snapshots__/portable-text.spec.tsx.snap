@@ -1,43 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`portable text React resolver renders a resolved linked item 1`] = `
-<div>
-  random text value
-</div>
-`;
+exports[`portable text React resolver renders a resolved linked item 1`] = `"<div>random text value</div>"`;
 
 exports[`portable text React resolver renders a table 1`] = `"<table><tbody><tr><td>Ivan</td><td>Jiri</td></tr><tr><td>Ondra</td><td>Dan</td></tr></tbody></table>"`;
 
-exports[`portable text React resolver renders an image 1`] = `
-[
-  <p>
-    some text before an asset
-  </p>,
-  "<img src="https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg" alt="">",
-]
-`;
+exports[`portable text React resolver renders an image 1`] = `"<p>some text before an asset</p><img alt="" src="https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg">"`;
 
-exports[`portable text React resolver renders internal and external links 1`] = `
-<p>
-  <a
-    href="http://google.com"
-    target="_blank"
-    title="linktitle"
-  >
-    external link
-  </a>
-  <a
-    href="https://somerandomwebsite.xyz/test_item"
-  >
-    <strong>
-      item link
-    </strong>
-  </a>
-</p>
-`;
+exports[`portable text React resolver renders internal and external links 1`] = `"<p><a href="http://google.com" target="_blank" title="linktitle">external link</a><a href="https://somerandomwebsite.xyz/test_item"><strong>item link</strong></a></p>"`;
 
-exports[`portable text React resolver renders simple HTML 1`] = `
-<p>
-  some text in a paragraph
-</p>
-`;
+exports[`portable text React resolver renders simple HTML 1`] = `"<p>some text in a paragraph</p>"`;

@@ -33,18 +33,12 @@ export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
   children: DomNode[];
 }
 
-/**
- * A tree structure representing a result of the `parse` method.
- */
-export interface ParseResult {
-  children: DomNode[];
-}
-
 type DeliverObjectElementAttributes = {
   "data-rel": "component" | "link";
   "data-type": "item";
   "data-codename": string;
   "data-id": never;
+  "data-external-id": never;
 };
 
 type ManagementObjectElementAttributes = {
@@ -52,15 +46,20 @@ type ManagementObjectElementAttributes = {
   "data-type": "item" | "component";
   "data-id": string;
   "data-codename": never;
+  "data-external-id"?: string;
 };
 
 export type AssetLinkElementAttributes = {
   "data-asset-id": string;
+  "data-asset-external-is"?: string;
+  "data-asset-codename"?: string;
   href?: string;
 };
 
 export type ItemLinkElementAttributes = {
   "data-item-id": string;
+  "data-item-external-id"?: string;
+  "data-item-codename"?: string;
   href?: string;
 };
 
@@ -73,6 +72,8 @@ export type ImgElementAttributes = {
   src: string;
   "data-asset-id": string;
   "data-image-id"?: string;
+  "data-asset-codename"?: string;
+  "data-asset-external-id"?: string;
   alt?: string;
 };
 
