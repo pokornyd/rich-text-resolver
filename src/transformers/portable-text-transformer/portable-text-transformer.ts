@@ -206,18 +206,19 @@ const processLinkedItemOrComponent: NodeToPortableText<DomHtmlNode<ObjectElement
     ?? throwError("Error transforming <object> tag: Missing a valid item or component reference.");
   const { reference, refType } = referenceData;
 
+  // data-rel and data-type specify whether an object is a component or linked item in DAPI and MAPI respectively
+  const objectType = node.attributes["data-rel"] ? node.attributes["data-rel"] : node.attributes["data-type"];
   const itemComponentReference: Reference = {
     _type: "reference",
     _ref: reference,
     referenceType: refType,
   };
 
-  // data-rel and data-type specify whether an object is a component or linked item in DAPI and MAPI respectively
   return [
     createComponentOrItemBlock(
       randomUUID(),
       itemComponentReference,
-      node.attributes["data-rel"] ?? node.attributes["data-type"],
+      objectType,
     ),
   ];
 };

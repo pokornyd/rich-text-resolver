@@ -37,16 +37,14 @@ type DeliverObjectElementAttributes = {
   "data-rel": "component" | "link";
   "data-type": "item";
   "data-codename": string;
-  "data-id": never;
-  "data-external-id": never;
 };
 
 type ManagementObjectElementAttributes = {
-  "data-rel": undefined;
   "data-type": "item" | "component";
   "data-id": string;
-  "data-codename": never;
   "data-external-id"?: string;
+  "data-rel": undefined; // TODO: needs to be defined as such, otherwise TS will infer it as string or eslint complains
+  "data-codename"?: string;
 };
 
 export type AssetLinkElementAttributes = {
