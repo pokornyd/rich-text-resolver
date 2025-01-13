@@ -300,14 +300,8 @@ describe("Portable Text Transformer", () => {
     const input =
       `<object type="application/kenticocloud" data-type="item" data-rel="link" data-codename="test_item"></object>`;
 
-    const processBlock = (block: PortableTextItem) => {
-      if (block._type === "componentOrItem") {
-        return {
-          ...block,
-          additionalData: "data",
-        };
-      }
-    };
+    const processBlock = (block: PortableTextItem) =>
+      block._type === "componentOrItem" ? { ...block, additionalData: "data" } : null;
 
     const { nodeResult } = transformInput(input);
     const modifiedResult = traversePortableText(nodeResult, processBlock);
@@ -319,14 +313,8 @@ describe("Portable Text Transformer", () => {
   it("extends link nested in a table with additional data", () => {
     const input = `<table><tbody><tr><td><a href="http://google.com">tablelink</a></td></tr></tbody></table>`;
 
-    const processBlock = (block: PortableTextItem) => {
-      if (block._type === "link") {
-        return {
-          ...block,
-          additionalData: "data",
-        };
-      }
-    };
+    const processBlock = (block: PortableTextItem) =>
+      block._type === "link" ? { ...block, additionalData: "data" } : null;
 
     const { nodeResult } = transformInput(input);
     const transformedResult = traversePortableText(nodeResult, processBlock);

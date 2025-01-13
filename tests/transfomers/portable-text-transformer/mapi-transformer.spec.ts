@@ -151,6 +151,6 @@ describe("portabletext to MAPI resolver", () => {
     expect(portableText).not.toEqual(secondParsePortableText);
 
     // duplicate markdefinition
-    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]); // TODO: fix types
+    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]);
   });
 });

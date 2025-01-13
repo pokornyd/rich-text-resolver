@@ -25,9 +25,7 @@ import {
   TextStyleElement,
 } from "../transformers/index.js";
 
-export type ResolverFunction<T extends ArbitraryTypedObject> = (
-  value: T,
-) => string;
+export type ResolverFunction<T extends ArbitraryTypedObject> = (value: T) => string;
 
 /**
  * Recursively traverses and optionally transforms a Portable Text structure using a provided
@@ -37,20 +35,20 @@ export type ResolverFunction<T extends ArbitraryTypedObject> = (
  * @template T The type of the Portable Text nodes, defaulting to PortableTextObject.
  * @param {T[]} nodes - Array of Portable Text objects.
  *   It can be a default Portable Text object or a custom type that extends from it.
- * @param {(object: T) => ArbitraryTypedObject | undefined} callback - A callback function
+ * @param {(object: T) => ArbitraryTypedObject | null} callback - A callback function
  *   invoked for each node in the Portable Text structure. It can return a modified version
- *   of the node or `undefined` if no modifications are to be made.
+ *   of the node or `null` if no modifications are to be made.
  * @returns {ArbitraryTypedObject} - A modified copy of the original portable text structure.
  */
 export const traversePortableText = <
   T extends ArbitraryTypedObject = PortableTextObject,
 >(
   nodes: T[],
-  callback: (node: T) => ArbitraryTypedObject | undefined,
+  callback: (node: T) => ArbitraryTypedObject | null,
 ): ArbitraryTypedObject[] => {
   return nodes.map((node) => {
-    // Apply the callback to the current node. If it returns undefined, clone the node.
-    const traversedNode = callback(node) ?? { ...node };
+    // Apply the callback to the current node. If it returns null, clone the node.
+    const traversedNode = callback(node) ?? node;
 
     Object.keys(traversedNode).forEach((key) => {
       // marks is an array of strings that shouldn't be modified, therefore omit from traversal
