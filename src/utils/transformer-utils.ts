@@ -111,8 +111,8 @@ export const createImageBlock = (
   guid: ShortGuid,
   reference: string,
   url: string,
+  referenceType: "codename" | "external-id" | "id",
   alt?: string,
-  referenceType?: "codename" | "external-id" | "id",
 ): PortableTextImage => ({
   _type: "image",
   _key: guid,
@@ -137,12 +137,14 @@ export const createExternalLink = (
 export const createItemLink = (
   guid: ShortGuid,
   reference: string,
+  referenceType: "codename" | "external-id" | "id",
 ): PortableTextItemLink => ({
   _key: guid,
   _type: "contentItemLink",
   reference: {
     _type: "reference",
     _ref: reference,
+    referenceType,
   },
 });
 

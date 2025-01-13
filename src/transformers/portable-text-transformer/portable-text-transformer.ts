@@ -42,6 +42,9 @@ import {
   createTable,
   createTableCell,
   createTableRow,
+  getAssetReferenceData,
+  getItemLinkReferenceData,
+  getItemOrComponentReferenceData,
   ignoredElements,
   isElement,
   isExternalLink,
@@ -55,11 +58,6 @@ import {
 type ListContext = {
   depth: number;
   type: "number" | "bullet" | "unknown";
-};
-
-type ReferenceData = {
-  reference: string;
-  refType: "id" | "external-id" | "codename";
 };
 
 type NodeToPortableText<T extends DomNode> = NodeTransformer<T, ListContext, PortableTextItem>;
@@ -163,12 +161,14 @@ const processMark: NodeToPortableText<DomHtmlNode> = (node, children) => {
   const { links, contentItemLinks, spans } = categorizeItems(children);
   const key = randomUUID();
   const mark = match(node)
-    .when(isExternalLink, () => {
+    .when(isExternalLink, () => { // this includes asset, email, phone and regular url links
       links.push(createExternalLink(key, node.attributes));
       return key;
     })
     .when(isItemLink, (itemLinkNode) => {
-      contentItemLinks.push(createItemLink(key, itemLinkNode.attributes["data-item-id"]));
+      const { reference, refType } = getItemLinkReferenceData(itemLinkNode.attributes)
+        ?? throwError("Error transforming item link: Missing a valid item reference.");
+      contentItemLinks.push(createItemLink(key, reference, refType));
       return key;
     })
     .otherwise(() => node.tagName);
@@ -186,7 +186,7 @@ const processImage: NodeToPortableText<DomHtmlNode<ImgElementAttributes>> = (nod
    * although assets in rich text can also be referenced by external-id or codename, only ID is always returned in the response.
    * if a user plans to transform portable text to mapi compatible HTML format, codenames and ext-ids need to be taken into account anyway though.
    */
-  const referenceData = getReferenceData(node.attributes)
+  const referenceData = getAssetReferenceData(node.attributes)
     ?? throwError("Error transforming <img> tag: Missing a valid asset reference.");
   const { reference, refType } = referenceData;
 
@@ -195,14 +195,14 @@ const processImage: NodeToPortableText<DomHtmlNode<ImgElementAttributes>> = (nod
       randomUUID(),
       reference,
       node.attributes["src"],
-      node.attributes["alt"],
       refType,
+      node.attributes["alt"],
     ),
   ];
 };
 
 const processLinkedItemOrComponent: NodeToPortableText<DomHtmlNode<ObjectElementAttributes>> = (node) => {
-  const referenceData = getReferenceData(node.attributes)
+  const referenceData = getItemOrComponentReferenceData(node.attributes)
     ?? throwError("Error transforming <object> tag: Missing a valid item or component reference.");
   const { reference, refType } = referenceData;
 

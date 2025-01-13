@@ -27,7 +27,7 @@ export interface Reference extends ArbitraryTypedObject {
   /**
    * Type of reference (codename, id or external id)
    */
-  referenceType?: "codename" | "external-id" | "id";
+  referenceType: "codename" | "external-id" | "id";
 }
 
 /**

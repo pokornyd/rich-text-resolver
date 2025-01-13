@@ -70,6 +70,7 @@ exports[`Portable Text Transformer doesn't extend link mark to adjacent spans 1`
         "reference": {
           "_ref": "3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5",
           "_type": "reference",
+          "referenceType": "id",
         },
       },
     ],
@@ -979,6 +980,7 @@ exports[`Portable Text Transformer transforms item links 1`] = `
         "reference": {
           "_ref": "23f71096-fa89-4f59-a3f9-970e970944ec",
           "_type": "reference",
+          "referenceType": "id",
         },
       },
     ],
@@ -1715,6 +1717,7 @@ exports[`Portable Text Transformer transforms tables with input <p>Text</p>
                     "reference": {
                       "_ref": "6538fde0-e6e5-425c-8642-278e637b2dc1",
                       "_type": "reference",
+                      "referenceType": "id",
                     },
                   },
                 ],
@@ -2788,6 +2791,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                     "reference": {
                       "_ref": "e2d97322-470a-42e7-a31e-40be26c2ef24",
                       "_type": "reference",
+                      "referenceType": "id",
                     },
                   },
                 ],
@@ -2831,6 +2835,7 @@ exports[`Portable Text Transformer transforms tables with input <table>
                     "reference": {
                       "_ref": "abaf708d-5d91-4b50-9905-30f1d0f482f9",
                       "_type": "reference",
+                      "referenceType": "id",
                     },
                   },
                 ],
