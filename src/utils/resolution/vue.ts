@@ -1,3 +1,5 @@
+import { toHTML } from "@portabletext/to-html";
+
 import {
   PortableTextImage,
   PortableTextObject,
@@ -18,7 +20,7 @@ import {
 export const resolveTable = (
   table: PortableTextTable,
   vueRenderFunction: Function,
-  resolver: (value: PortableTextObject[]) => string,
+  resolver: (value: PortableTextObject[]) => string = toHTML,
 ) => {
   const renderCell = (cell: PortableTextTableCell) => {
     const cellContent = resolver(cell.content);
