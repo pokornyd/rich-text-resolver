@@ -23,7 +23,7 @@ Install the package via npm
 
 ### Parsing rich text HTML to a JSON tree
 
-The tool provides environment-aware `parseHtml` function to transform HTML into an array of simplified JSON trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [JSON transformer docs](docs/index.md) for further information.
+The tool provides environment-aware (browser or Node.js) `parseHtml` function to transform HTML into an array of simplified JSON trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [JSON transformer docs](docs/index.md) for further information.
 
 ### Portable text resolution
 
@@ -44,31 +44,37 @@ Combined with a suitable package for the framework of your choice, this makes fo
 
 #### Custom portable text blocks
 
-Besides default blocks for common elements, Portable Text supports custom blocks, which can represent other entities. Each custom block should extend `ArbitraryTypedObject` to ensure `_key` and `_type` properties are present. Key should be a unique identifier (e.g. guid), while type should indicate what the block represents. Value of `_type` property is used for subsequent override and resolution purposes. 
+Besides default blocks for common elements, Portable Text supports custom blocks, which can represent other entities. Each custom block should extend `ArbitraryTypedObject` to ensure `_key` and `_type` properties are present. Key should be a unique identifier (e.g. guid), while type should indicate what the block represents. Value of `_type` property is used for mapping purposes in subsequent resolution.
 
 **This package comes with built-in custom block definitions for representing Kontent.ai rich text entities:**
 
-##### Component/linked item
+##### Component/linked item – **PortableTextComponentOrItem**
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L3-L11
 
-##### Image
+##### Image – **PortableTextImage**
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L13-L22
 
 > [!TIP] 
-> For image resolution, you may use `resolveImage` helper function. You can provide it either with a custom resolution method or use provided default implementations.
+> Package provides helpers for image resolution:
+> * React: `ImageComponent` component, accepting `PortableTextImage` as a prop.
+> * HTML: `resolveImage` function, accepting `PortableTextImage` and an optional custom resolver.
+> * Vue: `resolveImageVue` function, accepting `PortableTextImage`, Vue render function and an optional custom resolver.
 
-##### Item link
+##### Item link – **PortableTextItemLink**
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L24-L31
 
-##### Table
+##### Table – **PortableTextTable**
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L33-L59
 
 > [!TIP] 
-> For table resolution, you may use `resolveTable` helper function. You can provide it either with a custom resolution method or use a default implementation from a resolution package of your choice (such as `toHTML` or `toPlainText`).
+> Package provides helpers for table resolution:
+> * React: `TableComponent` component, accepting `PortableTextTable` as a prop.
+> * HTML: `resolveTable` function, accepting `PortableTextTable` and an optional custom resolver.
+> * Vue: `resolveTableVue` function, accepting `PortableTextTable`, Vue render function and an optional custom resolver.
 
 ## Examples
 
@@ -77,6 +83,12 @@ https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff
 Package exports a `traversePortableText` method, which accepts an array of `PortableTextObject` and a callback function. The method recursively traverses all nodes and their subnodes, optionally modifying them with the provided callback:
 
 ```ts
+    import {
+      PortableTextObject,
+      transformToPortableText,
+      traversePortableText,
+    } from "@kontent-ai/rich-text-resolver";
+
     const input = `<figure data-asset-id="guid" data-image-id="guid"><img src="https://asseturl.xyz" data-asset-id="guid" data-image-id="guid" alt=""></figure>`;
 
     // Adds height parameter to asset reference and changes _type.  
