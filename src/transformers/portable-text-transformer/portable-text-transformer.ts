@@ -62,62 +62,46 @@ type ListContext = {
 
 type NodeToPortableText<T extends DomNode> = NodeTransformer<T, ListContext, PortableTextItem>;
 
-const categorizeItems = (items: PortableTextItem[]) =>
-  items.reduce(
-    (acc, item) => {
-      const categoryMap: Record<PortableTextItem["_type"], PortableTextItem[]> = {
-        link: acc.links,
-        contentItemLink: acc.contentItemLinks,
-        span: acc.spans,
-        mark: acc.marks,
-        cell: acc.cells,
-        row: acc.rows,
-        image: acc.images,
-        componentOrItem: acc.componentsOrItems,
-        table: acc.tables,
-        block: acc.blocks,
-        reference: acc.references,
-      };
+const categorizeItems = (items: PortableTextItem[]) => {
+  const initialAcc = {
+    links: [] as PortableTextExternalLink[],
+    contentItemLinks: [] as PortableTextItemLink[],
+    spans: [] as PortableTextSpan[],
+    listBlocks: [] as PortableTextStrictListItemBlock[],
+    blocks: [] as PortableTextStrictBlock[],
+    marks: [] as PortableTextMark[],
+    cells: [] as PortableTextTableCell[],
+    rows: [] as PortableTextTableRow[],
+    images: [] as PortableTextImage[],
+    componentsOrItems: [] as PortableTextComponentOrItem[],
+    tables: [] as PortableTextTable[],
+    references: [] as Reference[],
+  };
 
-      if (item._type === "block") {
-        (item.listItem ? acc.listBlocks : acc.blocks).push(item);
-      } else {
-        categoryMap[item._type].push(item);
-      }
+  const typeMap: Record<
+    Exclude<PortableTextItem["_type"], "block">,
+    PortableTextItem[]
+  > = {
+    link: initialAcc.links,
+    contentItemLink: initialAcc.contentItemLinks,
+    span: initialAcc.spans,
+    mark: initialAcc.marks,
+    cell: initialAcc.cells,
+    row: initialAcc.rows,
+    image: initialAcc.images,
+    componentOrItem: initialAcc.componentsOrItems,
+    table: initialAcc.tables,
+    reference: initialAcc.references,
+  };
 
-      return acc;
-    },
-    {
-      links: [] as PortableTextExternalLink[],
-      contentItemLinks: [] as PortableTextItemLink[],
-      spans: [] as PortableTextSpan[],
-      listBlocks: [] as PortableTextStrictListItemBlock[],
-      blocks: [] as PortableTextStrictBlock[],
-      marks: [] as PortableTextMark[],
-      cells: [] as PortableTextTableCell[],
-      rows: [] as PortableTextTableRow[],
-      images: [] as PortableTextImage[],
-      componentsOrItems: [] as PortableTextComponentOrItem[],
-      tables: [] as PortableTextTable[],
-      references: [] as Reference[],
-    },
-  );
-
-const getReferenceData = (attributes: Record<string, string | undefined>): ReferenceData | undefined => {
-  const refAttributeTypes = [
-    { attr: "data-asset-id", refType: "id" },
-    { attr: "data-asset-external-id", refType: "external-id" },
-    { attr: "data-asset-codename", refType: "codename" },
-    { attr: "data-id", refType: "id" },
-    { attr: "data-external-id", refType: "external-id" },
-    { attr: "data-codename", refType: "codename" },
-  ] as const;
-
-  const refInfo = refAttributeTypes.find(({ attr }) => attributes[attr]);
-
-  return refInfo
-    ? { reference: attributes[refInfo.attr]!, refType: refInfo.refType }
-    : undefined;
+  return items.reduce((acc, item) => {
+    if (item._type === "block") {
+      (item.listItem ? acc.listBlocks : acc.blocks).push(item);
+    } else {
+      typeMap[item._type].push(item);
+    }
+    return acc;
+  }, initialAcc);
 };
 
 const updateListContext = (node: DomNode, context: ListContext): ListContext =>
