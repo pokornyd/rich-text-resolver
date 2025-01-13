@@ -4,8 +4,9 @@ import { PortableTextComponentOrItem, PortableTextImage, PortableTextItemLink, P
     _type: "componentOrItem",
     _key: "guid",
     component: {
-      _ref: "linkedItemOrComponentCodename",
       _type: "reference",
+      _ref: "linkedItemOrComponentCodename",
+      referenceType: "codename",
     },
     dataType: "component"
   };
@@ -17,7 +18,8 @@ import { PortableTextComponentOrItem, PortableTextImage, PortableTextItemLink, P
       _type: "reference",
       _ref: "bc6f3ce5-935d-4446-82d4-ce77436dd412",
       url: "https://assets-us-01.kc-usercontent.com:443/.../image.jpg",
-      alt: ""
+      alt: "",
+      referenceType: "id",
     }
   };
   
@@ -25,8 +27,9 @@ import { PortableTextComponentOrItem, PortableTextImage, PortableTextItemLink, P
     _type: "contentItemLink",
     _key: "guid",
     reference: {
-      _ref: "0184a8ac-9781-4292-9e30-1fb56f648a6c",
       _type: "reference",
+      _ref: "0184a8ac-9781-4292-9e30-1fb56f648a6c",
+      referenceType: "id",
     }
   };
   
