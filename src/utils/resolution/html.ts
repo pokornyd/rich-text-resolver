@@ -3,6 +3,7 @@ import {
   PortableTextMarkComponent,
   PortableTextOptions,
   PortableTextTypeComponent,
+  toHTML,
 } from "@portabletext/to-html";
 
 import {
@@ -50,7 +51,7 @@ export type PortableTextHtmlResolvers = Omit<PortableTextOptions, "components"> 
  */
 export const resolveTable = (
   table: PortableTextTable,
-  resolver: (value: PortableTextObject[]) => string,
+  resolver: (value: PortableTextObject[]) => string = toHTML,
 ) => {
   const renderCell = (cell: PortableTextTableCell) => {
     const cellContent = resolver(cell.content);

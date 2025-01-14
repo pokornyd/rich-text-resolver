@@ -39,9 +39,7 @@ describe("portabletext to MAPI resolver", () => {
     // Compare the original Portable Text to the re-parsed Portable Text after MAPI conversion
     expect(
       traversePortableText(secondParsePortableText, sortMarks),
-    ).toStrictEqual(
-      traversePortableText(nodePortableText, sortMarks),
-    );
+    ).toStrictEqual(traversePortableText(nodePortableText, sortMarks));
   };
 
   it("handles nested style marks", () => {
@@ -59,6 +57,16 @@ describe("portabletext to MAPI resolver", () => {
   it("handles rich text with external links", () => {
     const richTextContent =
       `<p>Here is an <a href="https://example.com" target="_blank" data-new-window="true" title="linktitle">external link</a> in some text.</p>`;
+    transformAndCompare(richTextContent);
+  });
+
+  it("handles link to an email", () => {
+    const richTextContent = `<p><a data-email-address="someone@mail.com">email link</a></p>`;
+    transformAndCompare(richTextContent);
+  });
+
+  it("handles link to a phone number", () => {
+    const richTextContent = `<p><a data-phone-number="+1234567890">phone link</a></p>`;
     transformAndCompare(richTextContent);
   });
 
@@ -97,7 +105,9 @@ describe("portabletext to MAPI resolver", () => {
 
     const secondParseTree = nodeParse(mapiFormat);
     const secondParsePortableText = nodesToPortableText(secondParseTree);
-    const secondParseMapiFormat = toManagementApiFormat(secondParsePortableText);
+    const secondParseMapiFormat = toManagementApiFormat(
+      secondParsePortableText,
+    );
 
     expect(portableText).toMatchInlineSnapshot(`
 [
@@ -151,6 +161,8 @@ describe("portabletext to MAPI resolver", () => {
     expect(portableText).not.toEqual(secondParsePortableText);
 
     // duplicate markdefinition
-    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]);
+    expect(secondParsePortableText[0].markDefs[0]).toEqual(
+      secondParsePortableText[0].markDefs[1],
+    );
   });
 });
