@@ -2,7 +2,7 @@ export { transformNodes, transformNodesAsync, nodesToHtml, nodesToHtmlAsync, Nod
 export { traversePortableText } from './src/utils/transformer-utils.js';
 export { nodesToPortableText, transformToPortableText } from "./src/transformers/portable-text-transformer/portable-text-transformer.js";
 export { parseHtml } from "./src/parser/index.js";
-export { resolveImage, resolveTable, toHTMLImageDefault, PortableTextHtmlResolvers } from "./src/utils/resolution/html.js";
+export { resolveImage, resolveTable, toHTMLImageDefault, PortableTextHtmlResolvers, toHTML } from "./src/utils/resolution/html.js";
 export { resolveImage as resolveImageVue, resolveTable as resolveTableVue, toVueImageDefault } from "./src/utils/resolution/vue.js";
 export { toManagementApiFormat } from './src/utils/resolution/mapi.js';
 export * from './src/transformers/index.js';

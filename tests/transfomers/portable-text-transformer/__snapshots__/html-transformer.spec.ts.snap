@@ -2,6 +2,8 @@
 
 exports[`HTML transformer builds basic portable text into HTML 1`] = `"<p><br/></p><p>text<a href=http://google.com"><strong>link</strong></a></p><h1>heading</h1><p><br/></p>"`;
 
+exports[`HTML transformer by default resolves text styled with sub and sup 1`] = `"<p><sub>Subscript text</sub><sup>Superscript text</sup></p>"`;
+
 exports[`HTML transformer resolves a linked item 1`] = `"<p>resolved value of text_element: <strong>random text value</strong></p><p>text after component</p>"`;
 
 exports[`HTML transformer resolves a table 1`] = `"<table><tbody><tr><td><p>Ivan</p></td><td><p>Jiri</p></td></tr><tr><td><p>Ondra</p></td><td><p>Dan</p></td></tr></tbody></table>"`;
@@ -13,3 +15,5 @@ exports[`HTML transformer resolves an asset with custom resolver 1`] = `"<img sr
 exports[`HTML transformer resolves internal link 1`] = `"<p><a href="https://website.com/23f71096-fa89-4f59-a3f9-970e970944ec"><em>item</em></a></p>"`;
 
 exports[`HTML transformer resolves styled text with line breaks 1`] = `"<p><strong>Strong text with line break<br/>Strong text with line break</strong></p>"`;
+
+exports[`HTML transformer resolves superscript with custom resolver 1`] = `"<p><sup custom-attribute="value">Superscript text</sup></p>"`;

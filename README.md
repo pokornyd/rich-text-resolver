@@ -115,15 +115,15 @@ Package exports a `traversePortableText` method, which accepts an array of `Port
 
 ### Plain HTML resolution
 
-HTML resolution using `@portabletext/to-html` package.
+HTML resolution using a slightly modified version of `toHTML` function from `@portabletext/to-html` package.
 
 ```ts
-import { toHTML } from "@portabletext/to-html";
 import {
   transformToPortableText,
   resolveTable,
   resolveImage,
-  PortableTextHtmlResolvers
+  PortableTextHtmlResolvers,
+  toHTML
 } from "@kontent-ai/rich-text-resolver";
 
 const richTextValue = "<rich text html>";
@@ -172,12 +172,17 @@ const resolvedHtml = toHTML(portableText, resolvers);
 
 ### React resolution
 
-React, using `@portabletext/react` package.
+React, using a slightly modified version of `PortableText` component from `@portabletext/react` package.
 
 ```tsx
-import { PortableText, toPlainText } from "@portabletext/react";
+import { toPlainText } from "@portabletext/react";
 import {
-  PortableTextReactResolvers
+  PortableTextReactResolvers,
+  PortableText,
+  TableComponent,
+  ImageComponent,
+} from "@kontent-ai/rich-text-resolver/utils/react";
+import {
   transformToPortableText,
   resolveTable,
 } from "@kontent-ai/rich-text-resolver";

@@ -1,12 +1,11 @@
-import { toHTML } from "@portabletext/to-html";
-
 import {
   PortableTextImage,
   PortableTextObject,
   PortableTextTable,
   PortableTextTableCell,
   PortableTextTableRow,
-} from "../../index.js";
+  toHTML,
+} from "../../../index.js";
 
 /**
  * Renders a portable text table to a Vue virtual DOM node.
@@ -54,8 +53,8 @@ export const resolveImage = (
 ) => vueRenderFunction("img", resolver(image));
 
 /**
- * Provides a default resolver function for an image object to Vue. This function can be used as
- * a default argument for the `resolveImage` function.
+ * Provides a default resolver function for an image object to Vue. Default fallback for `resolver`
+ * argument of `resolveImage` function.
  *
  * @param {PortableTextImage} image - The portable text image object to be rendered.
  * @returns {VueImage} An object representing the image, containing `src` and `alt` properties,

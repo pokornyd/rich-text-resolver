@@ -25,8 +25,6 @@ import {
   TextStyleElement,
 } from "../transformers/index.js";
 
-export type ResolverFunction<T extends ArbitraryTypedObject> = (value: T) => string;
-
 /**
  * Recursively traverses and optionally transforms a Portable Text structure using a provided
  * callback function. The callback is applied to each node in the structure. If the callback

@@ -9,3 +9,7 @@ exports[`portable text React resolver renders an image 1`] = `"<p>some text befo
 exports[`portable text React resolver renders internal and external links 1`] = `"<p><a href="http://google.com" target="_blank" title="linktitle">external link</a><a href="https://somerandomwebsite.xyz/test_item"><strong>item link</strong></a></p>"`;
 
 exports[`portable text React resolver renders simple HTML 1`] = `"<p>some text in a paragraph</p>"`;
+
+exports[`portable text React resolver renders sub and sup marks using custom implementation 1`] = `"<p><strong>subscript text</strong><strong>superscript text</strong></p>"`;
+
+exports[`portable text React resolver renders sub and sup marks using default implementation 1`] = `"<p><sub>subscript text</sub><sup>superscript text</sup></p>"`;

@@ -1,10 +1,14 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import { PortableText } from "@portabletext/react";
 import { render } from "@testing-library/react";
 import React from "react";
 
 import { transformToPortableText } from "../../src";
-import { ImageComponent, PortableTextReactResolvers, TableComponent } from "../../src/utils/resolution/react";
+import {
+  ImageComponent,
+  PortableText,
+  PortableTextReactResolvers,
+  TableComponent,
+} from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
   value: "<p>some text in a paragraph</p>",
@@ -120,6 +124,32 @@ describe("portable text React resolver", () => {
         <img src="https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg" data-asset-id="bc6f3ce5-935d-4446-82d4-ce77436dd412" data-image-id="bc6f3ce5-935d-4446-82d4-ce77436dd412" alt="" />
       </figure>
     `);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders sub and sup marks using default implementation", () => {
+    const tree = renderPortableText(`
+      <p><sub>subscript text</sub><sup>superscript text</sup></p>
+    `);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders sub and sup marks using custom implementation", () => {
+    const customComponents: PortableTextReactResolvers = {
+      ...portableTextComponents,
+      marks: {
+        ...portableTextComponents.marks,
+        sub: ({ children }) => <strong>{children}</strong>,
+        sup: ({ children }) => <strong>{children}</strong>,
+      },
+    };
+
+    const tree = renderPortableText(
+      `
+      <p><sub>subscript text</sub><sup>superscript text</sup></p>
+    `,
+      customComponents,
+    );
     expect(tree).toMatchSnapshot();
   });
 });
