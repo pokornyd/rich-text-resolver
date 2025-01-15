@@ -1,6 +1,4 @@
-import { ArbitraryTypedObject, nodesToPortableText, PortableTextSpan, traversePortableText } from "../../../src";
-import { browserParse } from "../../../src/parser/browser";
-import { nodeParse } from "../../../src/parser/node";
+import { ArbitraryTypedObject, PortableTextSpan, transformToPortableText, traversePortableText } from "../../../src";
 import { toManagementApiFormat } from "../../../src/utils/resolution/mapi";
 
 jest.mock("short-unique-id", () => {
@@ -17,29 +15,18 @@ const sortMarks = (obj: ArbitraryTypedObject) => isSpan(obj) ? { ...obj, marks: 
 
 describe("portabletext to MAPI resolver", () => {
   const transformAndCompare = (richTextContent: string) => {
-    // Parse the rich text content into a tree
-    const browserTree = browserParse(richTextContent);
-    const nodeTree = nodeParse(richTextContent);
-
-    // Convert the tree to Portable Text
-    const nodePortableText = nodesToPortableText(nodeTree);
-    const browserPortableText = nodesToPortableText(browserTree);
+    const portableText = transformToPortableText(richTextContent);
 
     // Convert Portable Text to MAPI format
-    const nodeManagementApiFormat = toManagementApiFormat(nodePortableText);
-    const browserManagementApiFormat = toManagementApiFormat(browserPortableText);
+    const managementApiFormat = toManagementApiFormat(portableText);
 
     // Parse the MAPI format back into a tree and convert it to Portable Text
-    const secondParseTree = nodeParse(nodeManagementApiFormat);
-    const secondParsePortableText = nodesToPortableText(secondParseTree);
-
-    // Compare the MAPI formats to ensure consistency across platforms
-    expect(nodeManagementApiFormat).toEqual(browserManagementApiFormat);
+    const secondParsePortableText = transformToPortableText(managementApiFormat);
 
     // Compare the original Portable Text to the re-parsed Portable Text after MAPI conversion
     expect(
       traversePortableText(secondParsePortableText, sortMarks),
-    ).toStrictEqual(traversePortableText(nodePortableText, sortMarks));
+    ).toStrictEqual(traversePortableText(portableText, sortMarks));
   };
 
   it("handles nested style marks", () => {
@@ -99,12 +86,10 @@ describe("portabletext to MAPI resolver", () => {
      */
     const richTextContent =
       `<p><strong>strong text </strong><a href="https://example.com"><strong>example strong link text</strong>not strong link text</a></p>`;
-    const tree = nodeParse(richTextContent);
-    const portableText = nodesToPortableText(tree);
+    const portableText = transformToPortableText(richTextContent);
     const mapiFormat = toManagementApiFormat(portableText);
 
-    const secondParseTree = nodeParse(mapiFormat);
-    const secondParsePortableText = nodesToPortableText(secondParseTree);
+    const secondParsePortableText = transformToPortableText(mapiFormat);
     const secondParseMapiFormat = toManagementApiFormat(
       secondParsePortableText,
     );

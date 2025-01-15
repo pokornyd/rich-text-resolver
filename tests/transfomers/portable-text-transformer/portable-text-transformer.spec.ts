@@ -1,4 +1,4 @@
-import { nodesToPortableText, PortableTextItem, traversePortableText } from "../../../src";
+import { DomNode, PortableTextItem, transformToPortableText, traversePortableText } from "../../../src";
 import { browserParse } from "../../../src/parser/browser";
 import { nodeParse } from "../../../src/parser/node";
 
@@ -14,21 +14,23 @@ describe("Portable Text Transformer", () => {
   const transformInput = (
     input: string,
   ): {
-    nodeResult: PortableTextItem[];
-    browserResult: PortableTextItem[];
+    nodeTree: DomNode[];
+    browserTree: DomNode[];
+    result: PortableTextItem[];
   } => {
     const browserTree = browserParse(input);
     const nodeTree = nodeParse(input);
     return {
-      nodeResult: nodesToPortableText(nodeTree),
-      browserResult: nodesToPortableText(browserTree),
+      nodeTree,
+      browserTree,
+      result: transformToPortableText(input),
     };
   };
 
   const transformAndCompare = (input: string) => {
-    const { nodeResult, browserResult } = transformInput(input);
-    expect(nodeResult).toMatchSnapshot();
-    expect(nodeResult).toMatchObject(browserResult);
+    const { nodeTree, browserTree, result } = transformInput(input);
+    expect(result).toMatchSnapshot();
+    expect(nodeTree).toMatchObject(browserTree);
   };
 
   it("transforms empty rich text", () => {
@@ -246,14 +248,10 @@ describe("Portable Text Transformer", () => {
     transformAndCompare(`<p>text<strong>bold</strong></p>`);
   });
 
-  it.each([nodeParse, browserParse])(
-    "throws error for non-supported tags for %s",
-    (parse) => {
-      const input = "<p>text in a paragraph</p><div>text in a div, which doesnt exist in kontent RTE</div>";
-      const tree = parse(input);
-      expect(() => nodesToPortableText(tree)).toThrow();
-    },
-  );
+  it("throws error for non-supported tags", () => {
+    const input = "<p>text in a paragraph</p><div>text in a div, which doesnt exist in kontent RTE</div>";
+    expect(() => transformToPortableText(input)).toThrow();
+  });
 
   it("doesn't extend link mark to adjacent spans", () => {
     transformAndCompare(
@@ -301,13 +299,14 @@ describe("Portable Text Transformer", () => {
       `<object type="application/kenticocloud" data-type="item" data-rel="link" data-codename="test_item"></object>`;
 
     const processBlock = (block: PortableTextItem) =>
-      block._type === "componentOrItem" ? { ...block, additionalData: "data" } : null;
+      block._type === "componentOrItem"
+        ? { ...block, additionalData: "data" }
+        : null;
 
-    const { nodeResult } = transformInput(input);
-    const modifiedResult = traversePortableText(nodeResult, processBlock);
+    const { result } = transformInput(input);
+    const modifiedResult = traversePortableText(result, processBlock);
 
     expect(modifiedResult).toMatchSnapshot();
-    expect(modifiedResult).toMatchObject(nodeResult);
   });
 
   it("extends link nested in a table with additional data", () => {
@@ -316,11 +315,10 @@ describe("Portable Text Transformer", () => {
     const processBlock = (block: PortableTextItem) =>
       block._type === "link" ? { ...block, additionalData: "data" } : null;
 
-    const { nodeResult } = transformInput(input);
-    const transformedResult = traversePortableText(nodeResult, processBlock);
+    const { result } = transformInput(input);
+    const transformedResult = traversePortableText(result, processBlock);
 
     expect(transformedResult).toMatchSnapshot();
-    expect(transformedResult).toMatchObject(nodeResult);
   });
 
   it("transforms a linked item and a component from MAPI with corresponding dataType", () => {

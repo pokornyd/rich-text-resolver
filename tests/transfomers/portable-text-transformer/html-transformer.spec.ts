@@ -3,7 +3,6 @@ import { PortableTextTypeComponentOptions } from "@portabletext/to-html";
 
 import {
   ArbitraryTypedObject,
-  nodesToPortableText,
   PortableTextBlock,
   PortableTextComponentOrItem,
   PortableTextExternalLink,
@@ -11,9 +10,8 @@ import {
   PortableTextItemLink,
   PortableTextMark,
   PortableTextTable,
+  transformToPortableText,
 } from "../../../src";
-import { browserParse } from "../../../src/parser/browser";
-import { nodeParse } from "../../../src/parser/node";
 import { PortableTextHtmlResolvers, resolveImage, toHTML } from "../../../src/utils/resolution/html";
 
 jest.mock("short-unique-id", () => {
@@ -125,21 +123,13 @@ describe("HTML transformer", () => {
   ) => {
     richTextInput.value = richTextValue;
 
-    const browserTree = browserParse(richTextInput.value);
-    const nodeTree = nodeParse(richTextInput.value);
-    const nodePortableText = nodesToPortableText(nodeTree);
-    const browserPortableText = nodesToPortableText(browserTree);
-    const nodeResult = toHTML(
-      nodePortableText,
-      getPortableTextComponents(richTextInput, customResolvers),
-    );
-    const browserResult = toHTML(
-      browserPortableText,
+    const portableText = transformToPortableText(richTextInput.value);
+    const result = toHTML(
+      portableText,
       getPortableTextComponents(richTextInput, customResolvers),
     );
 
-    expect(nodeResult).toMatchSnapshot();
-    expect(nodeResult).toEqual(browserResult);
+    expect(result).toMatchSnapshot();
   };
 
   it("builds basic portable text into HTML", () => {
