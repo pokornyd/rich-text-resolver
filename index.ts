@@ -1,6 +1,6 @@
-export { transformNodes, transformNodesAsync, nodesToHtml, nodesToHtmlAsync, NodeTransformer, NodeTransformers, AsyncNodeTransformer, AsyncNodeTransformers, NodeToString, NodeToStringAsync, NodeToStringMap, AsyncNodeToStringMap } from './src/index.js';
+export { nodesToHtml, nodesToHtmlAsync, NodeToHtml, NodeToHtmlAsync, NodeToHtmlMap, AsyncNodeToHtmlMap } from './src/index.js';
 export { traversePortableText } from './src/utils/transformer-utils.js';
-export { nodesToPortableText, transformToPortableText } from "./src/transformers/portable-text-transformer/portable-text-transformer.js";
+export { transformToPortableText } from "./src/transformers/portable-text-transformer/portable-text-transformer.js";
 export { parseHtml } from "./src/parser/index.js";
 export { resolveImage, resolveTable, toHTMLImageDefault, PortableTextHtmlResolvers, toHTML } from "./src/utils/resolution/html.js";
 export { resolveImage as resolveImageVue, resolveTable as resolveTableVue, toVueImageDefault } from "./src/utils/resolution/vue.js";

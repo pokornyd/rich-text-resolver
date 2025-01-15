@@ -3,10 +3,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import { transformToPortableText } from "../../src";
-import {
-  PortableText,
-  PortableTextReactResolvers,
-} from "../../src/utils/resolution/react";
+import { PortableText, PortableTextReactResolvers } from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
   value: "<p>some text in a paragraph</p>",

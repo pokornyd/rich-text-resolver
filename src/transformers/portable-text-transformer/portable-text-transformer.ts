@@ -11,8 +11,6 @@ import {
 import {
   BlockElement,
   IgnoredElement,
-  NodeTransformer,
-  NodeTransformers,
   PortableTextComponentOrItem,
   PortableTextExternalLink,
   PortableTextImage,
@@ -28,7 +26,6 @@ import {
   PortableTextTableRow,
   Reference,
   TextStyleElement,
-  transformNodes,
 } from "../../transformers/index.js";
 import {
   blockElements,
@@ -60,7 +57,35 @@ type ListContext = {
   type: "number" | "bullet" | "unknown";
 };
 
-type NodeToPortableText<T extends DomNode> = NodeTransformer<T, ListContext, PortableTextItem>;
+type NodeToPortableText<TNode extends DomNode> = TNode extends DomHtmlNode
+  ? (node: TNode, children: PortableTextItem[], context: ListContext) => PortableTextItem[]
+  : (node: TNode) => PortableTextSpan[];
+
+type PortableTextTransformers = {
+  text: NodeToPortableText<DomTextNode>;
+  tag: Record<string, NodeToPortableText<DomHtmlNode<any>>>;
+};
+
+const transformNodes = (
+  nodes: DomNode[],
+  transformers: PortableTextTransformers,
+  context: ListContext,
+): PortableTextItem[] =>
+  nodes.flatMap(node =>
+    match(node)
+      .with({ type: "text" }, textNode => transformers.text(textNode))
+      .with({ type: "tag" }, tagNode => {
+        const updatedContext = updateListContext(tagNode, context);
+        const children = transformNodes(tagNode.children, transformers, updatedContext);
+        const transformer = transformers.tag[tagNode.tagName];
+        if (!transformer) {
+          throw new Error(`No transformer specified for tag: ${tagNode.tagName}`);
+        }
+
+        return transformer(tagNode, children, updatedContext);
+      })
+      .exhaustive()
+  );
 
 const categorizeItems = (items: PortableTextItem[]) => {
   const initialAcc = {
@@ -78,27 +103,47 @@ const categorizeItems = (items: PortableTextItem[]) => {
     references: [] as Reference[],
   };
 
-  const typeMap: Record<
-    Exclude<PortableTextItem["_type"], "block">,
-    PortableTextItem[]
-  > = {
-    link: initialAcc.links,
-    contentItemLink: initialAcc.contentItemLinks,
-    span: initialAcc.spans,
-    mark: initialAcc.marks,
-    cell: initialAcc.cells,
-    row: initialAcc.rows,
-    image: initialAcc.images,
-    componentOrItem: initialAcc.componentsOrItems,
-    table: initialAcc.tables,
-    reference: initialAcc.references,
-  };
-
   return items.reduce((acc, item) => {
-    if (item._type === "block") {
-      (item.listItem ? acc.listBlocks : acc.blocks).push(item);
-    } else {
-      typeMap[item._type].push(item);
+    switch (item._type) {
+      case "link":
+        acc.links.push(item);
+        break;
+      case "contentItemLink":
+        acc.contentItemLinks.push(item);
+        break;
+      case "span":
+        acc.spans.push(item);
+        break;
+      case "mark":
+        acc.marks.push(item);
+        break;
+      case "cell":
+        acc.cells.push(item);
+        break;
+      case "row":
+        acc.rows.push(item);
+        break;
+      case "image":
+        acc.images.push(item);
+        break;
+      case "componentOrItem":
+        acc.componentsOrItems.push(item);
+        break;
+      case "table":
+        acc.tables.push(item);
+        break;
+      case "reference":
+        acc.references.push(item);
+        break;
+      case "block":
+        if (item.listItem) {
+          acc.listBlocks.push(item as PortableTextStrictListItemBlock);
+        } else {
+          acc.blocks.push(item as PortableTextStrictBlock);
+        }
+        break;
+      default:
+        throw new Error(`Unknown type encountered.`);
     }
     return acc;
   }, initialAcc);
@@ -122,8 +167,8 @@ const processListItem: NodeToPortableText<DomHtmlNode> = (_, children, listConte
   return [
     createListBlock(
       randomUUID(),
-      listContext?.depth,
-      listContext?.type,
+      listContext.depth,
+      listContext.type,
       [...links, ...contentItemLinks],
       "normal",
       spans,
@@ -235,22 +280,6 @@ const processText: NodeToPortableText<DomTextNode> = (node) => [createSpan(rando
 const ignoreProcessing: NodeToPortableText<DomHtmlNode> = (_, children) => children;
 
 /**
- * Transforms a parsed tree into an array of Portable Text Blocks.
- *
- * @param {DomNode[]} parsedNodes Array of nodes representing the rich text content.
- * @returns {PortableTextObject[]} An array of Portable Text Blocks representing the structured content.
- */
-export const nodesToPortableText = (
-  parsedNodes: DomNode[],
-): PortableTextObject[] =>
-  transformNodes(
-    parsedNodes,
-    transformers,
-    { depth: 0, type: "unknown" }, // initialization of list transformation context
-    updateListContext,
-  ) as PortableTextObject[];
-
-/**
  * Transforms rich text HTML into an array of Portable Text Blocks.
  *
  * @param {string} richText HTML string of Kontent.ai rich text content.
@@ -258,9 +287,13 @@ export const nodesToPortableText = (
  */
 export const transformToPortableText = (
   richText: string,
-): PortableTextObject[] => nodesToPortableText(parseHtml(richText));
+): PortableTextObject[] => {
+  const parsedNodes = parseHtml(richText);
 
-const transformers: NodeTransformers<PortableTextItem, ListContext> = {
+  return transformNodes(parsedNodes, transformers, { depth: 0, type: "unknown" }) as PortableTextObject[];
+};
+
+const transformers: PortableTextTransformers = {
   text: processText,
   tag: {
     ...(Object.fromEntries(
