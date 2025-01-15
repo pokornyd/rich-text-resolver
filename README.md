@@ -21,6 +21,10 @@ Install the package via npm
 
 ## Features
 
+### API Overview
+
+![Module API](media/resolver-api-overview.png)
+
 ### Parsing rich text HTML to a JSON tree
 
 The tool provides environment-aware (browser or Node.js) `parseHtml` function to transform HTML into an array of simplified JSON trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [JSON transformer docs](docs/index.md) for further information.
@@ -34,6 +38,11 @@ The tool provides environment-aware (browser or Node.js) `parseHtml` function to
 - Svelte: [svelte-portabletext](https://github.com/portabletext/svelte-portabletext)
 - Vue: [vue-portabletext](https://github.com/portabletext/vue-portabletext)
 - Astro: [astro-portabletext](https://github.com/theisel/astro-portabletext)
+
+> [!TIP]
+> This module re-exports modified `toHTML` function and `<PortableText>` component from `to-html` and `react-portabletext` packages respectively. These modified helpers provide default resolution for tags which are either unsupported or only partially supported in the original packages (`sub` and `sup` tags, images, tables and links).
+>
+> Make sure to use these re-exports if you want to take advantage of the default resolution.
 
 The tool provides `transformToPortableText` function to convert rich text content into an array of Portable Text blocks, with custom blocks defined for Kontent.ai-specific objects.
 
@@ -56,12 +65,6 @@ https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L14-L24
 
-> [!TIP] 
-> Package provides helpers for image resolution:
-> * React: `ImageComponent` component, accepting `PortableTextImage` as a prop.
-> * HTML: `resolveImage` function, accepting `PortableTextImage` and an optional custom resolver.
-> * Vue: `resolveImageVue` function, accepting `PortableTextImage`, Vue render function and an optional custom resolver.
-
 ##### Item link – **PortableTextItemLink**
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L26-L34
@@ -70,48 +73,7 @@ https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff
 
 https://github.com/kontent-ai/rich-text-resolver-js/blob/6fe68490a32bb304d141cff741fb7e57001550eb/showcase/showcase.ts#L36-L62
 
-> [!TIP] 
-> Package provides helpers for table resolution:
-> * React: `TableComponent` component, accepting `PortableTextTable` as a prop.
-> * HTML: `resolveTable` function, accepting `PortableTextTable` and an optional custom resolver.
-> * Vue: `resolveTableVue` function, accepting `PortableTextTable`, Vue render function and an optional custom resolver.
-
 ## Examples
-
-### Modifying portable text nodes
-
-Package exports a `traversePortableText` method, which accepts an array of `PortableTextObject` and a callback function. The method recursively traverses all nodes and their subnodes, optionally modifying them with the provided callback:
-
-```ts
-    import {
-      PortableTextObject,
-      transformToPortableText,
-      traversePortableText,
-    } from "@kontent-ai/rich-text-resolver";
-
-    const input = `<figure data-asset-id="guid" data-image-id="guid"><img src="https://asseturl.xyz" data-asset-id="guid" data-image-id="guid" alt=""></figure>`;
-
-    // Adds height parameter to asset reference and changes _type.  
-    const processBlocks = (block: PortableTextObject) => {
-      if (block._type === "image") {
-        const modifiedReference = {
-          ...block.asset,
-          height: 300
-        }
-  
-        return {
-          ...block,
-          asset: modifiedReference,
-          _type: "modifiedImage"
-        }
-      }
-
-      // logic for modifying other object types...
-    }
-
-    const portableText = transformToPortableText(input);
-    const modifiedPortableText = traversePortableText(portableText, processBlocks);
-```
 
 ### Plain HTML resolution
 
@@ -184,7 +146,6 @@ import {
 } from "@kontent-ai/rich-text-resolver/utils/react";
 import {
   transformToPortableText,
-  resolveTable,
 } from "@kontent-ai/rich-text-resolver";
 
 // assumes richTextElement from SDK
@@ -195,7 +156,7 @@ const resolvers: PortableTextReactResolvers = {
       const item = richTextElement.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    // default components for table and image for convenience
+    // Image and Table components are used as a default fallback if a resolver isn't explicitly specified
     table: ({ value }) => <TableComponent {...value} />,
     image: ({ value }) => <ImageComponent {...value} />,
   },
@@ -286,6 +247,42 @@ const components: PortableTextComponents = {
 </template>
 ```
 
+### Modifying portable text nodes
+
+Package exports a `traversePortableText` method, which accepts an array of `PortableTextObject` and a callback function. The method recursively traverses all nodes and their subnodes, optionally modifying them with the provided callback:
+
+```ts
+    import {
+      PortableTextObject,
+      transformToPortableText,
+      traversePortableText,
+    } from "@kontent-ai/rich-text-resolver";
+
+    const input = `<figure data-asset-id="guid" data-image-id="guid"><img src="https://asseturl.xyz" data-asset-id="guid" data-image-id="guid" alt=""></figure>`;
+
+    // Adds height parameter to asset reference and changes _type.  
+    const processBlocks = (block: PortableTextObject) => {
+      if (block._type === "image") {
+        const modifiedReference = {
+          ...block.asset,
+          height: 300
+        }
+  
+        return {
+          ...block,
+          asset: modifiedReference,
+          _type: "modifiedImage"
+        }
+      }
+
+      // logic for modifying other object types...
+    }
+
+    const portableText = transformToPortableText(input);
+    const modifiedPortableText = traversePortableText(portableText, processBlocks);
+```
+
+
 ### MAPI transformation
 
 `toManagementApiFormat` is a custom transformation method built upon `toHTML` package, allowing you to restore portable text previously created from management API rich text back into MAPI supported format.
@@ -303,9 +300,9 @@ const components: PortableTextComponents = {
 ```
 
 > [!IMPORTANT]  
-> MAPI transformation logic expects Portable Text that had been previously created from management API rich text and performs only minimal validation.
+> MAPI transformation logic expects Portable Text that had been previously created from management API rich text and performs only minimal validation. It doesn't provide implicit transformation capabilities from other formats (such as delivery API).
 >
-> Transformation from other formats (such as delivery API) is not supported unless the blocks are manually adjusted to be MAPI compatible prior to running the method.
+> If you're interested in transforming external HTML or rich text to a MAPI compatible format, see [JSON transformer docs](docs/index.md) instead.
 
 [last-commit]: https://img.shields.io/github/last-commit/kontent-ai/rich-text-resolver-js?style=for-the-badge
 [contributors-shield]: https://img.shields.io/github/contributors/kontent-ai/rich-text-resolver-js?style=for-the-badge

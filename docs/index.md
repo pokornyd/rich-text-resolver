@@ -1,6 +1,6 @@
 # JSON Transformers
 
-This module provides an environment-aware (browser or Node.js) `parseHtml` function to convert an HTML string into an array of nodes. The JSON structure can subsequently be transformed using one of the provided transformation methods, either to a modified HTML string or a completely different structure, both in synchronous and asynchronous manner.
+This module provides an environment-aware (browser or Node.js) `parseHtml` function to convert an HTML string into an array of nodes. The resulting array can subsequently be modified by one of the provided functions and transformed back to HTML.
 
 This toolset can be particularly useful for transforming rich text or HTML content from external sources into a valid Kontent.ai rich text format in migration scenarios. 
 
@@ -34,8 +34,6 @@ export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
 }
 ```
 
-The resulting array can be transformed using one of the functions included in the module.
-
 ### HTML Transformation
 
 To transform the `DomNode` array back to HTML, you can use `nodesToHtml` function or its async variant `nodesToHtmlAsync`. The function accepts the parsed array and a `transformers` object, which defines custom transformation for each HTML node. Text nodes are transformed automatically. A wildcard `*` can be used to define fallback transformation for remaining tags. If no explicit or wildcard transformation is provided, default resolution is used.
@@ -43,14 +41,16 @@ To transform the `DomNode` array back to HTML, you can use `nodesToHtml` functio
 #### Basic
 Basic example of HTML transformation, removing HTML attribute `style` and transforming `b` tag to `strong`:
 ```ts
-import { nodesToHtml, NodeToStringMap, parseHtml } from '@kontent-ai/rich-text-resolver';
+import { nodesToHtml, NodeToHtmlMap, parseHtml } from '@kontent-ai/rich-text-resolver';
 
 const rawHtml = `<p style="color:red">Hello <b>World!</b></p>`;
 const parsedNodes = parseHtml(rawHtml);
 
-const transformers: NodeToStringMap = {
+const transformers: NodeToHtmlMap = {
   // children contains already transformed child nodes
   b: (node, children) => `<strong>${children}</strong>`;
+
+  // wildcard transformation removes attributes from remaining nodes
   "*": (node, children) => `<${node.tagName}>${children}</${node.tagName}>`;
 };
 
@@ -58,14 +58,14 @@ const transformers: NodeToStringMap = {
 const defaultOutput = nodesToHtml(parsedNodes, {});
 console.log(defaultOutput); // <p style="color:red">Hello <b>World!</b></p>
 
-// b is converted to strong, wildcard transformation omits attributes from remaining nodes
+// b is converted to strong, wildcard transformation is used for remaining nodes
 const customOutput = nodesToHtml(parsedNodes, transformers);
 console.log(customOutput); // <p>Hello <strong>World!</strong></p>
 ```
 
 #### Advanced
 
-For more complex scenarios, optional context and its handler can be passed to the top level transformation function (`nodesToHtml` or its async variant) as third and fourth parameters respectively.
+For more complex scenarios, optional context and its handler can be passed to `nodesToHtml` as third and fourth parameters respectively.
 
 The context can then be accessed in individual transformations, defined in the `transformers` object. If you need to dynamically update the context, you may optionally provide a context handler, which accepts current node and context as parameters and passes a cloned, modified context for child node processing, ensuring each node gets valid contextual data.
 
@@ -82,7 +82,7 @@ For that matter, we will use `nodesToHtmlAsync` method and pass an instance of J
 import { ManagementClient } from "@kontent-ai/management-sdk";
 import {
   parseHtml,
-  AsyncNodeToStringMap,
+  AsyncNodeToHtmlMap,
   nodesToHtmlAsync,
 } from "@kontent-ai/rich-text-resolver";
 
@@ -90,7 +90,7 @@ const input = `<img src="https://website.com/image.jpg" alt="some image">`;
 const nodes = parseHtml(input);
 
 // type parameter specifies context type, in this case ManagementClient
-const transformers: AsyncNodeToStringMap<ManagementClient> = {
+const transformers: AsyncNodeToHtmlMap<ManagementClient> = {
   // context (client) can be accessed as a third parameter in each transformation
   img: async (node, _, client) =>
     await new Promise<string>(async (resolve, reject) => {
@@ -155,7 +155,7 @@ In this case, we can store depth as a context and increment it via handler anyti
 import {
   nodesToHtml,
   DomNode,
-  NodeToStringMap,
+  NodeToHtmlMap,
   parseHtml,
 } from "@kontent-ai/rich-text-resolver";
 
@@ -178,7 +178,7 @@ const depthHandler = (node: DomNode, context: DepthContext): DepthContext =>
     ? { ...context, divSpanDepth: context.divSpanDepth + 1 } // return new context with incremented depth
     : context; // return the same context if not div/span
 
-const transformers: NodeToStringMap<DepthContext> = {
+const transformers: NodeToHtmlMap<DepthContext> = {
   // we'll only define transformations for 'div' and 'span'. Default resolution will transform remaining tags.
   div: (_, children, context) =>
     // topmost div is at depth=1, as context is updated before processing.
@@ -199,58 +199,6 @@ const output = nodesToHtml(
 console.log(output);
 // <p>Top level some text nested deep</p><p>Another top-level div with text</p>
 
-```
-
-### Generic transformation
-
-Should you need to transform the nodes to a different structure, rather than HTML (string), you can use `transformNodes` (`transformNodesAsync`) function. Its usage is similar but revolves around generics and provides further control over the output, such as specifying custom transformation for text nodes.
-
-Snippet showcasing use of `transformNodes` to convert the `DomNode` array into Portable Text, as used internally in this module. Full source code in [the corresponding TS file](../src/transformers/portable-text-transformer/portable-text-transformer.ts).
-
-```ts
-// context stores current list type and list item depth
-type ListContext = {
-  depth: number;
-  type: "number" | "bullet" | "unknown";
-};
-
-const transformers: NodeTransformers<PortableTextItem, ListContext> = {
-  text: processText,
-  tag: {
-    ...(Object.fromEntries(
-      blockElements.map((tagName) => [tagName, processBlock]),
-    ) as Record<BlockElement, NodeToPortableText<DomHtmlNode>>),
-    ...(Object.fromEntries(
-      textStyleElements.map((tagName) => [tagName, processMark]),
-    ) as Record<TextStyleElement, NodeToPortableText<DomHtmlNode>>),
-    ...(Object.fromEntries(
-      ignoredElements.map((tagName) => [tagName, ignoreProcessing]),
-    ) as Record<IgnoredElement, NodeToPortableText<DomHtmlNode>>),
-    a: processMark,
-    li: processListItem,
-    table: processTable,
-    tr: processTableRow,
-    td: processTableCell,
-    br: processLineBreak,
-    img: processImage,
-    object: processLinkedItemOrComponent,
-  },
-};
-
-const updateListContext = (node: DomNode, context: ListContext): ListContext =>
-  (isElement(node) && isListBlock(node))
-    ? { depth: context.depth + 1, type: node.tagName === "ol" ? "number" : "bullet" }
-    : context;
-
-export const nodesToPortableText = (
-  parsedNodes: DomNode[],
-): PortableTextObject[] =>
-  transformNodes(
-    parsedNodes,
-    transformers,
-    { depth: 0, type: "unknown" }, // initialization of list transformation context
-    updateListContext,
-  ) as PortableTextObject[];
 ```
 
 
