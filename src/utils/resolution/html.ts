@@ -45,7 +45,20 @@ type RichTextHtmlComponents = Omit<PortableTextHtmlComponents, "types" | "marks"
 export const toHTML = (blocks: PortableTextObject[], resolvers?: PortableTextHtmlResolvers) => {
   const defaultComponentResolvers: PortableTextHtmlResolvers = {
     components: {
+      types: {
+        image: ({ value }) => resolveImage(value),
+        table: ({ value }) => resolveTable(value),
+      },
       marks: {
+        link: ({ value, children }) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { _key, _type, ...attributes } = value!;
+          return `<a ${
+            Object.entries(attributes)
+              .map(([key, value]) => `${key}="${value}"`)
+              .join(" ")
+          }>${children}</a>`;
+        },
         sup: ({ children }) => `<sup>${children}</sup>`,
         sub: ({ children }) => `<sub>${children}</sub>`,
       },
@@ -53,7 +66,10 @@ export const toHTML = (blocks: PortableTextObject[], resolvers?: PortableTextHtm
   };
 
   const mergedComponentResolvers = {
-    types: resolvers?.components.types,
+    types: {
+      ...defaultComponentResolvers.components.types,
+      ...resolvers?.components.types,
+    },
     marks: {
       ...defaultComponentResolvers.components.marks,
       ...resolvers?.components.marks,

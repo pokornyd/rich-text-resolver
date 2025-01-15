@@ -63,9 +63,18 @@ export const ImageComponent: React.FC<PortableTextImage> = (image) => (
 );
 
 const defaultComponentResolvers: PortableTextReactResolvers = {
+  types: {
+    image: ({ value }) => <ImageComponent {...value} />,
+    table: ({ value }) => <TableComponent {...value} />,
+  },
   marks: {
-    sup: ({ children }: { children: React.ReactNode }) => <sup>{children}</sup>,
-    sub: ({ children }: { children: React.ReactNode }) => <sub>{children}</sub>,
+    link: ({ value, children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _key, _type, ...attributes } = value!;
+      return <a {...attributes}>{children}</a>;
+    },
+    sup: ({ children }) => <sup>{children}</sup>,
+    sub: ({ children }) => <sub>{children}</sub>,
   },
 };
 
@@ -82,7 +91,10 @@ export const PortableText = <B extends TypedObject = PortableTextBlock>({
   onMissingComponent: missingComponentHandler,
 }: PortableTextProps<B>): JSX.Element => {
   const mergedComponentResolvers: PortableTextReactResolvers = {
-    types: componentOverrides?.types,
+    types: {
+      ...defaultComponentResolvers.types,
+      ...componentOverrides?.types,
+    },
     marks: {
       ...defaultComponentResolvers.marks,
       ...componentOverrides?.marks,

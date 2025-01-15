@@ -45,7 +45,7 @@ export interface AssetReference extends Reference {
 }
 
 /**
- * Represents a mark definition for a link to an external URL in rich text element.
+ * Represents a mark definition for a link to an external URL in rich text element. This includes asset, phone and email links.
  */
 export interface PortableTextExternalLink extends PortableTextMarkDefinition {
   _type: "link";

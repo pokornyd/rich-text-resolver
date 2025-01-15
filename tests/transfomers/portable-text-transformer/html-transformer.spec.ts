@@ -1,5 +1,5 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import { escapeHTML, PortableTextTypeComponentOptions } from "@portabletext/to-html";
+import { PortableTextTypeComponentOptions } from "@portabletext/to-html";
 
 import {
   ArbitraryTypedObject,
@@ -14,7 +14,7 @@ import {
 } from "../../../src";
 import { browserParse } from "../../../src/parser/browser";
 import { nodeParse } from "../../../src/parser/node";
-import { PortableTextHtmlResolvers, resolveImage, resolveTable, toHTML } from "../../../src/utils/resolution/html";
+import { PortableTextHtmlResolvers, resolveImage, toHTML } from "../../../src/utils/resolution/html";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -105,19 +105,12 @@ describe("HTML transformer", () => {
               return `Resolver for type ${linkedItem.system.type} not implemented.`;
           }
         },
-        table: ({
-          value,
-        }: PortableTextTypeComponentOptions<PortableTextTable>) => resolveTable(value, toHTML),
       },
       marks: {
         contentItemLink: ({
           children,
           value,
         }) => `<a href="https://website.com/${value?.reference._ref}">${children}</a>`,
-        link: ({
-          children,
-          value,
-        }) => `<a href=${escapeHTML(value?.href!)}">${children}</a>`,
         sup: ({
           children,
           value,
@@ -167,7 +160,7 @@ describe("HTML transformer", () => {
     );
   });
 
-  it("resolves a table", () => {
+  it("resolves a table using default fallback", () => {
     transformAndCompare(
       "<table><tbody>\n  <tr><td>Ivan</td><td>Jiri</td></tr>\n  <tr><td>Ondra</td><td>Dan</td></tr>\n</tbody></table>",
     );
@@ -202,6 +195,12 @@ describe("HTML transformer", () => {
     transformAndCompare(
       "<p><sup>Superscript text</sup></p>",
       customResolvers,
+    );
+  });
+
+  it("resolves a link using default fallback", () => {
+    transformAndCompare(
+      "<p><a href=\"https://website.com/12345\" target=\"_blank\" rel=\"noopener noreferrer\">link</a></p>",
     );
   });
 });

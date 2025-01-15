@@ -4,10 +4,8 @@ import React from "react";
 
 import { transformToPortableText } from "../../src";
 import {
-  ImageComponent,
   PortableText,
   PortableTextReactResolvers,
-  TableComponent,
 } from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
@@ -48,24 +46,8 @@ const portableTextComponents: PortableTextReactResolvers = {
       const item = dummyRichText.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    table: ({ value }) => <TableComponent {...value} />,
-    image: ({ value }) => <ImageComponent {...value} />,
   },
   marks: {
-    link: ({ value, children }) => {
-      const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
-      return (
-        <a
-          href={value?.href}
-          target={target}
-          rel={value?.rel}
-          title={value?.title}
-          data-new-window={value?.["data-new-window"]}
-        >
-          {children}
-        </a>
-      );
-    },
     contentItemLink: ({ value, children }) => {
       const item = dummyRichText.linkedItems.find(item => item.system.id === value?.reference._ref);
       return (
@@ -134,8 +116,8 @@ describe("portable text React resolver", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("renders sub and sup marks using custom implementation", () => {
-    const customComponents: PortableTextReactResolvers = {
+  it("renders sub and sup marks using custom resolvers", () => {
+    const customComponentResolvers: PortableTextReactResolvers = {
       ...portableTextComponents,
       marks: {
         ...portableTextComponents.marks,
@@ -148,7 +130,25 @@ describe("portable text React resolver", () => {
       `
       <p><sub>subscript text</sub><sup>superscript text</sup></p>
     `,
-      customComponents,
+      customComponentResolvers,
+    );
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders a link using custom resolvers", () => {
+    const customComponentResolvers: PortableTextReactResolvers = {
+      ...portableTextComponents,
+      marks: {
+        ...portableTextComponents.marks,
+        link: ({ value, children }) => <a href={value?.href}>{children}</a>,
+      },
+    };
+
+    const tree = renderPortableText(
+      `
+      <p><a href="http://google.com" title="linktitle" target="_blank">external link</a></p>
+    `,
+      customComponentResolvers,
     );
     expect(tree).toMatchSnapshot();
   });
