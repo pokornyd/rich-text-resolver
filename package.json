@@ -23,9 +23,9 @@
       "import": "./dist/esnext/src/parser/index.js",
       "require": "./dist/cjs/src/parser/index.js"
     },
-    "./transformers/json": {
-      "import": "./dist/esnext/src/transformers/json-transformer/json-transformer.js",
-      "require": "./dist/cjs/src/transformers/json-transformer/json-transformer.js"
+    "./transformers/html": {
+      "import": "./dist/esnext/src/transformers/html-transformer/html-transformer.js",
+      "require": "./dist/cjs/src/transformers/html-transformer/html-transformer.js"
     },
     "./transformers/portable-text": {
       "import": "./dist/esnext/src/transformers/portable-text-transformer/portable-text-transformer.js",

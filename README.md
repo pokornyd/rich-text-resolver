@@ -25,9 +25,9 @@ Install the package via npm
 
 ![Module API](media/resolver-api-overview.png)
 
-### Parsing rich text HTML to a JSON tree
+### Parsing rich text HTML to an array of simplified nodes
 
-The tool provides environment-aware (browser or Node.js) `parseHtml` function to transform HTML into an array of simplified JSON trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [JSON transformer docs](docs/index.md) for further information.
+The tool provides environment-aware (browser or Node.js) `parseHtml` function to transform HTML into an array of `DomNode` trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [HTML transformer docs](docs/index.md) for further information.
 
 ### Portable text resolution
 
@@ -291,8 +291,7 @@ Package exports a `traversePortableText` method, which accepts an array of `Port
   const richTextContent =
     `<p>Here is an <a data-item-id="12345"><strong>internal link</strong></a> in some text.</p>`;
 
-  const tree = parseHtml(richTextContent);
-  const portableText = transformToPortableText(tree);
+  const portableText = transformToPortableText(richTextContent);
   
   // your logic to modify the portable text
 
@@ -302,7 +301,7 @@ Package exports a `traversePortableText` method, which accepts an array of `Port
 > [!IMPORTANT]  
 > MAPI transformation logic expects Portable Text that had been previously created from management API rich text and performs only minimal validation. It doesn't provide implicit transformation capabilities from other formats (such as delivery API).
 >
-> If you're interested in transforming external HTML or rich text to a MAPI compatible format, see [JSON transformer docs](docs/index.md) instead.
+> If you're interested in transforming external HTML or rich text to a MAPI compatible format, see [HTML transformer docs](docs/index.md) instead.
 
 [last-commit]: https://img.shields.io/github/last-commit/kontent-ai/rich-text-resolver-js?style=for-the-badge
 [contributors-shield]: https://img.shields.io/github/contributors/kontent-ai/rich-text-resolver-js?style=for-the-badge

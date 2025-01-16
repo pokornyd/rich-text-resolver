@@ -1,4 +1,4 @@
-# JSON Transformers
+# HTML Transformers
 
 This module provides an environment-aware (browser or Node.js) `parseHtml` function to convert an HTML string into an array of nodes. The resulting array can subsequently be modified by one of the provided functions and transformed back to HTML.
 
