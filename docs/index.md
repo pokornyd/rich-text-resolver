@@ -1,19 +1,19 @@
 # HTML Transformers
 
-This module provides an environment-aware (browser or Node.js) `parseHtml` function to convert an HTML string into an array of nodes. The resulting array can subsequently be modified by one of the provided functions and transformed back to HTML.
+This module provides an environment-aware (browser or Node.js) `parseHTML` function to convert an HTML string into an array of nodes. The resulting array can subsequently be modified by one of the provided functions and transformed back to HTML.
 
 This toolset can be particularly useful for transforming rich text or HTML content from external sources into a valid Kontent.ai rich text format in migration scenarios. 
 
 ## Usage
 
-Pass stringified HTML to `parseHtml` function to get an array of `DomNode` objects:
+Pass stringified HTML to `parseHTML` function to get an array of `DomNode` objects:
 
 ```ts
-import { parseHtml } from '@kontent-ai/rich-text-resolver';
+import { parseHTML } from '@kontent-ai/rich-text-resolver';
 
 const rawHtml = `<p>Hello <strong>World!</strong></p>`;
 
-const parsedNodes = parseHtml(rawHtml);
+const parsedNodes = parseHTML(rawHtml);
 ```
 
 `DomNode` is a union of `DomHtmlNode` and `DomTextNode`, defined as follows:
@@ -36,15 +36,15 @@ export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
 
 ### HTML Transformation
 
-To transform the `DomNode` array back to HTML, you can use `nodesToHtml` function or its async variant `nodesToHtmlAsync`. The function accepts the parsed array and a `transformers` object, which defines custom transformation for each HTML node. Text nodes are transformed automatically. A wildcard `*` can be used to define fallback transformation for remaining tags. If no explicit or wildcard transformation is provided, default resolution is used.
+To transform the `DomNode` array back to HTML, you can use `nodesToHTML` function or its async variant `nodesToHTMLAsync`. The function accepts the parsed array and a `transformers` object, which defines custom transformation for each HTML node. Text nodes are transformed automatically. A wildcard `*` can be used to define fallback transformation for remaining tags. If no explicit or wildcard transformation is provided, default resolution is used.
 
 #### Basic
 Basic example of HTML transformation, removing HTML attribute `style` and transforming `b` tag to `strong`:
 ```ts
-import { nodesToHtml, NodeToHtmlMap, parseHtml } from '@kontent-ai/rich-text-resolver';
+import { nodesToHTML, NodeToHtmlMap, parseHTML } from '@kontent-ai/rich-text-resolver';
 
 const rawHtml = `<p style="color:red">Hello <b>World!</b></p>`;
-const parsedNodes = parseHtml(rawHtml);
+const parsedNodes = parseHTML(rawHtml);
 
 const transformers: NodeToHtmlMap = {
   // children contains already transformed child nodes
@@ -55,17 +55,17 @@ const transformers: NodeToHtmlMap = {
 };
 
 // restores original HTML with attributes
-const defaultOutput = nodesToHtml(parsedNodes, {});
+const defaultOutput = nodesToHTML(parsedNodes, {});
 console.log(defaultOutput); // <p style="color:red">Hello <b>World!</b></p>
 
 // b is converted to strong, wildcard transformation is used for remaining nodes
-const customOutput = nodesToHtml(parsedNodes, transformers);
+const customOutput = nodesToHTML(parsedNodes, transformers);
 console.log(customOutput); // <p>Hello <strong>World!</strong></p>
 ```
 
 #### Advanced
 
-For more complex scenarios, optional context and its handler can be passed to `nodesToHtml` as third and fourth parameters respectively.
+For more complex scenarios, optional context and its handler can be passed to `nodesToHTML` as third and fourth parameters respectively.
 
 The context can then be accessed in individual transformations, defined in the `transformers` object. If you need to dynamically update the context, you may optionally provide a context handler, which accepts current node and context as parameters and passes a cloned, modified context for child node processing, ensuring each node gets valid contextual data.
 
@@ -76,18 +76,18 @@ In Kontent.ai rich text, images are represented by a `<figure>` tag, with `data-
 1. Load the binaries from `src` attribute and create an asset in Kontent.ai asset library
 2. Use the asset ID from previous step to reference the asset in the transformed `<figure>` tag.
 
-For that matter, we will use `nodesToHtmlAsync` method and pass an instance of JS SDK `ManagementClient` as context, to perform the asset creation. Since we don't need to modify the client in any way, we can omit the context handler for this example.
+For that matter, we will use `nodesToHTMLAsync` method and pass an instance of JS SDK `ManagementClient` as context, to perform the asset creation. Since we don't need to modify the client in any way, we can omit the context handler for this example.
 
 ```ts
 import { ManagementClient } from "@kontent-ai/management-sdk";
 import {
-  parseHtml,
+  parseHTML,
   AsyncNodeToHtmlMap,
-  nodesToHtmlAsync,
+  nodesToHTMLAsync,
 } from "@kontent-ai/rich-text-resolver";
 
 const input = `<img src="https://website.com/image.jpg" alt="some image">`;
-const nodes = parseHtml(input);
+const nodes = parseHTML(input);
 
 // type parameter specifies context type, in this case ManagementClient
 const transformers: AsyncNodeToHtmlMap<ManagementClient> = {
@@ -129,7 +129,7 @@ const transformers: AsyncNodeToHtmlMap<ManagementClient> = {
     }),
 };
 
-const richText = nodesToHtmlAsync(
+const richText = nodesToHTMLAsync(
   nodes,
   transformers,
   new ManagementClient({
@@ -153,10 +153,10 @@ In this case, we can store depth as a context and increment it via handler anyti
 
 ```ts
 import {
-  nodesToHtml,
+  nodesToHTML,
   DomNode,
   NodeToHtmlMap,
-  parseHtml,
+  parseHTML,
 } from "@kontent-ai/rich-text-resolver";
 
 type DepthContext = {
@@ -170,7 +170,7 @@ const input = `
     <div>Another top-level div <span>with text</span></div>
     `;
 
-const parsedNodes = parseHtml(input);
+const parsedNodes = parseHTML(input);
 
 // handler increments depth whenever we encounter a div or span tag node.
 const depthHandler = (node: DomNode, context: DepthContext): DepthContext =>
@@ -189,7 +189,7 @@ const transformers: NodeToHtmlMap<DepthContext> = {
     context?.divSpanDepth === 1 ? `<p>${children}</p>` : children,
 };
 
-const output = nodesToHtml(
+const output = nodesToHTML(
   parsedNodes,
   transformers,
   { divSpanDepth: 0 }, // initial context

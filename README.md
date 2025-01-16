@@ -27,7 +27,7 @@ Install the package via npm
 
 ### Parsing rich text HTML to an array of simplified nodes
 
-The tool provides environment-aware (browser or Node.js) `parseHtml` function to transform HTML into an array of `DomNode` trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [HTML transformer docs](docs/index.md) for further information.
+The tool provides environment-aware (browser or Node.js) `parseHTML` function to transform HTML into an array of `DomNode` trees. Any valid HTML is parsed, including all attributes. Together with built-in transformation methods, this tool is a suitable option for processing HTML and rich text from external sources, to make it compatible with Kontent.ai rich text format. See dedicated [HTML transformer docs](docs/index.md) for further information.
 
 ### Portable text resolution
 

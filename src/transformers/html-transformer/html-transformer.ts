@@ -47,7 +47,7 @@ export type AsyncNodeToHtmlMap<TContext = unknown> = Record<string, NodeToHtmlAs
  * - The function traverses and transforms the nodes in a depth-first manner.
  * - If a `contextHandler` is provided, it updates the context before passing it to child nodes traversal.
  */
-export const nodesToHtml = <TContext>(
+export const nodesToHTML = <TContext>(
   nodes: DomNode[],
   transformers: NodeToHtmlMap<TContext>,
   context: TContext = {} as TContext,
@@ -58,7 +58,7 @@ export const nodesToHtml = <TContext>(
       .with({ type: "text" }, textNode => textNode.content)
       .with({ type: "tag" }, tagNode => {
         const updatedContext = contextHandler?.(tagNode, context) ?? context;
-        const children = nodesToHtml(tagNode.children, transformers, updatedContext, contextHandler);
+        const children = nodesToHTML(tagNode.children, transformers, updatedContext, contextHandler);
         const transformer = transformers[tagNode.tagName] ?? transformers["*"];
 
         return (
@@ -88,7 +88,7 @@ export const nodesToHtml = <TContext>(
  * - The function traverses and transforms the nodes in a depth-first manner.
  * - If a `contextHandler` is provided, it updates the context before passing it to child nodes traversal.
  */
-export const nodesToHtmlAsync = async <TContext>(
+export const nodesToHTMLAsync = async <TContext>(
   nodes: DomNode[],
   transformers: AsyncNodeToHtmlMap<TContext>,
   context: TContext = {} as TContext,
@@ -101,7 +101,7 @@ export const nodesToHtmlAsync = async <TContext>(
           .with({ type: "text" }, textNode => textNode.content)
           .with({ type: "tag" }, async tagNode => {
             const updatedContext = contextHandler?.(tagNode, context) ?? context;
-            const children = await nodesToHtmlAsync(tagNode.children, transformers, updatedContext, contextHandler);
+            const children = await nodesToHTMLAsync(tagNode.children, transformers, updatedContext, contextHandler);
             const transformer = transformers[tagNode.tagName] ?? transformers["*"];
 
             return (

@@ -4,7 +4,7 @@ import { nodeParse } from "./node/index.js";
 
 export * from "./parser-models.js";
 
-export const parseHtml = (htmlInput: string) =>
+export const parseHTML = (htmlInput: string) =>
   runtimeEnvironment.isBrowser
     ? browserParse(htmlInput)
     : nodeParse(htmlInput);

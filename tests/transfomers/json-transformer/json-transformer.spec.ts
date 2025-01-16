@@ -1,19 +1,19 @@
-import { AsyncNodeToHtmlMap, DomNode, nodesToHtml, nodesToHtmlAsync, NodeToHtmlMap, parseHtml } from "../../../src";
+import { AsyncNodeToHtmlMap, DomNode, nodesToHTML, nodesToHTMLAsync, NodeToHtmlMap, parseHTML } from "../../../src";
 
-describe("nodesToHtml and nodesToHtmlAsync", () => {
+describe("nodesToHTML and nodesToHTMLAsync", () => {
   const input = "<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>";
-  const nodes = parseHtml(input);
+  const nodes = parseHTML(input);
 
   test("should convert nodes to HTML with default resolution (without any transformers, sync)", () => {
     const transformers: NodeToHtmlMap = {};
-    const html = nodesToHtml(nodes, transformers);
+    const html = nodesToHTML(nodes, transformers);
 
     expect(html).toEqual(input);
   });
 
   test("should convert nodes to HTML with default resolution (without any transformes, async)", async () => {
     const transformers: AsyncNodeToHtmlMap = {};
-    const html = await nodesToHtmlAsync(nodes, transformers);
+    const html = await nodesToHTMLAsync(nodes, transformers);
 
     expect(html).toEqual(input);
   });
@@ -31,7 +31,7 @@ describe("nodesToHtml and nodesToHtmlAsync", () => {
       },
     };
 
-    const html = nodesToHtml(nodes, transformers);
+    const html = nodesToHTML(nodes, transformers);
 
     expect(html).toBe(
       `<p>Hello <b>World</b>!</p><p>Another <em data-custom="yes">paragraph</em> with a nested <span>span</span></p>`,
@@ -43,7 +43,7 @@ describe("nodesToHtml and nodesToHtmlAsync", () => {
       span: (_, children) => children,
     };
 
-    const html = nodesToHtml(nodes, transformers);
+    const html = nodesToHTML(nodes, transformers);
 
     expect(html).toBe("<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested span</p>");
   });
@@ -61,14 +61,14 @@ describe("nodesToHtml and nodesToHtmlAsync", () => {
       },
     };
 
-    const resultHtml = await nodesToHtmlAsync(nodes, asyncTransformers);
+    const resultHtml = await nodesToHTMLAsync(nodes, asyncTransformers);
 
     expect(resultHtml).toBe(
       `<p>Hello <strong data-async="1">World</strong>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>`,
     );
   });
 
-  test("should handle context updates in nodesToHtml", () => {
+  test("should handle context updates in nodesToHTML", () => {
     const transformers: NodeToHtmlMap<{ color: string }> = {
       p: (_, children, ctx) => {
         return `<p style="color:${ctx?.color}">${children}</p>`;
@@ -88,7 +88,7 @@ describe("nodesToHtml and nodesToHtmlAsync", () => {
 
     const initialContext = { color: "red" };
 
-    const html = nodesToHtml(nodes, transformers, initialContext, contextHandler);
+    const html = nodesToHTML(nodes, transformers, initialContext, contextHandler);
 
     // when span is encountered, context color is changed to blue
     expect(html).toBe(

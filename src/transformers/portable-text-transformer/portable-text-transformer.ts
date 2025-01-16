@@ -6,7 +6,7 @@ import {
   DomTextNode,
   ImgElementAttributes,
   ObjectElementAttributes,
-  parseHtml,
+  parseHTML,
 } from "../../parser/index.js";
 import {
   BlockElement,
@@ -288,7 +288,7 @@ const ignoreProcessing: NodeToPortableText<DomHtmlNode> = (_, children) => child
 export const transformToPortableText = (
   richText: string,
 ): PortableTextObject[] => {
-  const parsedNodes = parseHtml(richText);
+  const parsedNodes = parseHTML(richText);
 
   return transformNodes(parsedNodes, transformers, { depth: 0, type: "unknown" }) as PortableTextObject[];
 };
