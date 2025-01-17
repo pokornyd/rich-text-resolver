@@ -24,39 +24,34 @@ import {
 } from "../transformers/transformer-models.js";
 
 /**
- * Recursively traverses and optionally transforms a Portable Text structure using a provided
+ * Recursively traverses and transforms a Portable Text structure using a provided
  * callback function. The callback is applied to each node in the structure. If the callback
  * does not modify a node, the original node is used.
  *
  * @template T The type of the Portable Text nodes, defaulting to PortableTextObject.
  * @param {T[]} nodes - Array of Portable Text objects.
  *   It can be a default Portable Text object or a custom type that extends from it.
- * @param {(object: T) => ArbitraryTypedObject | null} callback - A callback function
+ * @param {(object: T) => ArbitraryTypedObject} callback - A callback function
  *   invoked for each node in the Portable Text structure. It can return a modified version
  *   of the node or `null` if no modifications are to be made.
- * @returns {ArbitraryTypedObject} - A modified copy of the original portable text structure.
+ * @returns {ArbitraryTypedObject} - Modified clone of the original Portable Text array.
  */
 export const traversePortableText = <
   T extends ArbitraryTypedObject = PortableTextObject,
 >(
   nodes: T[],
-  callback: (node: T) => ArbitraryTypedObject | null,
+  callback: (node: T) => ArbitraryTypedObject,
 ): ArbitraryTypedObject[] => {
   return nodes.map((node) => {
-    // Apply the callback to the current node. If it returns null, clone the node.
-    const traversedNode = callback(node) ?? node;
+    const transformed = callback(node);
 
-    Object.keys(traversedNode).forEach((key) => {
-      // marks is an array of strings that shouldn't be modified, therefore omit from traversal
-      if (Array.isArray(traversedNode[key]) && key !== "marks") {
-        traversedNode[key] = traversePortableText(
-          traversedNode[key],
-          callback,
-        );
+    Object.entries(transformed).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        transformed[key] = traversePortableText(value as T[], callback);
       }
     });
 
-    return traversedNode;
+    return transformed;
   });
 };
 

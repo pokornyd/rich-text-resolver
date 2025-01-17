@@ -301,7 +301,7 @@ describe("Portable Text Transformer", () => {
     const processBlock = (block: PortableTextItem) =>
       block._type === "componentOrItem"
         ? { ...block, additionalData: "data" }
-        : null;
+        : block;
 
     const { result } = transformInput(input);
     const modifiedResult = traversePortableText(result, processBlock);
@@ -313,7 +313,7 @@ describe("Portable Text Transformer", () => {
     const input = `<table><tbody><tr><td><a href="http://google.com">tablelink</a></td></tr></tbody></table>`;
 
     const processBlock = (block: PortableTextItem) =>
-      block._type === "link" ? { ...block, additionalData: "data" } : null;
+      block._type === "link" ? { ...block, additionalData: "data" } : block;
 
     const { result } = transformInput(input);
     const transformedResult = traversePortableText(result, processBlock);

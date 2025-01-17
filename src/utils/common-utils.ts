@@ -28,14 +28,11 @@ export const isTableCell = (node: DomHtmlNode): boolean => node.tagName === "td"
 
 export const isLineBreak = (node: DomHtmlNode): boolean => node.tagName === "br";
 
-export const isBlockElement = (node: DomHtmlNode): boolean =>
-  blockElements.includes(node.tagName as BlockElement);
+export const isBlockElement = (node: DomHtmlNode): boolean => blockElements.includes(node.tagName as BlockElement);
 
-export const isValidElement = (node: DomHtmlNode): boolean =>
-  validElements.includes(node.tagName as ValidElement);
+export const isValidElement = (node: DomHtmlNode): boolean => validElements.includes(node.tagName as ValidElement);
 
-export const isMarkElement = (node: DomHtmlNode): boolean =>
-  markElements.includes(node.tagName as MarkElement);
+export const isMarkElement = (node: DomHtmlNode): boolean => markElements.includes(node.tagName as MarkElement);
 
 /**
  * Returns `true` for text nodes and type guards the node as `DomTextNode`.

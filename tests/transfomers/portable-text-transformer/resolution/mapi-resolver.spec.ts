@@ -1,5 +1,5 @@
-import { ArbitraryTypedObject, PortableTextSpan, transformToPortableText, traversePortableText } from "../../../src";
-import { toManagementApiFormat } from "../../../src/utils/resolution/mapi";
+import { ArbitraryTypedObject, PortableTextSpan, transformToPortableText, traversePortableText } from "../../../../src";
+import { toManagementApiFormat } from "../../../../src/utils/resolution/mapi";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {

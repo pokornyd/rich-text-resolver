@@ -2,8 +2,8 @@ import { PortableText, PortableTextComponentProps, PortableTextComponents, toPla
 import { mount } from "@vue/test-utils";
 import { h } from "vue";
 
-import { PortableTextImage, PortableTextTable, transformToPortableText } from "../../../src";
-import { resolveImage, resolveTable } from "../../../src/utils/resolution/vue";
+import { PortableTextImage, PortableTextTable, transformToPortableText } from "../../../../src";
+import { resolveImage, resolveTable } from "../../../../src/utils/resolution/vue";
 
 const components: PortableTextComponents = {
   types: {

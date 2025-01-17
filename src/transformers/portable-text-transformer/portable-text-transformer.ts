@@ -1,4 +1,4 @@
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 
 import { parseHTML } from "../../parser/index.js";
 import {
@@ -87,7 +87,7 @@ const transformNodes = (
       .exhaustive()
   );
 
-const categorizeItems = (items: PortableTextItem[]) => {
+export const categorizeItems = (items: PortableTextItem[]) => {
   const initialAcc = {
     links: [] as PortableTextExternalLink[],
     contentItemLinks: [] as PortableTextItemLink[],
@@ -104,47 +104,45 @@ const categorizeItems = (items: PortableTextItem[]) => {
   };
 
   return items.reduce((acc, item) => {
-    switch (item._type) {
-      case "link":
-        acc.links.push(item);
-        break;
-      case "contentItemLink":
-        acc.contentItemLinks.push(item);
-        break;
-      case "span":
-        acc.spans.push(item);
-        break;
-      case "mark":
-        acc.marks.push(item);
-        break;
-      case "cell":
-        acc.cells.push(item);
-        break;
-      case "row":
-        acc.rows.push(item);
-        break;
-      case "image":
-        acc.images.push(item);
-        break;
-      case "componentOrItem":
-        acc.componentsOrItems.push(item);
-        break;
-      case "table":
-        acc.tables.push(item);
-        break;
-      case "reference":
-        acc.references.push(item);
-        break;
-      case "block":
-        if (item.listItem) {
-          acc.listBlocks.push(item as PortableTextStrictListItemBlock);
-        } else {
-          acc.blocks.push(item as PortableTextStrictBlock);
-        }
-        break;
-      default:
-        throw new Error(`Unknown type encountered.`);
-    }
+    match(item)
+      .with({ _type: "block", listItem: P.string }, (listBlock) => {
+        acc.listBlocks.push(listBlock as PortableTextStrictListItemBlock);
+      })
+      .with({ _type: "block" }, (block) => {
+        acc.blocks.push(block);
+      })
+      .with({ _type: "link" }, (link) => {
+        acc.links.push(link);
+      })
+      .with({ _type: "contentItemLink" }, (contentItemLink) => {
+        acc.contentItemLinks.push(contentItemLink);
+      })
+      .with({ _type: "span" }, (span) => {
+        acc.spans.push(span);
+      })
+      .with({ _type: "mark" }, (mark) => {
+        acc.marks.push(mark);
+      })
+      .with({ _type: "cell" }, (cell) => {
+        acc.cells.push(cell);
+      })
+      .with({ _type: "row" }, (row) => {
+        acc.rows.push(row);
+      })
+      .with({ _type: "image" }, (image) => {
+        acc.images.push(image);
+      })
+      .with({ _type: "componentOrItem" }, (componentOrItem) => {
+        acc.componentsOrItems.push(componentOrItem);
+      })
+      .with({ _type: "table" }, (table) => {
+        acc.tables.push(table);
+      })
+      .with({ _type: "reference" }, (reference) => {
+        acc.references.push(reference);
+      })
+      .exhaustive();
+
     return acc;
   }, initialAcc);
 };

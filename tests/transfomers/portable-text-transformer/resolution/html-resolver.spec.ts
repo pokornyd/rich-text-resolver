@@ -11,8 +11,8 @@ import {
   PortableTextMark,
   PortableTextTable,
   transformToPortableText,
-} from "../../../src";
-import { PortableTextHtmlResolvers, resolveImage, toHTML } from "../../../src/utils/resolution/html";
+} from "../../../../src";
+import { PortableTextHtmlResolvers, resolveImage, toHTML } from "../../../../src/utils/resolution/html";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -39,7 +39,7 @@ const customResolvers: Partial<CustomResolvers> = {
   sup: (_, children) => `<sup custom-attribute="value">${children}</sup>`,
 };
 
-describe("HTML transformer", () => {
+describe("HTML resolution", () => {
   let richTextInput: Elements.RichTextElement;
 
   beforeEach(() => {
