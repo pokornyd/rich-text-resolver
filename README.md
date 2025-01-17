@@ -252,6 +252,9 @@ Package exports a `traversePortableText` method, which accepts an array of `Port
       }
 
       // logic for modifying other object types...
+
+        // return original block if no modifications required
+        return block;
     }
 
     const portableText = transformToPortableText(input);
