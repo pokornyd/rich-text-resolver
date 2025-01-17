@@ -13,7 +13,9 @@ import {
   markElements,
   textStyleElements,
   validElements,
-} from "../index.js";
+} from "../utils/constants.js";
+
+type LiteralOrString<T extends string> = T | (string & {});
 
 /**
  * A reference to various Kontent.ai objects in rich text
@@ -126,8 +128,7 @@ export interface PortableTextComponentOrItem extends ArbitraryTypedObject {
  */
 export interface PortableTextMark extends ArbitraryTypedObject {
   _type: "mark";
-  value: TextStyleElement | ShortGuid;
-  childCount: number;
+  value: LiteralOrString<TextStyleElement>; // value can be a shortguid (string) if a mark references a link
 }
 
 /**
