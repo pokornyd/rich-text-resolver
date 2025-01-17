@@ -1,11 +1,5 @@
-import {
-  convertDomNodeAttributes,
-  getAllNewLineAndWhiteSpace,
-  isElementNode,
-  isRootNode,
-  isTextNode,
-  throwError,
-} from "../../utils/index.js";
+import { convertDomNodeAttributes, isElementNode, isRootNode, isTextNode } from "../../utils/browser-parser-utils.js";
+import { getAllNewLineAndWhiteSpace, throwError } from "../../utils/common-utils.js";
 import { DomNode } from "../parser-models.js";
 
 export const parse = (input: string): DomNode[] => {

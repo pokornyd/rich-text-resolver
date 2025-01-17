@@ -13,7 +13,6 @@ import {
   PortableTextExternalLink,
   PortableTextImage,
   PortableTextItemLink,
-  PortableTextMark,
   PortableTextObject,
   PortableTextStrictBlock,
   PortableTextStrictListItemBlock,
@@ -22,8 +21,7 @@ import {
   PortableTextTableRow,
   Reference,
   ShortGuid,
-  TextStyleElement,
-} from "../transformers/index.js";
+} from "../transformers/transformer-models.js";
 
 /**
  * Recursively traverses and optionally transforms a Portable Text structure using a provided
@@ -168,17 +166,6 @@ export const createTableCell = (
   content: content ?? [],
 });
 
-export const createMark = (
-  guid: ShortGuid,
-  value: TextStyleElement | string,
-  childCount: number,
-): PortableTextMark => ({
-  _type: "mark",
-  _key: guid,
-  value: value,
-  childCount: childCount,
-});
-
 export const createComponentOrItemBlock = (
   guid: ShortGuid,
   reference: Reference,
@@ -189,7 +176,5 @@ export const createComponentOrItemBlock = (
   dataType,
   component: reference,
 });
-
-export const getAllNewLineAndWhiteSpace = /\n\s*/g;
 
 export const { randomUUID } = new ShortUniqueId({ length: 10 });

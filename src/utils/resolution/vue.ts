@@ -4,8 +4,8 @@ import {
   PortableTextTable,
   PortableTextTableCell,
   PortableTextTableRow,
-  toHTML,
-} from "../../../index.js";
+} from "../../transformers/transformer-models.js";
+import { toHTML } from "./html.js";
 
 /**
  * Renders a portable text table to a Vue virtual DOM node.

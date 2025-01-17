@@ -13,8 +13,8 @@ import {
   PortableTextMark,
   PortableTextObject,
   PortableTextTable,
-  throwError,
-} from "../../index.js";
+} from "../../transformers/transformer-models.js";
+import { throwError } from "../common-utils.js";
 import { resolveTable } from "./html.js";
 
 const toManagementApiImage = (image: PortableTextImage) => createFigureTag(image.asset._ref);

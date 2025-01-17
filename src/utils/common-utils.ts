@@ -1,18 +1,14 @@
 import { match, P } from "ts-pattern";
 
 import {
-  BlockElement,
-  blockElements,
   DomHtmlNode,
   DomNode,
   DomTextNode,
   ItemLinkElementAttributes,
-  MarkElement,
-  markElements,
   ObjectElementAttributes,
-  ValidElement,
-  validElements,
-} from "../index.js";
+} from "../parser/parser-models.js";
+import { BlockElement, MarkElement, ValidElement } from "../transformers/transformer-models.js";
+import { blockElements, markElements, validElements } from "../utils/constants.js";
 
 export const isOrderedListBlock = (node: DomHtmlNode): boolean => node.tagName === "ol";
 
@@ -33,13 +29,13 @@ export const isTableCell = (node: DomHtmlNode): boolean => node.tagName === "td"
 export const isLineBreak = (node: DomHtmlNode): boolean => node.tagName === "br";
 
 export const isBlockElement = (node: DomHtmlNode): boolean =>
-  isElement(node) && blockElements.includes(node.tagName as BlockElement);
+  blockElements.includes(node.tagName as BlockElement);
 
 export const isValidElement = (node: DomHtmlNode): boolean =>
-  isElement(node) && validElements.includes(node.tagName as ValidElement);
+  validElements.includes(node.tagName as ValidElement);
 
 export const isMarkElement = (node: DomHtmlNode): boolean =>
-  isElement(node) && markElements.includes(node.tagName as MarkElement);
+  markElements.includes(node.tagName as MarkElement);
 
 /**
  * Returns `true` for text nodes and type guards the node as `DomTextNode`.
@@ -148,3 +144,5 @@ type ReferenceData = {
   reference: string;
   refType: "id" | "external-id" | "codename";
 };
+
+export const getAllNewLineAndWhiteSpace = /\n\s*/g;

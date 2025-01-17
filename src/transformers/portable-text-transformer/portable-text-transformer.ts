@@ -1,13 +1,37 @@
 import { match } from "ts-pattern";
 
+import { parseHTML } from "../../parser/index.js";
 import {
   DomHtmlNode,
   DomNode,
   DomTextNode,
   ImgElementAttributes,
   ObjectElementAttributes,
-  parseHTML,
-} from "../../parser/index.js";
+} from "../../parser/parser-models.js";
+import {
+  getAssetReferenceData,
+  getItemLinkReferenceData,
+  getItemOrComponentReferenceData,
+  isElement,
+  isExternalLink,
+  isItemLink,
+  isListBlock,
+  throwError,
+} from "../../utils/common-utils.js";
+import { blockElements, ignoredElements, textStyleElements } from "../../utils/constants.js";
+import {
+  createBlock,
+  createComponentOrItemBlock,
+  createExternalLink,
+  createImageBlock,
+  createItemLink,
+  createListBlock,
+  createSpan,
+  createTable,
+  createTableCell,
+  createTableRow,
+  randomUUID,
+} from "../../utils/transformer-utils.js";
 import {
   BlockElement,
   IgnoredElement,
@@ -26,31 +50,7 @@ import {
   PortableTextTableRow,
   Reference,
   TextStyleElement,
-} from "../../transformers/index.js";
-import {
-  blockElements,
-  createBlock,
-  createComponentOrItemBlock,
-  createExternalLink,
-  createImageBlock,
-  createItemLink,
-  createListBlock,
-  createSpan,
-  createTable,
-  createTableCell,
-  createTableRow,
-  getAssetReferenceData,
-  getItemLinkReferenceData,
-  getItemOrComponentReferenceData,
-  ignoredElements,
-  isElement,
-  isExternalLink,
-  isItemLink,
-  isListBlock,
-  randomUUID,
-  textStyleElements,
-  throwError,
-} from "../../utils/index.js";
+} from "../transformer-models.js";
 
 type ListContext = {
   depth: number;

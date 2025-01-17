@@ -49,7 +49,7 @@ type ManagementObjectElementAttributes = {
 
 export type AssetLinkElementAttributes = {
   "data-asset-id": string;
-  "data-asset-external-is"?: string;
+  "data-asset-external-id"?: string;
   "data-asset-codename"?: string;
   href?: string;
 };

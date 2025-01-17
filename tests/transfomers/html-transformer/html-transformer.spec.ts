@@ -1,4 +1,11 @@
-import { AsyncNodeToHtmlMap, DomNode, nodesToHTML, nodesToHTMLAsync, NodeToHtmlMap, parseHTML } from "../../../src";
+import {
+  AsyncNodeToHtmlMap,
+  DomNode,
+  nodesToHTML,
+  nodesToHTMLAsync,
+  NodeToHtmlMap,
+  parseHTML,
+} from "../../../src/index.js";
 
 describe("nodesToHTML and nodesToHTMLAsync", () => {
   const input = "<p>Hello <b>World</b>!</p><p>Another <i>paragraph</i> with a nested <span>span</span></p>";

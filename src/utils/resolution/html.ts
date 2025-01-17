@@ -15,7 +15,7 @@ import {
   PortableTextTable,
   PortableTextTableCell,
   PortableTextTableRow,
-} from "../../index.js";
+} from "../../transformers/transformer-models.js";
 
 type RichTextCustomBlocks = Partial<{
   image: PortableTextTypeComponent<PortableTextImage>;
