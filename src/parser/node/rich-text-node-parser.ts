@@ -1,15 +1,15 @@
 import * as NodeHtmlParser from "node-html-parser";
 import { Node } from "node-html-parser";
 
-import { getAllNewLineAndWhiteSpace, throwError } from "../../utils/index.js";
+import { getAllNewLineAndWhiteSpace, throwError } from "../../utils/common-utils.js";
 import { isElementNode, isRootNode, isTextNode } from "../../utils/node-parser-utils.js";
-import { DomNode, ParseResult } from "../parser-models.js";
+import { DomNode } from "../parser-models.js";
 
-export const parse = (input: string): ParseResult => {
+export const parse = (input: string): DomNode[] => {
   const node = NodeHtmlParser.parse(input.replaceAll(getAllNewLineAndWhiteSpace, ""));
 
   return isRootNode(node)
-    ? { children: node.childNodes.flatMap(parseInternal) }
+    ? node.childNodes.flatMap(parseInternal)
     : throwError("Cannot parse node that is not a root");
 };
 

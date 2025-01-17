@@ -1,879 +1,874 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`node parser parses complex rich text into portable text 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [],
-          "tagName": "br",
-          "type": "tag",
-        },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "attributes": {},
-                          "children": [
-                            {
-                              "content": "text",
-                              "type": "text",
-                            },
-                          ],
-                          "tagName": "strong",
-                          "type": "tag",
-                        },
-                      ],
-                      "tagName": "h1",
-                      "type": "tag",
-                    },
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "attributes": {},
-                          "children": [],
-                          "tagName": "br",
-                          "type": "tag",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "a",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "h1",
-                      "type": "tag",
-                    },
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "n",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "h2",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {
-                        "href": "http://google.com",
-                      },
-                      "children": [
-                        {
-                          "content": "tablelink",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "a",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "asdfg",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "attributes": {},
-                          "children": [
-                            {
-                              "content": "list item",
-                              "type": "text",
-                            },
-                            {
-                              "attributes": {},
-                              "children": [
-                                {
-                                  "attributes": {},
-                                  "children": [
-                                    {
-                                      "content": "nested list item",
-                                      "type": "text",
-                                    },
-                                  ],
-                                  "tagName": "li",
-                                  "type": "tag",
-                                },
-                              ],
-                              "tagName": "ul",
-                              "type": "tag",
-                            },
-                          ],
-                          "tagName": "li",
-                          "type": "tag",
-                        },
-                      ],
-                      "tagName": "ul",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "lorem ipsum",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "strong",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "content": "kare",
-                      "type": "text",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {
-                        "data-asset-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
-                        "data-image-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
-                      },
-                      "children": [
-                        {
-                          "attributes": {
-                            "alt": "",
-                            "data-asset-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
-                            "data-image-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
-                            "src": "https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg",
-                          },
-                          "children": [],
-                          "tagName": "img",
-                          "type": "tag",
-                        },
-                      ],
-                      "tagName": "figure",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "content": "dolor ",
-                      "type": "text",
-                    },
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "sit",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "strong",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [],
-                      "tagName": "br",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-          ],
-          "tagName": "tbody",
-          "type": "tag",
-        },
-      ],
-      "tagName": "table",
-      "type": "tag",
-    },
-    {
-      "attributes": {},
-      "children": [
-        {
-          "content": "text",
-          "type": "text",
-        },
-        {
-          "attributes": {
-            "data-new-window": "true",
-            "href": "http://google.com",
-            "rel": "noopener noreferrer",
-            "target": "_blank",
-            "title": "linktitle",
-          },
-          "children": [
-            {
-              "content": "normal and",
-              "type": "text",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "content": "bold",
-                  "type": "text",
-                },
-              ],
-              "tagName": "strong",
-              "type": "tag",
-            },
-            {
-              "content": "link",
-              "type": "text",
-            },
-          ],
-          "tagName": "a",
-          "type": "tag",
-        },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-    {
-      "attributes": {},
-      "children": [
-        {
-          "content": "heading",
-          "type": "text",
-        },
-      ],
-      "tagName": "h1",
-      "type": "tag",
-    },
-    {
-      "attributes": {
-        "data-codename": "test_item",
-        "data-rel": "link",
-        "data-type": "item",
-        "type": "application/kenticocloud",
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [],
+        "tagName": "br",
+        "type": "tag",
       },
-      "children": [],
-      "tagName": "object",
-      "type": "tag",
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "attributes": {},
+                        "children": [
+                          {
+                            "content": "text",
+                            "type": "text",
+                          },
+                        ],
+                        "tagName": "strong",
+                        "type": "tag",
+                      },
+                    ],
+                    "tagName": "h1",
+                    "type": "tag",
+                  },
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "attributes": {},
+                        "children": [],
+                        "tagName": "br",
+                        "type": "tag",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "a",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "h1",
+                    "type": "tag",
+                  },
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "n",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "h2",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {
+                      "href": "http://google.com",
+                    },
+                    "children": [
+                      {
+                        "content": "tablelink",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "a",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "asdfg",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "attributes": {},
+                        "children": [
+                          {
+                            "content": "list item",
+                            "type": "text",
+                          },
+                          {
+                            "attributes": {},
+                            "children": [
+                              {
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "content": "nested list item",
+                                    "type": "text",
+                                  },
+                                ],
+                                "tagName": "li",
+                                "type": "tag",
+                              },
+                            ],
+                            "tagName": "ul",
+                            "type": "tag",
+                          },
+                        ],
+                        "tagName": "li",
+                        "type": "tag",
+                      },
+                    ],
+                    "tagName": "ul",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "lorem ipsum",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "strong",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "content": "kare",
+                    "type": "text",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {
+                      "data-asset-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
+                      "data-image-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "alt": "",
+                          "data-asset-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
+                          "data-image-id": "bc6f3ce5-935d-4446-82d4-ce77436dd412",
+                          "src": "https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg",
+                        },
+                        "children": [],
+                        "tagName": "img",
+                        "type": "tag",
+                      },
+                    ],
+                    "tagName": "figure",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "content": "dolor ",
+                    "type": "text",
+                  },
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "sit",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "strong",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [],
+                    "tagName": "br",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+        ],
+        "tagName": "tbody",
+        "type": "tag",
+      },
+    ],
+    "tagName": "table",
+    "type": "tag",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "content": "text",
+        "type": "text",
+      },
+      {
+        "attributes": {
+          "data-new-window": "true",
+          "href": "http://google.com",
+          "rel": "noopener noreferrer",
+          "target": "_blank",
+          "title": "linktitle",
+        },
+        "children": [
+          {
+            "content": "normal and",
+            "type": "text",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "content": "bold",
+                "type": "text",
+              },
+            ],
+            "tagName": "strong",
+            "type": "tag",
+          },
+          {
+            "content": "link",
+            "type": "text",
+          },
+        ],
+        "tagName": "a",
+        "type": "tag",
+      },
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "content": "heading",
+        "type": "text",
+      },
+    ],
+    "tagName": "h1",
+    "type": "tag",
+  },
+  {
+    "attributes": {
+      "data-codename": "test_item",
+      "data-rel": "link",
+      "data-type": "item",
+      "type": "application/kenticocloud",
     },
-  ],
-}
+    "children": [],
+    "tagName": "object",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses empty rich text 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [],
-          "tagName": "br",
-          "type": "tag",
-        },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-  ],
-}
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [],
+        "tagName": "br",
+        "type": "tag",
+      },
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses external links 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "content": "text",
-          "type": "text",
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "content": "text",
+        "type": "text",
+      },
+      {
+        "attributes": {
+          "data-new-window": "true",
+          "href": "http://google.com",
+          "rel": "noopener noreferrer",
+          "target": "_blank",
+          "title": "linktitle",
         },
-        {
-          "content": "external link/a>",
-          "type": "text",
-        },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-  ],
-}
+        "children": [
+          {
+            "content": "external link",
+            "type": "text",
+          },
+        ],
+        "tagName": "a",
+        "type": "tag",
+      },
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses images 1`] = `
-{
-  "children": [
-    {
-      "attributes": {
-        "data-asset-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-        "data-image-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-      },
-      "children": [
-        {
-          "attributes": {
-            "alt": "",
-            "data-asset-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-            "data-image-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
-            "src": "https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg",
-          },
-          "children": [],
-          "tagName": "img",
-          "type": "tag",
-        },
-      ],
-      "tagName": "figure",
-      "type": "tag",
+[
+  {
+    "attributes": {
+      "data-asset-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
+      "data-image-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
     },
-  ],
-}
+    "children": [
+      {
+        "attributes": {
+          "alt": "",
+          "data-asset-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
+          "data-image-id": "7d866175-d3db-4a02-b0eb-891fb06b6ab0",
+          "src": "https://assets-eu-01.kc-usercontent.com:443/6d864951-9d19-0138-e14d-98ba886a4410/236ecb7f-41e3-40c7-b0db-ea9c2c44003b/sharad-bhat-62p19OGT2qg-unsplash.jpg",
+        },
+        "children": [],
+        "tagName": "img",
+        "type": "tag",
+      },
+    ],
+    "tagName": "figure",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses item links 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {
-            "data-item-id": "23f71096-fa89-4f59-a3f9-970e970944ec",
-            "href": "",
-          },
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "content": "link to an item",
-                  "type": "text",
-                },
-              ],
-              "tagName": "strong",
-              "type": "tag",
-            },
-          ],
-          "tagName": "a",
-          "type": "tag",
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {
+          "data-item-id": "23f71096-fa89-4f59-a3f9-970e970944ec",
+          "href": "",
         },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-  ],
-}
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "content": "link to an item",
+                "type": "text",
+              },
+            ],
+            "tagName": "strong",
+            "type": "tag",
+          },
+        ],
+        "tagName": "a",
+        "type": "tag",
+      },
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses linked items/components 1`] = `
-{
-  "children": [
-    {
-      "attributes": {
-        "data-codename": "test_item",
-        "data-rel": "link",
-        "data-type": "item",
-        "type": "application/kenticocloud",
-      },
-      "children": [],
-      "tagName": "object",
-      "type": "tag",
+[
+  {
+    "attributes": {
+      "data-codename": "test_item",
+      "data-rel": "link",
+      "data-type": "item",
+      "type": "application/kenticocloud",
     },
-  ],
-}
+    "children": [],
+    "tagName": "object",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses lists 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [
-            {
-              "content": "first level bullet",
-              "type": "text",
-            },
-          ],
-          "tagName": "li",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "content": "first level bullet",
-              "type": "text",
-            },
-          ],
-          "tagName": "li",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "content": "nested number in bullet list",
-                  "type": "text",
-                },
-              ],
-              "tagName": "li",
-              "type": "tag",
-            },
-          ],
-          "tagName": "ol",
-          "type": "tag",
-        },
-      ],
-      "tagName": "ul",
-      "type": "tag",
-    },
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [
-            {
-              "content": "first level item",
-              "type": "text",
-            },
-          ],
-          "tagName": "li",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "content": "first level item",
-              "type": "text",
-            },
-          ],
-          "tagName": "li",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "content": "second level item",
-                  "type": "text",
-                },
-              ],
-              "tagName": "li",
-              "type": "tag",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "content": "second level item ",
-                      "type": "text",
-                    },
-                  ],
-                  "tagName": "strong",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "li",
-              "type": "tag",
-            },
-          ],
-          "tagName": "ol",
-          "type": "tag",
-        },
-      ],
-      "tagName": "ol",
-      "type": "tag",
-    },
-  ],
-}
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "content": "first level bullet",
+            "type": "text",
+          },
+        ],
+        "tagName": "li",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "content": "first level bullet",
+            "type": "text",
+          },
+        ],
+        "tagName": "li",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "content": "nested number in bullet list",
+                "type": "text",
+              },
+            ],
+            "tagName": "li",
+            "type": "tag",
+          },
+        ],
+        "tagName": "ol",
+        "type": "tag",
+      },
+    ],
+    "tagName": "ul",
+    "type": "tag",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "content": "first level item",
+            "type": "text",
+          },
+        ],
+        "tagName": "li",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "content": "first level item",
+            "type": "text",
+          },
+        ],
+        "tagName": "li",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "content": "second level item",
+                "type": "text",
+              },
+            ],
+            "tagName": "li",
+            "type": "tag",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "content": "second level item ",
+                    "type": "text",
+                  },
+                ],
+                "tagName": "strong",
+                "type": "tag",
+              },
+            ],
+            "tagName": "li",
+            "type": "tag",
+          },
+        ],
+        "tagName": "ol",
+        "type": "tag",
+      },
+    ],
+    "tagName": "ol",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses nested styles 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [
-            {
-              "content": "all text is bold and last part is ",
-              "type": "text",
-            },
-          ],
-          "tagName": "strong",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "content": "also italic and this is also ",
-                  "type": "text",
-                },
-              ],
-              "tagName": "strong",
-              "type": "tag",
-            },
-          ],
-          "tagName": "em",
-          "type": "tag",
-        },
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "content": "superscript",
-                      "type": "text",
-                    },
-                  ],
-                  "tagName": "sup",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "strong",
-              "type": "tag",
-            },
-          ],
-          "tagName": "em",
-          "type": "tag",
-        },
-      ],
-      "tagName": "p",
-      "type": "tag",
-    },
-  ],
-}
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "content": "all text is bold and last part is ",
+            "type": "text",
+          },
+        ],
+        "tagName": "strong",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "content": "also italic and this is also ",
+                "type": "text",
+              },
+            ],
+            "tagName": "strong",
+            "type": "tag",
+          },
+        ],
+        "tagName": "em",
+        "type": "tag",
+      },
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "content": "superscript",
+                    "type": "text",
+                  },
+                ],
+                "tagName": "sup",
+                "type": "tag",
+              },
+            ],
+            "tagName": "strong",
+            "type": "tag",
+          },
+        ],
+        "tagName": "em",
+        "type": "tag",
+      },
+    ],
+    "tagName": "p",
+    "type": "tag",
+  },
+]
 `;
 
 exports[`node parser parses tables 1`] = `
-{
-  "children": [
-    {
-      "attributes": {},
-      "children": [
-        {
-          "attributes": {},
-          "children": [
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "paragraph 1",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "paragraph 2",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-            {
-              "attributes": {},
-              "children": [
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-                {
-                  "attributes": {},
-                  "children": [
-                    {
-                      "attributes": {},
-                      "children": [
-                        {
-                          "content": "text",
-                          "type": "text",
-                        },
-                      ],
-                      "tagName": "p",
-                      "type": "tag",
-                    },
-                  ],
-                  "tagName": "td",
-                  "type": "tag",
-                },
-              ],
-              "tagName": "tr",
-              "type": "tag",
-            },
-          ],
-          "tagName": "tbody",
-          "type": "tag",
-        },
-      ],
-      "tagName": "table",
-      "type": "tag",
-    },
-  ],
-}
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "paragraph 1",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "paragraph 2",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+          {
+            "attributes": {},
+            "children": [
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+              {
+                "attributes": {},
+                "children": [
+                  {
+                    "attributes": {},
+                    "children": [
+                      {
+                        "content": "text",
+                        "type": "text",
+                      },
+                    ],
+                    "tagName": "p",
+                    "type": "tag",
+                  },
+                ],
+                "tagName": "td",
+                "type": "tag",
+              },
+            ],
+            "tagName": "tr",
+            "type": "tag",
+          },
+        ],
+        "tagName": "tbody",
+        "type": "tag",
+      },
+    ],
+    "tagName": "table",
+    "type": "tag",
+  },
+]
 `;

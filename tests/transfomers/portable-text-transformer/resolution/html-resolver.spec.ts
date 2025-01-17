@@ -1,25 +1,18 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import {
-  escapeHTML,
-  PortableTextMarkComponentOptions,
-  PortableTextOptions,
-  PortableTextTypeComponentOptions,
-  toHTML,
-} from "@portabletext/to-html";
+import { PortableTextTypeComponentOptions } from "@portabletext/to-html";
 
 import {
-  browserParse,
-  nodeParse,
+  ArbitraryTypedObject,
   PortableTextBlock,
-  PortableTextComponent,
+  PortableTextComponentOrItem,
   PortableTextExternalLink,
   PortableTextImage,
-  PortableTextInternalLink,
+  PortableTextItemLink,
+  PortableTextMark,
   PortableTextTable,
-  ResolverFunction,
   transformToPortableText,
-} from "../../../src";
-import { resolveImage, resolveTable, toHTMLImageDefault } from "../../../src/utils/resolution/html";
+} from "../../../../src";
+import { PortableTextHtmlResolvers, resolveImage, toHTML } from "../../../../src/utils/resolution/html";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -29,20 +22,24 @@ jest.mock("short-unique-id", () => {
   });
 });
 
+type ResolverFunction<T extends ArbitraryTypedObject> = (value: T, children?: any) => string;
+
 type CustomResolvers = {
   image?: ResolverFunction<PortableTextImage>;
   block?: ResolverFunction<PortableTextBlock>;
   table?: ResolverFunction<PortableTextTable>;
-  component?: ResolverFunction<PortableTextComponent>;
-  internalLink?: ResolverFunction<PortableTextInternalLink>;
+  component?: ResolverFunction<PortableTextComponentOrItem>;
+  contentItemLink?: ResolverFunction<PortableTextItemLink>;
   link?: ResolverFunction<PortableTextExternalLink>;
+  sup?: ResolverFunction<PortableTextMark>;
 };
 
 const customResolvers: Partial<CustomResolvers> = {
   image: (image) => `<img src="${image.asset.url}" alt="${image.asset.rel ?? ""}" height="800">`,
+  sup: (_, children) => `<sup custom-attribute="value">${children}</sup>`,
 };
 
-describe("HTML transformer", () => {
+describe("HTML resolution", () => {
   let richTextInput: Elements.RichTextElement;
 
   beforeEach(() => {
@@ -82,19 +79,18 @@ describe("HTML transformer", () => {
   const getPortableTextComponents = (
     element: Elements.RichTextElement,
     customResolvers: CustomResolvers = {},
-  ): PortableTextOptions => ({
+  ): PortableTextHtmlResolvers => ({
     components: {
       types: {
         image: ({
           value,
-        }: PortableTextTypeComponentOptions<PortableTextImage>) => {
-          return customResolvers.image
+        }) =>
+          customResolvers.image
             ? customResolvers.image(value)
-            : resolveImage(value, toHTMLImageDefault);
-        },
-        component: ({
+            : resolveImage(value),
+        componentOrItem: ({
           value,
-        }: PortableTextTypeComponentOptions<PortableTextComponent>) => {
+        }: PortableTextTypeComponentOptions<PortableTextComponentOrItem>) => {
           const linkedItem = element.linkedItems.find(
             (item) => item.system.codename === value.component._ref,
           );
@@ -107,25 +103,16 @@ describe("HTML transformer", () => {
               return `Resolver for type ${linkedItem.system.type} not implemented.`;
           }
         },
-        table: ({
-          value,
-        }: PortableTextTypeComponentOptions<PortableTextTable>) => {
-          return resolveTable(value, toHTML);
-        },
       },
       marks: {
-        internalLink: ({
+        contentItemLink: ({
           children,
           value,
-        }: PortableTextMarkComponentOptions<PortableTextInternalLink>) => {
-          return `<a href="https://website.com/${value?.reference._ref}">${children}</a>`;
-        },
-        link: ({
+        }) => `<a href="https://website.com/${value?.reference._ref}">${children}</a>`,
+        sup: ({
           children,
           value,
-        }: PortableTextMarkComponentOptions<PortableTextExternalLink>) => {
-          return `<a href=${escapeHTML(value?.href!)}">${children}</a>`;
-        },
+        }) => customResolvers.sup ? customResolvers.sup(value, children) : `<sup>${children}</sup>`,
       },
     },
   });
@@ -136,21 +123,13 @@ describe("HTML transformer", () => {
   ) => {
     richTextInput.value = richTextValue;
 
-    const browserTree = browserParse(richTextInput.value);
-    const nodeTree = nodeParse(richTextInput.value);
-    const nodePortableText = transformToPortableText(nodeTree);
-    const browserPortableText = transformToPortableText(browserTree);
-    const nodeResult = toHTML(
-      nodePortableText,
-      getPortableTextComponents(richTextInput, customResolvers),
-    );
-    const browserResult = toHTML(
-      browserPortableText,
+    const portableText = transformToPortableText(richTextInput.value);
+    const result = toHTML(
+      portableText,
       getPortableTextComponents(richTextInput, customResolvers),
     );
 
-    expect(nodeResult).toMatchSnapshot();
-    expect(nodeResult).toEqual(browserResult);
+    expect(result).toMatchSnapshot();
   };
 
   it("builds basic portable text into HTML", () => {
@@ -171,7 +150,7 @@ describe("HTML transformer", () => {
     );
   });
 
-  it("resolves a table", () => {
+  it("resolves a table using default fallback", () => {
     transformAndCompare(
       "<table><tbody>\n  <tr><td>Ivan</td><td>Jiri</td></tr>\n  <tr><td>Ondra</td><td>Dan</td></tr>\n</tbody></table>",
     );
@@ -193,6 +172,32 @@ describe("HTML transformer", () => {
   it("resolves styled text with line breaks", () => {
     transformAndCompare(
       "</p>\n<p><strong>Strong text with line break<br>\nStrong text with line break</strong></p>",
+    );
+  });
+
+  it("by default resolves text styled with sub and sup", () => {
+    transformAndCompare(
+      "<p><sub>Subscript text</sub><sup>Superscript text</sup></p>",
+    );
+  });
+
+  it("resolves superscript with custom resolver", () => {
+    transformAndCompare(
+      "<p><sup>Superscript text</sup></p>",
+      customResolvers,
+    );
+  });
+
+  it("resolves a link using default fallback", () => {
+    transformAndCompare(
+      "<p><a href=\"https://website.com/12345\" target=\"_blank\" rel=\"noopener noreferrer\">link</a></p>",
+    );
+  });
+
+  it("uses custom resolver for image, fallbacks to default for a table", () => {
+    transformAndCompare(
+      "<table><tbody>\n  <tr><td>Ivan</td><td>Jiri</td></tr>\n  <tr><td>Ondra</td><td>Dan</td></tr>\n</tbody></table><img src=\"https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/3594632c-d9bb-4197-b7da-2698b0dab409/Riesachsee_Dia_1_1963_%C3%96sterreich_16k_3063.jpg\" data-asset-id=\"62ba1f17-13e9-43c0-9530-6b44e38097fc\" data-image-id=\"62ba1f17-13e9-43c0-9530-6b44e38097fc\" alt=\"\">",
+      customResolvers,
     );
   });
 });

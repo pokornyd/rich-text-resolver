@@ -1,12 +1,5 @@
-import {
-  ArbitraryTypedObject,
-  browserParse,
-  nodeParse,
-  PortableTextSpan,
-  transformToPortableText,
-  traversePortableText,
-} from "../../../src";
-import { toManagementApiFormat } from "../../../src/utils/resolution/mapi";
+import { ArbitraryTypedObject, PortableTextSpan, transformToPortableText, traversePortableText } from "../../../../src";
+import { toManagementApiFormat } from "../../../../src/utils/resolution/mapi";
 
 jest.mock("short-unique-id", () => {
   return jest.fn().mockImplementation(() => {
@@ -22,31 +15,18 @@ const sortMarks = (obj: ArbitraryTypedObject) => isSpan(obj) ? { ...obj, marks: 
 
 describe("portabletext to MAPI resolver", () => {
   const transformAndCompare = (richTextContent: string) => {
-    // Parse the rich text content into a tree
-    const browserTree = browserParse(richTextContent);
-    const nodeTree = nodeParse(richTextContent);
-
-    // Convert the tree to Portable Text
-    const nodePortableText = transformToPortableText(nodeTree);
-    const browserPortableText = transformToPortableText(browserTree);
+    const portableText = transformToPortableText(richTextContent);
 
     // Convert Portable Text to MAPI format
-    const nodeManagementApiFormat = toManagementApiFormat(nodePortableText);
-    const browserManagementApiFormat = toManagementApiFormat(browserPortableText);
+    const managementApiFormat = toManagementApiFormat(portableText);
 
     // Parse the MAPI format back into a tree and convert it to Portable Text
-    const secondParseTree = nodeParse(nodeManagementApiFormat);
-    const secondParsePortableText = transformToPortableText(secondParseTree);
-
-    // Compare the MAPI formats to ensure consistency across platforms
-    expect(nodeManagementApiFormat).toEqual(browserManagementApiFormat);
+    const secondParsePortableText = transformToPortableText(managementApiFormat);
 
     // Compare the original Portable Text to the re-parsed Portable Text after MAPI conversion
     expect(
-      secondParsePortableText.map((p) => traversePortableText(p, sortMarks)),
-    ).toStrictEqual(
-      nodePortableText.map((p) => traversePortableText(p, sortMarks)),
-    );
+      traversePortableText(secondParsePortableText, sortMarks),
+    ).toStrictEqual(traversePortableText(portableText, sortMarks));
   };
 
   it("handles nested style marks", () => {
@@ -64,6 +44,16 @@ describe("portabletext to MAPI resolver", () => {
   it("handles rich text with external links", () => {
     const richTextContent =
       `<p>Here is an <a href="https://example.com" target="_blank" data-new-window="true" title="linktitle">external link</a> in some text.</p>`;
+    transformAndCompare(richTextContent);
+  });
+
+  it("handles link to an email", () => {
+    const richTextContent = `<p><a data-email-address="someone@mail.com">email link</a></p>`;
+    transformAndCompare(richTextContent);
+  });
+
+  it("handles link to a phone number", () => {
+    const richTextContent = `<p><a data-phone-number="+1234567890">phone link</a></p>`;
     transformAndCompare(richTextContent);
   });
 
@@ -96,13 +86,57 @@ describe("portabletext to MAPI resolver", () => {
      */
     const richTextContent =
       `<p><strong>strong text </strong><a href="https://example.com"><strong>example strong link text</strong>not strong link text</a></p>`;
-    const tree = nodeParse(richTextContent);
-    const portableText = transformToPortableText(tree);
+    const portableText = transformToPortableText(richTextContent);
     const mapiFormat = toManagementApiFormat(portableText);
 
-    const secondParseTree = nodeParse(mapiFormat);
-    const secondParsePortableText = transformToPortableText(secondParseTree);
-    const secondParseMapiFormat = toManagementApiFormat(secondParsePortableText);
+    const secondParsePortableText = transformToPortableText(mapiFormat);
+    const secondParseMapiFormat = toManagementApiFormat(
+      secondParsePortableText,
+    );
+
+    expect(portableText).toMatchInlineSnapshot(`
+[
+  {
+    "_key": "guid",
+    "_type": "block",
+    "children": [
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "strong",
+        ],
+        "text": "strong text ",
+      },
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "strong",
+          "guid",
+        ],
+        "text": "example strong link text",
+      },
+      {
+        "_key": "guid",
+        "_type": "span",
+        "marks": [
+          "guid",
+        ],
+        "text": "not strong link text",
+      },
+    ],
+    "markDefs": [
+      {
+        "_key": "guid",
+        "_type": "link",
+        "href": "https://example.com",
+      },
+    ],
+    "style": "normal",
+  },
+]
+`);
 
     expect(mapiFormat).toMatchInlineSnapshot(
       `"<p><strong>strong text <a href="https://example.com">example strong link text</a></strong><a href="https://example.com">not strong link text</a></p>"`,
@@ -112,6 +146,8 @@ describe("portabletext to MAPI resolver", () => {
     expect(portableText).not.toEqual(secondParsePortableText);
 
     // duplicate markdefinition
-    expect(secondParsePortableText[0].markDefs[0]).toEqual(secondParsePortableText[0].markDefs[1]);
+    expect(secondParsePortableText[0].markDefs[0]).toEqual(
+      secondParsePortableText[0].markDefs[1],
+    );
   });
 });

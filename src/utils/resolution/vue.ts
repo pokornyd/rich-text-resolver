@@ -1,6 +1,11 @@
-import { PortableTextBlock } from "@portabletext/types";
-
-import { PortableTextImage, PortableTextTable, PortableTextTableCell, PortableTextTableRow } from "../../index.js";
+import {
+  PortableTextImage,
+  PortableTextObject,
+  PortableTextTable,
+  PortableTextTableCell,
+  PortableTextTableRow,
+} from "../../transformers/transformer-models.js";
+import { toHTML } from "./html.js";
 
 /**
  * Renders a portable text table to a Vue virtual DOM node.
@@ -14,7 +19,7 @@ import { PortableTextImage, PortableTextTable, PortableTextTableCell, PortableTe
 export const resolveTable = (
   table: PortableTextTable,
   vueRenderFunction: Function,
-  resolver: (value: PortableTextBlock[]) => string,
+  resolver: (value: PortableTextObject[]) => string = toHTML,
 ) => {
   const renderCell = (cell: PortableTextTableCell) => {
     const cellContent = resolver(cell.content);
@@ -38,17 +43,18 @@ export const resolveTable = (
  * @param {Function} vueRenderFunction - A Vue render function, typically the `h` function from Vue.
  * @param {(image: PortableTextImage) => VueImage} resolver - A function that takes an image object
  *        and returns an object with `src` and `alt` properties, and possibly other HTML attributes.
+ *        Default implementation provided if not specified.
  * @returns {VueNode} The resolved image as a Vue virtual DOM node.
  */
 export const resolveImage = (
   image: PortableTextImage,
   vueRenderFunction: Function,
-  resolver: (image: PortableTextImage) => VueImage,
+  resolver: (image: PortableTextImage) => VueImage = toVueImageDefault,
 ) => vueRenderFunction("img", resolver(image));
 
 /**
- * Provides a default resolver function for an image object to Vue. This function can be used as
- * a default argument for the `resolveImage` function.
+ * Provides a default resolver function for an image object to Vue. Default fallback for `resolver`
+ * argument of `resolveImage` function.
  *
  * @param {PortableTextImage} image - The portable text image object to be rendered.
  * @returns {VueImage} An object representing the image, containing `src` and `alt` properties,

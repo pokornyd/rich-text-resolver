@@ -10,8 +10,4 @@
     "parserOptions": {
       "project": ["tsconfig.json", "tsconfig.test.json"]
     },
-    "rules": {
-      // I prefer union types of literals with string for brevity
-      "@typescript-eslint/no-redundant-type-constituents": "warn"
-    }
   }

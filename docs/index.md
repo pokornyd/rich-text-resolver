@@ -1,255 +1,204 @@
-# JSON Transformer
+# HTML Transformers
 
-This module also allows you to manipulate the intermediate JSON structure prior to converting it into Portable text or if you prefer to work with a tree structure, rather than portable text.
+This module provides an environment-aware (browser or Node.js) `parseHTML` function to convert an HTML string into an array of nodes. The resulting array can subsequently be modified by one of the provided functions and transformed back to HTML.
+
+This toolset can be particularly useful for transforming rich text or HTML content from external sources into a valid Kontent.ai rich text format in migration scenarios. 
 
 ## Usage
 
-Output of `nodeParse` and `browserParse` methods is a simple tree structure, defined by the following interface.
+Pass stringified HTML to `parseHTML` function to get an array of `DomNode` objects:
 
 ```ts
-interface ParseResult {
+import { parseHTML } from '@kontent-ai/rich-text-resolver';
+
+const rawHtml = `<p>Hello <strong>World!</strong></p>`;
+
+const parsedNodes = parseHTML(rawHtml);
+```
+
+`DomNode` is a union of `DomHtmlNode` and `DomTextNode`, defined as follows:
+
+```ts
+export type DomNode = DomHtmlNode | DomTextNode;
+
+export interface DomTextNode {
+  type: "text";
+  content: string;
+}
+
+export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
+  type: "tag";
+  tagName: string;
+  attributes: TAttributes & Record<string, string | undefined>;
   children: DomNode[];
 }
 ```
 
-`DomNode` is a union of `DomHtmlNode` and `DomTextNode`, which together define the full HTML tree structure:
+### HTML Transformation
 
-![Resolved DOMTree](../media/domtree.jpg)
+To transform the `DomNode` array back to HTML, you can use `nodesToHTML` function or its async variant `nodesToHTMLAsync`. The function accepts the parsed array and a `transformers` object, which defines custom transformation for each HTML node. Text nodes are transformed automatically. A wildcard `*` can be used to define fallback transformation for remaining tags. If no explicit or wildcard transformation is provided, default resolution is used.
 
-The structure can be modified using `transformToJson` method which accepts `ParseResult` as the first argument and an optional `customResolvers` object, which can contain two methods `resolveDomTextNode` and `resolveDomHtmlNode`. Each method is responsible for manipulating its respective node type, allowing you to transform the output as per your requirements.
+#### Basic
+Basic example of HTML transformation, removing HTML attribute `style` and transforming `b` tag to `strong`:
+```ts
+import { nodesToHTML, NodeToHtmlMap, parseHTML } from '@kontent-ai/rich-text-resolver';
 
-Example use of the `transformToJson` method:
+const rawHtml = `<p style="color:red">Hello <b>World!</b></p>`;
+const parsedNodes = parseHTML(rawHtml);
+
+const transformers: NodeToHtmlMap = {
+  // children contains already transformed child nodes
+  b: (node, children) => `<strong>${children}</strong>`;
+
+  // wildcard transformation removes attributes from remaining nodes
+  "*": (node, children) => `<${node.tagName}>${children}</${node.tagName}>`;
+};
+
+// restores original HTML with attributes
+const defaultOutput = nodesToHTML(parsedNodes, {});
+console.log(defaultOutput); // <p style="color:red">Hello <b>World!</b></p>
+
+// b is converted to strong, wildcard transformation is used for remaining nodes
+const customOutput = nodesToHTML(parsedNodes, transformers);
+console.log(customOutput); // <p>Hello <strong>World!</strong></p>
+```
+
+#### Advanced
+
+For more complex scenarios, optional context and its handler can be passed to `nodesToHTML` as third and fourth parameters respectively.
+
+The context can then be accessed in individual transformations, defined in the `transformers` object. If you need to dynamically update the context, you may optionally provide a context handler, which accepts current node and context as parameters and passes a cloned, modified context for child node processing, ensuring each node gets valid contextual data.
+
+##### Transforming img tag and creating an asset in the process (no handler)
+
+In Kontent.ai rich text, images are represented by a `<figure>` tag, with `data-asset-id` attribute referencing an existing asset in the asset library. Transforming an `img` tag is therefore a two-step process:
+
+1. Load the binaries from `src` attribute and create an asset in Kontent.ai asset library
+2. Use the asset ID from previous step to reference the asset in the transformed `<figure>` tag.
+
+For that matter, we will use `nodesToHTMLAsync` method and pass an instance of JS SDK `ManagementClient` as context, to perform the asset creation. Since we don't need to modify the client in any way, we can omit the context handler for this example.
 
 ```ts
-const transformJsonWithCustomResolvers = (result: ParseResult) => transformToJson(result, {
-  resolveDomTextNode: customResolveDomTextNode,
-  resolveDomHtmlNode: customResolveDomHtmlNode
-})
+import { ManagementClient } from "@kontent-ai/management-sdk";
+import {
+  parseHTML,
+  AsyncNodeToHtmlMap,
+  nodesToHTMLAsync,
+} from "@kontent-ai/rich-text-resolver";
 
+const input = `<img src="https://website.com/image.jpg" alt="some image">`;
+const nodes = parseHTML(input);
 
-const customResolveDomTextNode: ResolveDomTextNodeType = node => {
-  return {
-    text: node.content
-  };
-}
-
-const customResolveDomHtmlNode: ResolveDomHtmlNodeType = (node, traverse) => {
-  let result = {
-    tag: node.tagName
-  };
-
-  switch (node.tagName) {
-    case 'figure': {
-      const figureObject = {
-        'imageId': node.attributes['data-image-id']
-      };
-      result = { ...result, ...figureObject }
-      break;
-    }
-    case "img": {
-      const imgObject = {
-        'src': node.attributes['src'],
-        'alt': node.attributes['alt']
+// type parameter specifies context type, in this case ManagementClient
+const transformers: AsyncNodeToHtmlMap<ManagementClient> = {
+  // context (client) can be accessed as a third parameter in each transformation
+  img: async (node, _, client) =>
+    await new Promise<string>(async (resolve, reject) => {
+      if (!client) {
+        reject("Client is not provided");
+        return;
       }
-      result = { ...result, ...imgObject }
-      break;      
-    }
-    case 'ol': {
-      const tdObject = {
-        'tag': 'ol'
-      };
-      result = { ...result, ...tdObject }
-      break;
-    }
-    case 'ul': {
-      const tdObject = {
-        'tag': 'ul'
-      };
-      result = { ...result, ...tdObject }
-      break;
-    }
-    case 'li': {
-      let tdObject = {
-        'tag': 'li',
-        'text': node.children[0].type === 'text' ? node.children[0].content : ""
-      };
-      if (node.children.length > 1) {
-        tdObject = { ...tdObject, ...{ children: node.children.slice(1).map(node => traverse(node)) } }
-      }
-      return { ...result, ...tdObject }
-    }
-    case "object": {
-      if (node.attributes['type'] === 'application/kenticocloud') {
-        const linkedItemObject = {
-          codeName: node.attributes['data-codename']
-        };
-        result = { ...result, ...linkedItemObject }
-      }
-      break;
-    }
-    default: {
 
-    }
-  }
-  return result;
-}
+      const src: string = node.attributes.src;
+      const fileName = src.split("/").pop() || "untitled_file";
 
-const originalTree = browserParse(richTextValue);
-const transformedTree = transformJsonWithCustomResolvers(originalTree);
+      // SDK provides a helper method for creating an asset from URL
+      const assetId = await client
+        .uploadAssetFromUrl()
+        .withData({
+          binaryFile: {
+            filename: fileName,
+          },
+          fileUrl: src,
+          asset: {
+            title: fileName,
+            descriptions: [
+              {
+                language: { codename: "default" },
+                description: node.attributes.alt,
+              },
+            ],
+          },
+        })
+        .toPromise()
+        .then((res) => res.data.id) // get asset ID from the response
+        .catch((err) => reject(err));
+
+      // return transformed tag, referencing the newly created asset
+      resolve(`<figure data-asset-id="${assetId}"></figure>`);
+    }),
+};
+
+const richText = nodesToHTMLAsync(
+  nodes,
+  transformers,
+  new ManagementClient({
+    environmentId: "YOUR_ENVIRONMENT_ID",
+    apiKey: "YOUR_MANAGEMENT_API_KEY",
+  })
+);
+
+console.log(richText);
+// <figure data-asset-id="cc8f13a2-e0fb-468b-ba18-344c6e2ecb66"></figure>
 ```
 
-## Resolution
-If you prefer working with a tree structure, rather than Portable text, you can implement resolution around the `ParseResult` tree. See examples below.
+##### Removing nested divs and spans (with context handler)
 
-#### HTML string (TypeScript)
+Assume we have a scenario where we want to transform external HTML to Kontent.ai rich text. The HTML may contain divs and spans, which are not valid rich text tags. Furthermore, these tags can be nested on multiple levels, so a simple transformation `div/span → p` may not suffice, as it could result in nested `p` tags, which is not a valid HTML.
+
+In this case, we can store depth as a context and increment it via handler anytime we access a nested div/span. We will then define transformers for top level divs and spans to be converted to `p`. Remaining nested invalid tags will be removed.
+
+> [!WARNING]  
+> The below example is primarily intended as a showcase of context handling during transformation. Unwrapping divs and spans in this manner may still result in an invalid HTML. While a more complex transformation logic can be defined to fit your requirements, we ideally advise you to split the original HTML into multiple elements and for rich text processing, isolate the content originally created in a rich text editor, as it may prove easier to transform in this manner.
 
 ```ts
-const parsedTree = browserParse(richTextValue);
+import {
+  nodesToHTML,
+  DomNode,
+  NodeToHtmlMap,
+  parseHTML,
+} from "@kontent-ai/rich-text-resolver";
 
-const resolve = (domNode: DomNode): string => {
-  switch (node.type) {
-    case "tag": {
-      if (isLinkedItem(node)) {
-        return resolveLinkedItem(node);
-      } else if (isImage(node)) {
-        return resolveImage(node);
-      } else if (isItemLink(node)) {
-        return resolveItemLink(node);
-      } else {
-        // Recursively calls `resolve` for node's children
-        return resolveHtmlElement(node);
-      }
-    }
-
-    case "text":
-      return node.content;
-
-    default:
-      throw new Error("Invalid input.");
-  }
+type DepthContext = {
+  divSpanDepth: number;
 };
 
-const resolvedHtml = parsedTree.children.map(resolve).join("");
-```
+const input = `
+    <div>Top level
+      <span> some text <div>nested <span>deep</span></div></span>
+    </div> 
+    <div>Another top-level div <span>with text</span></div>
+    `;
 
-##### Helper resolution methods
+const parsedNodes = parseHTML(input);
 
-Resolution method implementation varies based on the use cases. This is just a showcase to present how to get information for node specific data.
+// handler increments depth whenever we encounter a div or span tag node.
+const depthHandler = (node: DomNode, context: DepthContext): DepthContext =>
+  node.type === "tag" && (node.tagName === "div" || node.tagName === "span")
+    ? { ...context, divSpanDepth: context.divSpanDepth + 1 } // return new context with incremented depth
+    : context; // return the same context if not div/span
 
-```ts
-const resolveHtmlElement = (node: DomHtmlNode): string => {
-  const attributes = Object.entries(node.attributes)
-    .map(([key, value]) => `${key}="${value}"`)
-    .join(" ");
-  const openingTag = `<${node.tagName} ${attributes}>`;
-  const closingTag = `</${node.tagName}>`;
-
-  // Recursively calls `resolve` for node's children
-  return `${openingTag}${node.children.map(link).join("")}${closingTag}`;
+const transformers: NodeToHtmlMap<DepthContext> = {
+  // we'll only define transformations for 'div' and 'span'. Default resolution will transform remaining tags.
+  div: (_, children, context) =>
+    // topmost div is at depth=1, as context is updated before processing.
+    context?.divSpanDepth === 1 ? `<p>${children}</p>` : children,
+    
+  // same for span
+  span: (_, children, context) =>
+    context?.divSpanDepth === 1 ? `<p>${children}</p>` : children,
 };
+
+const output = nodesToHTML(
+  parsedNodes,
+  transformers,
+  { divSpanDepth: 0 }, // initial context
+  depthHandler
+);
+
+console.log(output);
+// <p>Top level some text nested deep</p><p>Another top-level div with text</p>
+
 ```
 
-[Image attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Images-in-rich-text) contain just the information parsed from HTML. Image context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getImage` method.
 
-```ts
-resolveImage = (node: DomHtmlNode): string => {
-  const imageId = node.attributes["data-asset-id"];
-
-  const image = getImage(imageId);
-  return `<img src=${image.url}/>`;
-};
-```
-
-[Link attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Links-in-rich-text) contain just the information parsed from HTML. Link context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getLink` method.
-
-```ts
-const resolveItemLink = (node: DomHtmlNode): string => {
-  const linkId = node.attributes["data-item-id"];
-
-  const link = getLink(linkId);
-
-  return `<a href="${resolveLink(link)}">${node.children.map(link).join()}</a>`;
-};
-```
-
-[Linked item attributes](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Content-items-and-components-in-rich-text) contain just the information parsed from HTML. Linked item context is being returned as a [part of the Delivery API response](https://kontent.ai/learn/reference/openapi/delivery-api/#section/Rich-text-element) - in the sample below being loaded by `getLinkedContentItem` method.
-
-```ts
-const resolveLinkedItem = (node: DomHtmlNode): string => {
-  const itemCodeName = node.attributes["data-codename"];
-
-  const item = getLinkedContentItem(itemCodeName);
-  switch (item.system.type) {
-    case "quote":
-      return `<quote>${item.elements.quote_text.value}</quote>`;
-    //  ...
-    default:
-      return `<strong>UNSUPPORTED CONTENT ITEM</strong>`;
-  }
-};
-```
-
-### React with JS SDK
-
-```tsx
-// assumes element prop comes from JS SDK
-
-type Props = Readonly<{
-    element: Elements.RichTextElement;
-    className: string;
-}>;
-
-const RichText: React.FC<Props> = ({element, className}) => {
-  const [richTextContent, setRichTextContent] = useState<JSX.Element[] | null>(null);
-
-  useEffect(() => {
-    const parsedTree = browserParse(element.value);
-    const resolve = (domNode: DomNode, index: number): JSX.Element => {
-      switch (domNode.type) {
-        case 'tag': {
-          // traverse tree recursively
-          const resolvedChildElements = domNode.children.map(node => resolve(node, index));
-          // omit children parameter for non-pair elements like <br>
-          if (isUnpairedElement(domNode)) {
-            return React.createElement(domNode.tagName, {...domNode.attributes});
-          }
-
-          if (isLinkedItem(domNode)) {
-            const linkedItem = element.linkedItems.find(item => item.system.codename === domNode.attributes['data-codename']);
-
-            switch (linkedItem?.system.type) {
-              case 'youtube_video': {
-                  return <YoutubeVideo key={index} id={linkedItem.elements.videoId.value} />;
-              }
-              // resolution for other types
-              default: {
-                  return <div key={index}>Failed resolving item {linkedItem.system.codename}. Resolver for type {linkedItem.system.type} not implemented.</div>;
-              }
-            }
-            // if (isImage(domNode)) {...}
-            // if (isLink(domNode)) {...}
-          }
-
-          const attributes = { ...domNode.attributes, key: index };
-          return React.createElement(domNode.tagName, attributes, resolvedChildElements);
-        }
-
-        case: 'text': {
-          return <React.Fragment key={index}>{domNode.content}</React.Fragment>
-        }
-
-        default: throw new Error("Invalid input.")
-      }
-    }
-
-    const result = parsedTree.children.map((node, index) => resolve(node, index));
-    setRichTextContent(result);
-  }, [element]);
-
-  return (
-    <div className={className}>
-      {richTextContent}
-    </div>
-  );
-};
-```

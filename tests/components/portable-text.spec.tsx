@@ -1,24 +1,9 @@
 import { Elements, ElementType } from "@kontent-ai/delivery-sdk";
-import {
-  PortableText,
-  PortableTextMarkComponentProps,
-  PortableTextReactComponents,
-  PortableTextTypeComponentProps,
-  toPlainText,
-} from "@portabletext/react";
+import { render } from "@testing-library/react";
 import React from "react";
-import TestRenderer from "react-test-renderer";
 
-import {
-  nodeParse,
-  PortableTextComponent,
-  PortableTextExternalLink,
-  PortableTextImage,
-  PortableTextInternalLink,
-  PortableTextTable,
-  transformToPortableText,
-} from "../../src";
-import { resolveImage, resolveTable, toHTMLImageDefault } from "../../src/utils/resolution/html";
+import { transformToPortableText } from "../../src";
+import { PortableText, PortableTextReactResolvers } from "../../src/utils/resolution/react";
 
 const dummyRichText: Elements.RichTextElement = {
   value: "<p>some text in a paragraph</p>",
@@ -52,37 +37,15 @@ const dummyRichText: Elements.RichTextElement = {
   name: "dummy",
 };
 
-const portableTextComponents: Partial<PortableTextReactComponents> = {
+const portableTextComponents: PortableTextReactResolvers = {
   types: {
-    component: ({ value }: PortableTextTypeComponentProps<PortableTextComponent>) => {
+    componentOrItem: ({ value }) => {
       const item = dummyRichText.linkedItems.find(item => item.system.codename === value.component._ref);
       return <div>{item?.elements.text_element.value}</div>;
     },
-    table: ({ value }: PortableTextTypeComponentProps<PortableTextTable>) => {
-      const tableString = resolveTable(value, toPlainText);
-      return <>{tableString}</>;
-    },
-    image: ({ value }: PortableTextTypeComponentProps<PortableTextImage>) => {
-      const imageString = resolveImage(value, toHTMLImageDefault);
-      return <>{imageString}</>;
-    },
   },
   marks: {
-    link: ({ value, children }: PortableTextMarkComponentProps<PortableTextExternalLink>) => {
-      const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
-      return (
-        <a
-          href={value?.href}
-          target={target}
-          rel={value?.rel}
-          title={value?.title}
-          data-new-window={value?.["data-new-window"]}
-        >
-          {children}
-        </a>
-      );
-    },
-    internalLink: ({ value, children }: PortableTextMarkComponentProps<PortableTextInternalLink>) => {
+    contentItemLink: ({ value, children }) => {
       const item = dummyRichText.linkedItems.find(item => item.system.id === value?.reference._ref);
       return (
         <a href={"https://somerandomwebsite.xyz/" + item?.system.codename}>
@@ -96,9 +59,9 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
 describe("portable text React resolver", () => {
   const renderPortableText = (richTextValue: string, components = portableTextComponents) => {
     dummyRichText.value = richTextValue;
-    const jsonTree = nodeParse(dummyRichText.value);
-    const portableText = transformToPortableText(jsonTree);
-    return TestRenderer.create(<PortableText value={portableText} components={components} />).toJSON();
+    const portableText = transformToPortableText(dummyRichText.value);
+
+    return render(<PortableText value={portableText} components={components} />).container.innerHTML;
   };
 
   it("renders simple HTML", () => {
@@ -140,6 +103,50 @@ describe("portable text React resolver", () => {
         <img src="https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/7d534724-edb8-4a6d-92f6-feb52be61d37/image1_w_metadata.jpg" data-asset-id="bc6f3ce5-935d-4446-82d4-ce77436dd412" data-image-id="bc6f3ce5-935d-4446-82d4-ce77436dd412" alt="" />
       </figure>
     `);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders sub and sup marks using default implementation", () => {
+    const tree = renderPortableText(`
+      <p><sub>subscript text</sub><sup>superscript text</sup></p>
+    `);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders sub and sup marks using custom resolvers", () => {
+    const customComponentResolvers: PortableTextReactResolvers = {
+      ...portableTextComponents,
+      marks: {
+        ...portableTextComponents.marks,
+        sub: ({ children }) => <strong>{children}</strong>,
+        sup: ({ children }) => <strong>{children}</strong>,
+      },
+    };
+
+    const tree = renderPortableText(
+      `
+      <p><sub>subscript text</sub><sup>superscript text</sup></p>
+    `,
+      customComponentResolvers,
+    );
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("renders a link using custom resolvers", () => {
+    const customComponentResolvers: PortableTextReactResolvers = {
+      ...portableTextComponents,
+      marks: {
+        ...portableTextComponents.marks,
+        link: ({ value, children }) => <a href={value?.href}>{children}</a>,
+      },
+    };
+
+    const tree = renderPortableText(
+      `
+      <p><a href="http://google.com" title="linktitle" target="_blank">external link</a></p>
+    `,
+      customComponentResolvers,
+    );
     expect(tree).toMatchSnapshot();
   });
 });

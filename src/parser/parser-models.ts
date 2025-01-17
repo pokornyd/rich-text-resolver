@@ -33,34 +33,31 @@ export interface DomHtmlNode<TAttributes = Record<string, string | undefined>> {
   children: DomNode[];
 }
 
-/**
- * A tree structure representing a result of the `parse` method.
- */
-export interface ParseResult {
-  children: DomNode[];
-}
-
 type DeliverObjectElementAttributes = {
   "data-rel": "component" | "link";
   "data-type": "item";
   "data-codename": string;
-  "data-id": never;
 };
 
 type ManagementObjectElementAttributes = {
-  "data-rel": undefined;
   "data-type": "item" | "component";
   "data-id": string;
-  "data-codename": never;
+  "data-external-id"?: string;
+  "data-rel": undefined; // TODO: needs to be defined as such, otherwise TS will infer it as string or eslint complains
+  "data-codename"?: string;
 };
 
 export type AssetLinkElementAttributes = {
   "data-asset-id": string;
+  "data-asset-external-id"?: string;
+  "data-asset-codename"?: string;
   href?: string;
 };
 
 export type ItemLinkElementAttributes = {
   "data-item-id": string;
+  "data-item-external-id"?: string;
+  "data-item-codename"?: string;
   href?: string;
 };
 
@@ -73,6 +70,8 @@ export type ImgElementAttributes = {
   src: string;
   "data-asset-id": string;
   "data-image-id"?: string;
+  "data-asset-codename"?: string;
+  "data-asset-external-id"?: string;
   alt?: string;
 };
 
