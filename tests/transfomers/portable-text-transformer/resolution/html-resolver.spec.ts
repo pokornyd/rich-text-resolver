@@ -193,4 +193,11 @@ describe("HTML resolution", () => {
       "<p><a href=\"https://website.com/12345\" target=\"_blank\" rel=\"noopener noreferrer\">link</a></p>",
     );
   });
+
+  it("uses custom resolver for image, fallbacks to default for a table", () => {
+    transformAndCompare(
+      "<table><tbody>\n  <tr><td>Ivan</td><td>Jiri</td></tr>\n  <tr><td>Ondra</td><td>Dan</td></tr>\n</tbody></table><img src=\"https://assets-us-01.kc-usercontent.com:443/cec32064-07dd-00ff-2101-5bde13c9e30c/3594632c-d9bb-4197-b7da-2698b0dab409/Riesachsee_Dia_1_1963_%C3%96sterreich_16k_3063.jpg\" data-asset-id=\"62ba1f17-13e9-43c0-9530-6b44e38097fc\" data-image-id=\"62ba1f17-13e9-43c0-9530-6b44e38097fc\" alt=\"\">",
+      customResolvers,
+    );
+  });
 });
